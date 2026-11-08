@@ -9,9 +9,13 @@ const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
 const STATIC_EXPORT = process.env.STATIC_EXPORT === "1";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ""; // e.g. "/footballClub-frontend" for a GitHub project page
 
+// Pin the project root: with several lockfiles around (a temp build copy, a monorepo) the bundler would guess wrong.
+const TURBOPACK_ROOT = process.cwd();
+
 const nextConfig: NextConfig = STATIC_EXPORT
   ? {
       output: "export",
+      turbopack: { root: TURBOPACK_ROOT },
       trailingSlash: true,
       basePath: BASE_PATH || undefined,
       images: { unoptimized: true },
@@ -19,6 +23,7 @@ const nextConfig: NextConfig = STATIC_EXPORT
     }
   : {
       output: "standalone",
+      turbopack: { root: TURBOPACK_ROOT },
       poweredByHeader: false,
       images: {
         remotePatterns: [

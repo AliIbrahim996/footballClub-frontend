@@ -1,7 +1,7 @@
 // Builds the public site + free designer as plain static files (out/) for GitHub Pages or any static host.
 //
 // The full app (login, club management, API proxy) needs a server and is NOT part of this build: this script
-// copies the project to .static-build/, deletes everything that needs a server, and runs `next build` with
+// copies the project to a temporary folder, deletes everything that needs a server, and runs `next build` with
 // STATIC_EXPORT=1. Your working tree is never modified.
 //
 //   NEXT_PUBLIC_SITE_URL       public URL incl. sub-path, e.g. https://user.github.io/repo  (or https://your.domain)
@@ -9,17 +9,16 @@
 //   NEXT_PUBLIC_CONTACT_EMAIL  shown on the contact page (mailto)
 //   NEXT_PUBLIC_LEGAL_*        operator details for imprint / privacy policy
 //   ADSENSE_PUB_ID             optional: writes out/ads.txt
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import os from "node:os";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 const root = process.cwd();
-const work = path.join(root, ".static-build");
+// Outside the repository on purpose: inside it, the bundler finds the repo's own lockfile, src/ and proxy.ts and builds those instead.
+const work = mkdtempSync(path.join(os.tmpdir(), "pitchside-static-"));
 const out = path.join(root, "out");
-
-rmSync(work, { recursive: true, force: true });
 rmSync(out, { recursive: true, force: true });
-mkdirSync(work, { recursive: true });
 
 // Copy only what the build needs (cpSync cannot copy a folder into its own subfolder anyway).
 for (const entry of ["src", "public", "messages", "next.config.ts", "tsconfig.json", "postcss.config.mjs", "package.json", "package-lock.json"]) {
@@ -27,7 +26,7 @@ for (const entry of ["src", "public", "messages", "next.config.ts", "tsconfig.js
 }
 // A real install (not a symlink to ../node_modules): the bundler refuses to follow links that leave the project root.
 const install = spawnSync("npm", ["ci", "--ignore-scripts", "--no-audit", "--no-fund"], { cwd: work, stdio: "inherit", shell: true });
-if (install.status !== 0) process.exit(install.status ?? 1);
+if (install.status !== 0) { rmSync(work, { recursive: true, force: true }); process.exit(install.status ?? 1); }
 
 // Everything below needs a server (cookies, API calls, middleware, per-request data).
 const server = [
@@ -46,7 +45,7 @@ const env = {
   NEXT_TELEMETRY_DISABLED: "1",
 };
 const build = spawnSync(process.execPath, [path.join(work, "node_modules/next/dist/bin/next"), "build"], { cwd: work, env, stdio: "inherit" });
-if (build.status !== 0) process.exit(build.status ?? 1);
+if (build.status !== 0) { rmSync(work, { recursive: true, force: true }); process.exit(build.status ?? 1); }
 
 cpSync(path.join(work, "out"), out, { recursive: true });
 

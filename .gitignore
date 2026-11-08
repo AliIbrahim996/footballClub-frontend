@@ -42,5 +42,4 @@ next-env.d.ts
 !.env.example
 
 # static export build
-/.static-build/
 /out/
