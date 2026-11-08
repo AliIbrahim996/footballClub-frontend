@@ -19,7 +19,10 @@ export async function call<T = unknown>(path: string, init: RequestInit & { json
   });
   if (res.status === 204) return undefined as T;
   const data = await res.json().catch(() => null);
-  if (res.status === 401 && typeof window !== "undefined") window.location.href = `/${document.documentElement.lang || "en"}/login`;
+  if (res.status === 401 && typeof window !== "undefined") {
+    // Session expired: a deliberate full page load (not a client-side route change) so all in-memory state is dropped.
+    window.location.href = new URL(`/${document.documentElement.lang || "en"}/login`, window.location.origin).href;
+  }
   if (!res.ok) throw new ApiError(res.status, data);
   return data as T;
 }
