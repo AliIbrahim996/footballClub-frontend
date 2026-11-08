@@ -4,6 +4,29 @@
 
 Football club management in the browser: a **free tactics designer** (no account), plus a paid **club management system** with player database, skill ratings, cloud-saved plans, team invites and share links. Next.js (App Router, SSR) in **English and Arabic (RTL)**. The API is the sibling repo **footballClub-backend** (Django REST + PostgreSQL).
 
+**Live demo:** https://aliibrahim996.github.io/footballClub-frontend/ (the free designer and public pages; the club system needs the API, see below).
+
+## Engineering highlights
+A 2021 server-rendered Django project that embedded a third-party tactics tool in an iframe, rebuilt as a split **Django REST API + Next.js frontend**. The parts I would point a reviewer to:
+
+- **Native tactics board** (`src/components/board`): an SVG editor with pointer events and no drawing library. Eleven pitch layouts (full, half, penalty box, portrait, futsal and more), home/away/neutral players, runs, passes, dribbles, zones, text, one-click formations, undo/redo, keyboard shortcuts, PNG export through a canvas, and save/reopen of both the image and the editable board JSON.
+- **Two languages, including right-to-left**: English and Arabic with `next-intl`, locale-prefixed routes, logical CSS (`ps-`, `start-`, `border-e`) so the layout mirrors correctly, and API error messages localized through `Accept-Language`.
+- **Server rendering and SEO**: SSR public pages, per-language canonical and `hreflang` tags, JSON-LD, `sitemap.xml`, `robots.txt`, and an `llms.txt` for AI crawlers.
+- **Auth without tokens in JavaScript**: the API token lives in an `httpOnly` cookie and the browser only talks to a same-origin proxy route that adds it (no CORS to configure). The proxy rejects path-escape tricks and forwards the client IP so rate limits work per visitor.
+- **Several ways to ship the same code**: a Docker standalone image, a **static export** (`npm run build:static`) published to GitHub Pages with sub-path handling, and GitHub Actions for lint, build, Docker build and Pages deployment. A set of build-time switches (`SIGNUPS_OPEN`, designer-only mode, contact mode) lets one codebase run as a free demo or as the full product.
+- **Product thinking**: a freemium model (free designer, club system by request) with the trial, billing, team-invite and share-link features already built but switched off until needed.
+- **Process**: a structured code review of the whole change set found ten issues (rate limits shared behind a proxy, leaked invite tokens, a missing database fallback guard, and others); all were fixed and re-verified.
+
+```
+browser ──► Next.js (SSR, en/ar) ──► Django REST API ──► PostgreSQL
+                │  httpOnly cookie, same-origin proxy        └─ uploads: disk | S3 | GCS | Azure
+                └─ static export ──► GitHub Pages (designer-only demo)
+```
+
+### Honest limits
+- No automated frontend tests yet: quality is enforced with ESLint, the type-checked production build, CI, and browser walkthroughs I ran by hand.
+- The full club system is not publicly hosted; the live demo is the designer-only build. The Cloud Run and Android APK workflows are written but untested.
+- The legal pages are drafts, not legal advice.
 ## Screenshots
 
 | Landing page | Free tactics designer |
