@@ -105,6 +105,8 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
   }
 
   function onItemDown(e: React.PointerEvent, item: BoardItem) {
+    // Only select/erase act on existing items; every other tool starts on the pitch beneath them.
+    if (tool !== "select" && tool !== "erase") return;
     e.stopPropagation();
     if (tool === "erase") { commit({ ...board, items: board.items.filter((i) => i.id !== item.id) }); return; }
     setSelected(item.id);
