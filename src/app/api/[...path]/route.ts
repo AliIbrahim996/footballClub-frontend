@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { forwardedFor } from "@/lib/client-ip";
 import { BACKEND_URL, TOKEN_COOKIE } from "@/lib/server";
 
 /** Same-origin proxy to Django: attaches the httpOnly token so the browser never sees it. */
@@ -7,8 +8,14 @@ async function forward(request: NextRequest, ctx: { params: Promise<{ path: stri
   const token = request.cookies.get(TOKEN_COOKIE)?.value;
   if (!token) return NextResponse.json({ detail: "Not authenticated." }, { status: 401 });
 
-  const target = `${BACKEND_URL}/api/${path.join("/")}/${request.nextUrl.search}`;
+  // Only plain API paths: "." / ".." segments would let a request escape /api/ on the backend.
+  if (path.some((s) => s === "." || s === ".." || s.includes("/") || s.includes("\\") || s === "")) {
+    return NextResponse.json({ detail: "Bad request." }, { status: 400 });
+  }
+  const target = `${BACKEND_URL}/api/${path.map(encodeURIComponent).join("/")}/${request.nextUrl.search}`;
   const headers = new Headers({ Authorization: `Token ${token}` });
+  const ip = forwardedFor(request);
+  if (ip) headers.set("x-forwarded-for", ip);
   const lang = request.headers.get("accept-language");
   if (lang) headers.set("accept-language", lang);
   const type = request.headers.get("content-type");

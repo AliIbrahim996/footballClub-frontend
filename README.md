@@ -39,7 +39,7 @@ cp .env.example .env.local      # BACKEND_URL defaults to http://127.0.0.1:8000
 npm install
 npm run dev                     # http://localhost:3000  (redirects to /en)
 ```
-Demo login (when the API was seeded with `python manage.py seed --admin`): `admin` / `admin12345`.
+Demo login: seed the API with `python manage.py seed --admin` (with `DJANGO_DEBUG=1`); it prints the generated `admin` password once, or uses `SEED_ADMIN_PASSWORD` if you set it. No default credentials ship with the project.
 
 ## Docker
 ```bash

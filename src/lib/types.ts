@@ -45,6 +45,6 @@ export type Me = { username: string; club: ClubInfo };
 export type TeamData = {
   seats_limit: number; seats_used: number;
   members: { id: number; username: string; email: string; role: string }[];
-  invites: { id: number; email: string; role: string; token: string; created_at: string }[];
+  invites: { id: number; email: string; role: string; token?: string; created_at: string }[];
 };
 export type SharedPlan = { title: string; comment: string; image: string; board: Partial<BoardState>; created_at: string; club_name: string };

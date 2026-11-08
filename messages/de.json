@@ -27,7 +27,9 @@
     "invalid": "Benutzername oder Passwort ist falsch.",
     "unavailable": "Der Server ist nicht erreichbar. Bitte später erneut versuchen.",
     "noAccount": "Noch kein Konto?",
-    "startTrial": "Kostenlos testen"
+    "startTrial": "Kostenlos testen",
+    "noClub": "Dieses Konto ist keinem Verein zugeordnet. Registrieren Sie einen Verein oder bitten Sie den Vereinsinhaber um eine Einladung.",
+    "tooMany": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut."
   },
   "dashboard": {
     "title": "Übersicht",

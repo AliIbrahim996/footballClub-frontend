@@ -27,7 +27,9 @@
     "invalid": "Wrong username or password.",
     "unavailable": "The server is unreachable. Try again shortly.",
     "noAccount": "No account yet?",
-    "startTrial": "Start your free trial"
+    "startTrial": "Start your free trial",
+    "noClub": "This account is not linked to a club. Sign up for a club account or ask your club owner for an invitation.",
+    "tooMany": "Too many attempts. Please wait a minute and try again."
   },
   "dashboard": {
     "title": "Dashboard",

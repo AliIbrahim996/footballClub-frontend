@@ -20,11 +20,12 @@ export function LoginForm() {
     const f = new FormData(e.currentTarget);
     const res = await fetch("/api/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept-Language": document.documentElement.lang || "en" },
       body: JSON.stringify({ username: f.get("username"), password: f.get("password") }),
     }).catch(() => null);
     if (!res?.ok) {
-      setError(res && res.status < 500 ? t("invalid") : t("unavailable"));
+      const reasons: Record<number, string> = { 400: t("invalid"), 403: t("noClub"), 429: t("tooMany") };
+      setError((res && reasons[res.status]) || t("unavailable"));
       setBusy(false);
       return;
     }

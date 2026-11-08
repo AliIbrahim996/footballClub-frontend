@@ -16,19 +16,22 @@ git clone <frontend repo> footballclub-frontend && cd footballclub-frontend
 docker compose --profile with-api up --build -d
 ```
 Put HTTPS in front (needed for logins over the internet and for the Android app): a free **Cloudflare Tunnel** or Caddy/nginx with Let's Encrypt.
-Then set `NEXT_PUBLIC_SITE_URL=https://your.domain`, `COOKIE_SECURE=1`, `DJANGO_DEBUG=0`, a real `DJANGO_SECRET_KEY`,
-`DJANGO_ALLOWED_HOSTS`, and `SEED_DEMO_DATA=0`.
+Then set `NEXT_PUBLIC_SITE_URL=https://your.domain`, `COOKIE_SECURE=1`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS`, and `SEED_DEMO_DATA=0`.
+`DJANGO_SECRET_KEY` and `POSTGRES_PASSWORD` have **no defaults**: put them in `.env` (git-ignored; generate with
+`python -c "import secrets; print(secrets.token_urlsafe(50))"`). The containers refuse to start without them. Set `NUM_PROXIES` to the number of
+reverse proxies in front of the API (Next.js counts as 1, plus any load balancer) so rate limits apply per visitor, not per proxy.
 
 ## Option B: Google Cloud Run (managed, scales to zero)
 | Piece | Service | Cost note |
 |---|---|---|
 | web + api | Cloud Run (two services) | free tier, then pay per use; cold start after idle |
 | Database | Neon / Supabase free Postgres, or Cloud SQL | Cloud SQL has no free tier (roughly $10+/month) |
-| Uploads | Cloud Storage bucket (`GS_BUCKET_NAME`) | Cloud Run disks are ephemeral, so this is required |
+| Uploads | Cloud Storage bucket (`MEDIA_STORAGE=gcs`, `GS_BUCKET_NAME`) | Cloud Run disks are ephemeral, so this is required |
 | Images | Artifact Registry | small |
 
 API env: `DJANGO_DEBUG=0`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS=<api host>`, `POSTGRES_HOST/DB/USER/PASSWORD`, `POSTGRES_SSLMODE=require`,
-`GS_BUCKET_NAME`, `FRONTEND_URL`, plus Stripe/email variables below. Web env: `BACKEND_URL=https://<api host>`, `COOKIE_SECURE=1`.
+`MEDIA_STORAGE=gcs`, `GS_BUCKET_NAME`, `NUM_PROXIES=2` (Cloud Run front end + Next.js), `FRONTEND_URL`, plus Stripe/email variables below.
+The API **refuses to start in production without `POSTGRES_HOST`** (it never silently falls back to SQLite). Web env: `BACKEND_URL=https://<api host>`, `COOKIE_SECURE=1`.
 Make the bucket objects publicly readable (uploaded plan images and player photos are served by URL), and give the API's service account
 `roles/storage.objectAdmin` on it.
 
@@ -76,3 +79,19 @@ Ads render only on the free designer and shared-plan pages, never in the signed-
 - Privacy policy, terms, and (Germany) an imprint; GDPR applies, especially for youth players' data.
 - Back up the database and bucket; set `DJANGO_DEBUG=0`, rotate the demo admin password, turn off `SEED_DEMO_DATA`.
 - One trial per club is enforced by unique email; determined users can still use new emails, so watch for abuse.
+
+## Uploads on AWS, Google Cloud or Azure (`MEDIA_STORAGE`)
+The API stores plan images and player photos through one setting, so the cloud is a deployment choice, not a code change:
+
+| Cloud | `MEDIA_STORAGE` | Variables | Identity (no static keys needed) |
+|---|---|---|---|
+| any single machine | `local` | `MEDIA_ROOT` (a Docker volume) | n/a |
+| AWS S3 (also R2, MinIO, Spaces, B2) | `s3` | `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_REGION_NAME`, optional `AWS_S3_ENDPOINT_URL` | IAM role on ECS/App Runner/EC2 |
+| Google Cloud Storage | `gcs` | `GS_BUCKET_NAME` | Cloud Run service account |
+| Azure Blob Storage | `azure` | `AZURE_ACCOUNT_NAME`, `AZURE_CONTAINER`, plus `AZURE_ACCOUNT_KEY` or `AZURE_CONNECTION_STRING` | key/connection string from Key Vault |
+
+Public buckets give plain URLs (`MEDIA_PUBLIC=1`, default); private buckets use signed, expiring URLs (`MEDIA_PUBLIC=0`).
+Adding another provider means one branch in `web_application/storage.py`.
+
+## Secrets: where they live
+Nothing sensitive is committed. In CI and deploy workflows: Google authentication uses Workload Identity Federation (no key file), settings are repository *variables*, and secrets are mounted from the cloud secret manager by name. Tests run on a throwaway database container without any credentials and ignore all production variables.

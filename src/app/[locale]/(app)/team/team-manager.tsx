@@ -76,9 +76,9 @@ export function TeamManager({ team, isOwner, username }: { team: TeamData; isOwn
               {team.invites.map((i) => (
                 <li key={i.id} className="flex items-center justify-between gap-3 py-3">
                   <div className="min-w-0"><p className="truncate text-sm">{i.email}</p><p className="text-xs text-muted">{t(`roles.${i.role}`)}</p></div>
-                  {isOwner && (
+                  {isOwner && i.token && (
                     <div className="flex gap-1">
-                      <Button variant="secondary" className="h-9 px-3 text-xs" onClick={() => copy(i.token)}><Copy size={14} aria-hidden /> {copied === i.token ? t("copied") : t("copyLink")}</Button>
+                      <Button variant="secondary" className="h-9 px-3 text-xs" onClick={() => copy(i.token!)}><Copy size={14} aria-hidden /> {copied === i.token ? t("copied") : t("copyLink")}</Button>
                       <button aria-label={t("revoke")} onClick={() => remove(`/team/invites/${i.id}/`)} className="grid size-9 place-items-center rounded-lg text-danger hover:bg-danger/10"><Trash2 size={16} /></button>
                     </div>
                   )}
