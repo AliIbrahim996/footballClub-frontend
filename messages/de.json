@@ -188,7 +188,11 @@
     },
     "footer": {
       "blurb": "Kaderverwaltung, Spielerbewertung und eine interaktive Taktiktafel für Fußballvereine.",
-      "label": "Fußzeile"
+      "label": "Fußzeile",
+      "privacy": "Datenschutz",
+      "terms": "Nutzungsbedingungen",
+      "imprint": "Impressum",
+      "cookies": "Cookie-Einstellungen"
     },
     "hero": {
       "badge": "Fußball-Vereinsverwaltung",
@@ -355,7 +359,9 @@
     "submit": "Kostenlos testen",
     "trialNote": "Eine kostenlose Testphase pro Verein. Keine Karte zum Start nötig.",
     "haveAccount": "Schon ein Konto?",
-    "signIn": "Anmelden"
+    "signIn": "Anmelden",
+    "acceptTerms": "Ich akzeptiere die <terms>Nutzungsbedingungen</terms> und habe die <privacy>Datenschutzerklärung</privacy> gelesen.",
+    "mustAccept": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren."
   },
   "join": {
     "title": "{club} beitreten",
@@ -468,7 +474,7 @@
     "success": "Vielen Dank, Ihre Nachricht wurde gesendet.",
     "successHint": "Wir antworten so schnell wie möglich per E-Mail.",
     "error": "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es in ein paar Minuten erneut.",
-    "privacy": "Wir verwenden Ihre Angaben nur, um Ihnen zu antworten.",
+    "privacy": "Wir verwenden Ihre Angaben nur, um Ihnen zu antworten. Siehe unsere <link>Datenschutzerklärung</link>.",
     "mailSubject": "Pitchside: Vollversion",
     "prefill": "Hallo, wir interessieren uns für die Vollversion von Pitchside für unseren Verein.",
     "mailtoBody": "Schreiben Sie uns per E-Mail und erzählen Sie uns von Ihrem Verein. Wir richten die Vollversion für Sie ein.",

@@ -188,7 +188,11 @@
     },
     "footer": {
       "blurb": "Squad management, player ratings and an interactive tactics board for football clubs.",
-      "label": "Footer"
+      "label": "Footer",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "imprint": "Imprint",
+      "cookies": "Cookie settings"
     },
     "hero": {
       "badge": "Football club management",
@@ -355,7 +359,9 @@
     "submit": "Start free trial",
     "trialNote": "One free trial per club. No card needed to start.",
     "haveAccount": "Already have an account?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "acceptTerms": "I accept the <terms>Terms of Use</terms> and have read the <privacy>Privacy Policy</privacy>.",
+    "mustAccept": "Please accept the terms to continue."
   },
   "join": {
     "title": "Join {club}",
@@ -468,7 +474,7 @@
     "success": "Thank you, your message was sent.",
     "successHint": "We will reply by email as soon as we can.",
     "error": "Could not send your message. Please try again in a few minutes.",
-    "privacy": "We only use your details to reply to you.",
+    "privacy": "We only use your details to reply to you. See our <link>privacy policy</link>.",
     "mailSubject": "Pitchside: full version",
     "prefill": "Hello, we are interested in the full version of Pitchside for our club.",
     "mailtoBody": "Write to us by email and tell us about your club. We will set you up with the full version.",

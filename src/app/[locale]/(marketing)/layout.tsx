@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ConsentBanner } from "@/components/ads";
+import { ConsentBanner, CookieSettingsLink } from "@/components/ads";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { LinkButton, Logo } from "@/components/ui";
 import { DESIGNER_ONLY, SIGNUPS_OPEN } from "@/lib/flags";
@@ -37,6 +37,10 @@ export default async function MarketingLayout({ children, params }: { children: 
             <Link href="/features" className="text-muted hover:text-fg">{t("nav.features")}</Link>
             <Link href="/contact" className="text-muted hover:text-fg">{t("nav.contact")}</Link>
             {!DESIGNER_ONLY && <Link href="/login" className="text-muted hover:text-fg">{t("nav.signIn")}</Link>}
+            <Link href="/privacy" className="text-muted hover:text-fg">{t("footer.privacy")}</Link>
+            <Link href="/terms" className="text-muted hover:text-fg">{t("footer.terms")}</Link>
+            <Link href="/imprint" className="text-muted hover:text-fg">{t("footer.imprint")}</Link>
+            <CookieSettingsLink label={t("footer.cookies")} />
             <a href="/llms.txt" className="text-muted hover:text-fg">llms.txt</a>
             <a href="/sitemap.xml" className="text-muted hover:text-fg">Sitemap</a>
           </nav>

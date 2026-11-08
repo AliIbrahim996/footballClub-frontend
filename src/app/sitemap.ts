@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 
 import { SIGNUPS_OPEN } from "@/lib/flags";
 
-const PATHS = ["", "/features", "/designer", "/contact", ...(SIGNUPS_OPEN ? ["/register"] : [])];
+const PATHS = ["", "/features", "/designer", "/contact", "/privacy", "/terms", "/imprint", ...(SIGNUPS_OPEN ? ["/register"] : [])];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return PATHS.flatMap((path) =>

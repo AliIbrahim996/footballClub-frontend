@@ -104,6 +104,9 @@ Ads render only on the free designer and shared-plan pages, never in the signed-
   developer account and a signed release build (add your keystore as GitHub secrets). The APK has not been built in this environment.
 - Ads (AdSense) are not allowed inside app WebViews; the wrapped app shows the site without them being relied on for revenue.
 
+## Legal pages (required before launch)
+Set `NEXT_PUBLIC_LEGAL_NAME`, `_STREET`, `_CITY`, `_EMAIL` (and `_PHONE`, `_VAT_ID`, `_REGISTER`, `_REPRESENTATIVE`, `_HOSTING` where they apply) as **build** variables (Docker `--build-arg`, or the deploy workflow's repository variables `LEGAL_NAME`, `LEGAL_STREET`, …). They fill the imprint, privacy policy and terms. See [legal/COMPLIANCE_CHECKLIST.md](legal/COMPLIANCE_CHECKLIST.md).
+
 ## Before charging customers
 - Privacy policy, terms, and (Germany) an imprint; GDPR applies, especially for youth players' data.
 - Back up the database and bucket; set `DJANGO_DEBUG=0`, rotate the demo admin password, turn off `SEED_DEMO_DATA`.

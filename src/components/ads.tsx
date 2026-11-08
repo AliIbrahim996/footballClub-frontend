@@ -38,6 +38,17 @@ function useConsent() {
   );
 }
 
+/** Footer link that lets visitors change their mind: forgets the choice so the banner asks again. */
+export function CookieSettingsLink({ label }: { label: string }) {
+  if (!CLIENT) return null;
+  return (
+    <button
+      type="button" className="text-muted hover:text-fg"
+      onClick={() => { try { window.localStorage.removeItem(KEY); } catch { /* ignore */ } listeners.forEach((l) => l()); }}
+    >{label}</button>
+  );
+}
+
 export function ConsentBanner() {
   const t = useTranslations("ads");
   const consent = useConsent();

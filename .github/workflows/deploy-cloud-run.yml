@@ -31,6 +31,16 @@ jobs:
             --build-arg NEXT_PUBLIC_DESIGNER_ONLY="${{ vars.DESIGNER_ONLY || '0' }}" \
             --build-arg NEXT_PUBLIC_CONTACT_MODE="${{ vars.CONTACT_MODE || 'mailto' }}" \
             --build-arg NEXT_PUBLIC_CONTACT_EMAIL="${{ vars.CONTACT_EMAIL }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_NAME="${{ vars.LEGAL_NAME }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_STREET="${{ vars.LEGAL_STREET }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_CITY="${{ vars.LEGAL_CITY }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_COUNTRY="${{ vars.LEGAL_COUNTRY }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_EMAIL="${{ vars.LEGAL_EMAIL }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_PHONE="${{ vars.LEGAL_PHONE }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_VAT_ID="${{ vars.LEGAL_VAT_ID }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_REGISTER="${{ vars.LEGAL_REGISTER }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_REPRESENTATIVE="${{ vars.LEGAL_REPRESENTATIVE }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_HOSTING="${{ vars.LEGAL_HOSTING }}" \
             -t "$IMAGE" .
           docker push "$IMAGE"
       - uses: google-github-actions/deploy-cloudrun@v3

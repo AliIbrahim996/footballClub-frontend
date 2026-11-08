@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button, Card, Field, Input, inputCls } from "@/components/ui";
+import { Link } from "@/i18n/navigation";
 import { ApiError, call, fieldErrors } from "@/lib/client";
 
 export function ContactForm({ locale, initialMessage }: { locale: string; initialMessage: string }) {
@@ -50,7 +51,9 @@ export function ContactForm({ locale, initialMessage }: { locale: string; initia
       </div>
       {state === "error" && <p role="alert" className="text-sm text-danger">{t("error")}</p>}
       <Button type="submit" disabled={state === "sending"}>{state === "sending" ? t("sending") : t("send")}</Button>
-      <p className="text-xs text-muted">{t("privacy")}</p>
+      <p className="text-xs text-muted">
+        {t.rich("privacy", { link: (chunks) => <Link href="/privacy" className="underline underline-offset-2">{chunks}</Link> })}
+      </p>
     </form>
   );
 }
