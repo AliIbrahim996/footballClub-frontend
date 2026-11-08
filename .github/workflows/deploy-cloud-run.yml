@@ -1,0 +1,38 @@
+name: Deploy frontend to Cloud Run
+# UNTESTED TEMPLATE. Manual trigger. Uses Workload Identity Federation (no JSON keys stored in GitHub).
+# One-time setup is described in docs/DEPLOY.md. Required repository variables:
+#   GCP_PROJECT, GCP_REGION, GCP_ARTIFACT_REPO, GCP_WIF_PROVIDER, GCP_DEPLOY_SA, BACKEND_URL, SITE_URL
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT }}/${{ vars.GCP_ARTIFACT_REPO }}/pitchside-web:${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: gcloud auth configure-docker ${{ vars.GCP_REGION }}-docker.pkg.dev --quiet
+      - name: Build and push
+        run: |
+          docker build \
+            --build-arg BACKEND_URL="${{ vars.BACKEND_URL }}" \
+            --build-arg NEXT_PUBLIC_SITE_URL="${{ vars.SITE_URL }}" \
+            -t "$IMAGE" .
+          docker push "$IMAGE"
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: pitchside-web
+          region: ${{ vars.GCP_REGION }}
+          image: ${{ env.IMAGE }}
+          flags: --allow-unauthenticated --port=3000
+          env_vars: BACKEND_URL=${{ vars.BACKEND_URL }},COOKIE_SECURE=1
