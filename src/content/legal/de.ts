@@ -15,7 +15,7 @@ export function de(): LegalLang {
         "Der Schutz Ihrer Daten ist uns wichtig. Diese Erklärung informiert Sie nach Art. 13 und 14 DSGVO darüber, welche personenbezogenen Daten wir wann und wofür verarbeiten.",
       ],
       sections: [
-        { h: "1. Verantwortlicher", p: [`${operator}`, `E-Mail: ${email}${LEGAL.phone ? `, Telefon: ${LEGAL.phone}` : ""}`, "Für Daten, die Vereine über Pitchside über ihre Spielerinnen und Spieler verwalten, gilt Abschnitt 7: Dort ist der jeweilige Verein verantwortlich und wir sind Auftragsverarbeiter."] },
+        { h: "1. Verantwortlicher", p: [`${operator}`, `E-Mail: ${email}${LEGAL.phone ? `, Telefon: ${LEGAL.phone}` : ""}`, ...(LEGAL.euRepresentative ? [`Vertreter in der EU (Art. 27 DSGVO): ${LEGAL.euRepresentative}`] : []), "Für Daten, die Vereine über Pitchside über ihre Spielerinnen und Spieler verwalten, gilt Abschnitt 7: Dort ist der jeweilige Verein verantwortlich und wir sind Auftragsverarbeiter."] },
         { h: "2. Überblick", ul: [
           "Besuch der Website (Server-Logs) und Spracheinstellung",
           "Kostenloser Taktik-Designer (Daten bleiben in Ihrem Browser)",

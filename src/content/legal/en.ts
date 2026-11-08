@@ -14,7 +14,7 @@ export function en(): LegalLang {
       title: "Privacy Policy",
       intro: ["Protecting your data matters to us. This policy tells you, as required by Articles 13 and 14 GDPR, which personal data we process, when and why."],
       sections: [
-        { h: "1. Controller", p: [operator, `Email: ${email}${LEGAL.phone ? `, phone: ${LEGAL.phone}` : ""}`, "For data that clubs manage about their players through Pitchside, section 7 applies: the club is the controller and we act as processor."] },
+        { h: "1. Controller", p: [operator, `Email: ${email}${LEGAL.phone ? `, phone: ${LEGAL.phone}` : ""}`, ...(LEGAL.euRepresentative ? [`Representative in the EU (Art. 27 GDPR): ${LEGAL.euRepresentative}`] : []), "For data that clubs manage about their players through Pitchside, section 7 applies: the club is the controller and we act as processor."] },
         { h: "2. Overview", ul: [
           "Visiting the website (server logs) and language setting",
           "The free tactics designer (data stays in your browser)",

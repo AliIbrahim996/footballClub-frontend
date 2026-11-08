@@ -1,4 +1,4 @@
-﻿// Operator identity for the legal pages. Everything comes from build-time variables so no personal data is committed.
+// Operator identity for the legal pages. Everything comes from build-time variables so no personal data is committed.
 // An imprint is legally required (Germany: section 5 DDG) and must name the real provider: fill these in before launch.
 const v = (name: string) => (process.env[name] ?? "").trim();
 
@@ -14,6 +14,7 @@ export const LEGAL = {
   vatId: v("NEXT_PUBLIC_LEGAL_VAT_ID"), // USt-IdNr., if you have one
   register: v("NEXT_PUBLIC_LEGAL_REGISTER"), // commercial register court and number, if registered
   representative: v("NEXT_PUBLIC_LEGAL_REPRESENTATIVE"), // managing director(s) for companies
+  euRepresentative: v("NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE"), // GDPR Art. 27: needed if the operator is outside the EU/EEA and serves people in the EU
   hosting: v("NEXT_PUBLIC_LEGAL_HOSTING"), // hosting provider(s), e.g. "Render Services, Inc., San Francisco, USA"
 };
 
