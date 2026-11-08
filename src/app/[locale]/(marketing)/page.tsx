@@ -3,6 +3,7 @@ import { Check, ClipboardList, Languages, Route, Star, Users } from "lucide-reac
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LinkButton } from "@/components/ui";
 import { absolute, alternates } from "@/lib/seo";
+import { SIGNUPS_OPEN } from "@/lib/flags";
 import { SITE } from "@/lib/site";
 
 type P = { params: Promise<{ locale: string }> };
@@ -47,6 +48,8 @@ export default async function LandingPage({ params }: P) {
   setRequestLocale(locale);
   const t = await getTranslations("landing");
   const meta = await getTranslations("meta");
+  // While sign-ups are closed the cost answer and the club plan describe "contact us" instead of a self-service trial.
+  const faqAnswer = (k: (typeof FAQ)[number]) => (k === "cost" && !SIGNUPS_OPEN ? t("closed.faqCost") : t(`faq.${k}.a`));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -57,13 +60,13 @@ export default async function LandingPage({ params }: P) {
         description: meta("description"), inLanguage: ["en", "de", "ar"], url: absolute(`/${locale}`),
         offers: [
           { "@type": "Offer", name: "Free designer", price: "0", priceCurrency: "EUR" },
-          { "@type": "Offer", name: "Club plan", price: PRICE.replace(/[^0-9.]/g, "") || "9", priceCurrency: "EUR" },
+          ...(SIGNUPS_OPEN ? [{ "@type": "Offer", name: "Club plan", price: PRICE.replace(/[^0-9.]/g, "") || "9", priceCurrency: "EUR" }] : []),
         ],
         featureList: FEATURES.map((f) => t(`features.${f.key}.title`)),
       },
       {
         "@type": "FAQPage", inLanguage: locale,
-        mainEntity: FAQ.map((k) => ({ "@type": "Question", name: t(`faq.${k}.q`), acceptedAnswer: { "@type": "Answer", text: t(`faq.${k}.a`) } })),
+        mainEntity: FAQ.map((k) => ({ "@type": "Question", name: t(`faq.${k}.q`), acceptedAnswer: { "@type": "Answer", text: faqAnswer(k) } })),
       },
     ],
   };
@@ -79,7 +82,7 @@ export default async function LandingPage({ params }: P) {
           <p className="mt-5 max-w-xl text-lg text-muted text-pretty">{t("hero.body")}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <LinkButton href="/designer" className="h-12 px-6 text-base">{t("hero.cta")}</LinkButton>
-            <LinkButton href="/register" variant="secondary" className="h-12 px-6 text-base">{t("hero.secondary")}</LinkButton>
+            <LinkButton href={SIGNUPS_OPEN ? "/register" : "/contact?topic=full"} variant="secondary" className="h-12 px-6 text-base">{SIGNUPS_OPEN ? t("hero.secondary") : t("closed.heroSecondary")}</LinkButton>
           </div>
         </div>
         <div className="rise" style={{ animationDelay: "120ms" }}><HeroPitch /></div>
@@ -115,23 +118,26 @@ export default async function LandingPage({ params }: P) {
 
       <section aria-labelledby="pricing" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <h2 id="pricing" className="text-3xl font-semibold tracking-tight">{t("pricing.title")}</h2>
-        <p className="mt-2 max-w-2xl text-muted">{t("pricing.subtitle")}</p>
+        <p className="mt-2 max-w-2xl text-muted">{SIGNUPS_OPEN ? t("pricing.subtitle") : t("closed.pricingSubtitle")}</p>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {(["free", "pro"] as const).map((plan) => (
             <div key={plan} className={`flex flex-col rounded-2xl border p-6 ${plan === "pro" ? "border-accent bg-surface" : "border-line bg-surface"}`}>
               <h3 className="font-semibold">{t(`pricing.${plan}.name`)}</h3>
               <p className="mt-3 text-4xl font-semibold tracking-tight">
-                {plan === "pro" ? PRICE : "€0"}
-                <span className="ms-1 text-base font-normal text-muted">{plan === "pro" ? t("pricing.perMonth") : ""}</span>
+                {plan === "pro" ? (SIGNUPS_OPEN ? PRICE : t("closed.price")) : "€0"}
+                <span className="ms-1 text-base font-normal text-muted">{plan === "pro" && SIGNUPS_OPEN ? t("pricing.perMonth") : ""}</span>
               </p>
-              <p className="mt-1 text-sm text-muted">{t(`pricing.${plan}.note`)}</p>
+              <p className="mt-1 text-sm text-muted">{plan === "pro" && !SIGNUPS_OPEN ? t("closed.proNote") : t(`pricing.${plan}.note`)}</p>
               <ul className="mt-5 flex-1 space-y-2 text-sm">
                 {(t.raw(`pricing.${plan}.items`) as string[]).map((item) => (
                   <li key={item} className="flex gap-2"><Check size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden />{item}</li>
                 ))}
               </ul>
-              <LinkButton href={plan === "pro" ? "/register" : "/designer"} variant={plan === "pro" ? "primary" : "secondary"} className="mt-6">
-                {t(`pricing.${plan}.cta`)}
+              <LinkButton
+                href={plan === "pro" ? (SIGNUPS_OPEN ? "/register" : "/contact?topic=full") : "/designer"}
+                variant={plan === "pro" ? "primary" : "secondary"} className="mt-6"
+              >
+                {plan === "pro" && !SIGNUPS_OPEN ? t("closed.proCta") : t(`pricing.${plan}.cta`)}
               </LinkButton>
             </div>
           ))}
@@ -145,7 +151,7 @@ export default async function LandingPage({ params }: P) {
             {FAQ.map((k) => (
               <div key={k} className="py-5">
                 <dt className="font-medium">{t(`faq.${k}.q`)}</dt>
-                <dd className="mt-1.5 text-sm text-muted">{t(`faq.${k}.a`)}</dd>
+                <dd className="mt-1.5 text-sm text-muted">{faqAnswer(k)}</dd>
               </div>
             ))}
           </dl>

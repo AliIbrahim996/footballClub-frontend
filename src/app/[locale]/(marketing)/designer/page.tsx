@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AdSlot } from "@/components/ads";
 import { PublicDesigner } from "@/components/board/public-designer";
 import { LinkButton } from "@/components/ui";
+import { SIGNUPS_OPEN } from "@/lib/flags";
 import { absolute, alternates } from "@/lib/seo";
 
 type P = { params: Promise<{ locale: string }> };
@@ -45,8 +46,8 @@ export default async function DesignerPage({ params }: P) {
           </div>
           <div className="rounded-2xl border border-line bg-bg p-6">
             <h2 className="text-xl font-semibold">{t("upgradeTitle")}</h2>
-            <p className="mt-2 text-sm text-muted">{t("upgradeBody")}</p>
-            <LinkButton href="/register" className="mt-5">{t("upgradeCta")}</LinkButton>
+            <p className="mt-2 text-sm text-muted">{SIGNUPS_OPEN ? t("upgradeBody") : t("upgradeBodyClosed")}</p>
+            <LinkButton href={SIGNUPS_OPEN ? "/register" : "/contact?topic=full"} className="mt-5">{SIGNUPS_OPEN ? t("upgradeCta") : t("upgradeCtaClosed")}</LinkButton>
           </div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { ConsentBanner } from "@/components/ads";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { LinkButton, Logo } from "@/components/ui";
+import { DESIGNER_ONLY, SIGNUPS_OPEN } from "@/lib/flags";
 
 export default async function MarketingLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   setRequestLocale((await params).locale);
@@ -18,8 +19,8 @@ export default async function MarketingLayout({ children, params }: { children: 
             <Link href="/features" className="hidden h-10 items-center rounded-lg px-3 text-sm font-medium text-muted hover:text-fg md:inline-flex">{t("nav.features")}</Link>
             <LocaleSwitcher />
             {/* wrapper hides it on phones: LinkButton's own display class would beat a `hidden` passed in */}
-            <span className="hidden sm:inline-flex"><LinkButton href="/login" variant="secondary" className="h-10">{t("nav.signIn")}</LinkButton></span>
-            <LinkButton href="/register" variant="primary" className="h-10">{t("nav.trial")}</LinkButton>
+            {!DESIGNER_ONLY && <span className="hidden sm:inline-flex"><LinkButton href="/login" variant="secondary" className="h-10">{t("nav.signIn")}</LinkButton></span>}
+            <LinkButton href={SIGNUPS_OPEN ? "/register" : "/contact"} variant="primary" className="h-10">{SIGNUPS_OPEN ? t("nav.trial") : t("nav.contact")}</LinkButton>
           </nav>
         </div>
       </header>
@@ -34,7 +35,8 @@ export default async function MarketingLayout({ children, params }: { children: 
           <nav aria-label={t("footer.label")} className="flex flex-wrap gap-x-8 gap-y-2 text-sm md:justify-end">
             <Link href="/designer" className="text-muted hover:text-fg">{t("nav.designer")}</Link>
             <Link href="/features" className="text-muted hover:text-fg">{t("nav.features")}</Link>
-            <Link href="/login" className="text-muted hover:text-fg">{t("nav.signIn")}</Link>
+            <Link href="/contact" className="text-muted hover:text-fg">{t("nav.contact")}</Link>
+            {!DESIGNER_ONLY && <Link href="/login" className="text-muted hover:text-fg">{t("nav.signIn")}</Link>}
             <a href="/llms.txt" className="text-muted hover:text-fg">llms.txt</a>
             <a href="/sitemap.xml" className="text-muted hover:text-fg">Sitemap</a>
           </nav>

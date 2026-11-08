@@ -6,6 +6,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { call } from "@/lib/client";
+import { SIGNUPS_OPEN } from "@/lib/flags";
 import type { BoardItem, BoardState, Plan } from "@/lib/types";
 import { Button, Card, Field, Input, LinkButton } from "../ui";
 import { FORMATIONS, formation, svgToPng, uid, wavy } from "./geometry";
@@ -297,9 +298,9 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
         {mode === "public" ? (
           <Card className="space-y-3 p-4">
             <h2 className="font-semibold">{t("public.title")}</h2>
-            <p className="text-sm text-muted">{t("public.body")}</p>
+            <p className="text-sm text-muted">{SIGNUPS_OPEN ? t("public.body") : t("public.bodyClosed")}</p>
             <Button variant="secondary" onClick={exportPng} className="w-full"><Download size={16} aria-hidden /> {t("exportPng")}</Button>
-            <LinkButton href="/register" className="w-full">{t("public.cta")}</LinkButton>
+            <LinkButton href={SIGNUPS_OPEN ? "/register" : "/contact?topic=full"} className="w-full">{SIGNUPS_OPEN ? t("public.cta") : t("public.ctaClosed")}</LinkButton>
           </Card>
         ) : (
         <Card className="space-y-3 p-4">

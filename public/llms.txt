@@ -10,7 +10,7 @@
 
 ## Pricing
 - The tactics designer (/en/designer, /de/designer, /ar/designer) is free and needs no account.
-- The club management system has one free 14-day trial per club, then a monthly subscription. Clubs can invite coaches, and plans can be shared with public links.
+- The full club management system (players, ratings, cloud-saved plans, coach invitations, share links) is in early access: ask for it through the contact page (/en/contact, /de/contact, /ar/contact).
 
 ## Pages (public)
 - English: /en and /en/features

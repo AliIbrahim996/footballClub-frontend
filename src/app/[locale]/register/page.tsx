@@ -4,6 +4,8 @@ import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Logo } from "@/components/ui";
 import { alternates } from "@/lib/seo";
+import { redirect } from "@/i18n/navigation";
+import { SIGNUPS_OPEN } from "@/lib/flags";
 import { RegisterForm } from "./register-form";
 
 type P = { params: Promise<{ locale: string }> };
@@ -15,7 +17,9 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
 }
 
 export default async function RegisterPage({ params }: P) {
-  setRequestLocale((await params).locale);
+  const { locale } = await params;
+  if (!SIGNUPS_OPEN) redirect({ href: "/contact?topic=full", locale });
+  setRequestLocale(locale);
   const t = await getTranslations("register");
   return (
     <main className="grid min-h-dvh lg:grid-cols-2">

@@ -29,7 +29,8 @@
     "noAccount": "Noch kein Konto?",
     "startTrial": "Kostenlos testen",
     "noClub": "Dieses Konto ist keinem Verein zugeordnet. Registrieren Sie einen Verein oder bitten Sie den Vereinsinhaber um eine Einladung.",
-    "tooMany": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut."
+    "tooMany": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut.",
+    "contactUs": "Kontakt aufnehmen"
   },
   "dashboard": {
     "title": "Übersicht",
@@ -170,7 +171,9 @@
     "public": {
       "title": "Kostenloser Designer",
       "body": "Ihre Tafel wird nur in diesem Browser gespeichert. Exportieren Sie sie jederzeit als Bild oder legen Sie ein Vereinskonto an, um Pläne in der Cloud zu speichern und zu teilen.",
-      "cta": "Kostenlos testen"
+      "cta": "Kostenlos testen",
+      "bodyClosed": "Ihre Tafel wird nur in diesem Browser gespeichert. Exportieren Sie sie jederzeit als Bild. Für Cloud-Speicherung, Teilen und Vereinsverwaltung kontaktieren Sie uns.",
+      "ctaClosed": "Vollversion anfragen"
     }
   },
   "landing": {
@@ -180,7 +183,8 @@
       "features": "Funktionen",
       "signIn": "Anmelden",
       "designer": "Kostenloser Designer",
-      "trial": "Kostenlos testen"
+      "trial": "Kostenlos testen",
+      "contact": "Kontakt"
     },
     "footer": {
       "blurb": "Kaderverwaltung, Spielerbewertung und eine interaktive Taktiktafel für Fußballvereine.",
@@ -285,6 +289,14 @@
         ],
         "cta": "Kostenlos testen"
       }
+    },
+    "closed": {
+      "heroSecondary": "Vollversion anfragen",
+      "price": "Auf Anfrage",
+      "proNote": "Kontaktieren Sie uns für frühen Zugang",
+      "proCta": "Kontakt aufnehmen",
+      "pricingSubtitle": "Der Taktik-Designer ist für alle kostenlos. Die komplette Vereinsverwaltung ist im frühen Zugang: Kontaktieren Sie uns, wir richten alles für Sie ein.",
+      "faqCost": "Der Taktik-Designer ist kostenlos und ohne Konto nutzbar. Die komplette Vereinsverwaltung (Spieler, Bewertungen, Cloud-Pläne, Trainer-Einladungen) ist im frühen Zugang: Kontaktieren Sie uns, wir richten Ihren Verein ein."
     }
   },
   "featuresPage": {
@@ -427,7 +439,9 @@
     },
     "upgradeTitle": "Den ganzen Verein verwalten",
     "upgradeBody": "Pläne in der Cloud speichern, per Link teilen, Spieler verwalten, Fähigkeiten bewerten und den Trainerstab einladen. 14 Tage alles kostenlos testen.",
-    "upgradeCta": "Kostenlos testen"
+    "upgradeCta": "Kostenlos testen",
+    "upgradeBodyClosed": "Sie möchten Pläne in der Cloud speichern, per Link teilen, Spieler verwalten, Fähigkeiten bewerten und Ihren Trainerstab einladen? Die Vollversion ist im frühen Zugang. Kontaktieren Sie uns, wir richten sie für Ihren Verein ein.",
+    "upgradeCtaClosed": "Vollversion anfragen"
   },
   "shared": {
     "from": "Geteilt von {club}",
@@ -439,5 +453,25 @@
     "body": "Auf kostenlosen Seiten zeigen wir Werbung, damit der Designer kostenlos bleibt. Werbe-Cookies erlauben?",
     "accept": "Erlauben",
     "decline": "Nein danke"
+  },
+  "contact": {
+    "metaTitle": "Kontakt",
+    "metaDescription": "Fragen zur kompletten Pitchside-Vereinsverwaltung oder Feedback zum kostenlosen Taktik-Designer.",
+    "title": "Kontakt",
+    "intro": "Interesse an der kompletten Vereinsverwaltung oder Feedback zum kostenlosen Designer? Schreiben Sie uns, wir melden uns bei Ihnen.",
+    "name": "Ihr Name",
+    "email": "E-Mail",
+    "club": "Verein (optional)",
+    "message": "Nachricht",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet…",
+    "success": "Vielen Dank, Ihre Nachricht wurde gesendet.",
+    "successHint": "Wir antworten so schnell wie möglich per E-Mail.",
+    "error": "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es in ein paar Minuten erneut.",
+    "privacy": "Wir verwenden Ihre Angaben nur, um Ihnen zu antworten.",
+    "mailSubject": "Pitchside: Vollversion",
+    "prefill": "Hallo, wir interessieren uns für die Vollversion von Pitchside für unseren Verein.",
+    "mailtoBody": "Schreiben Sie uns per E-Mail und erzählen Sie uns von Ihrem Verein. Wir richten die Vollversion für Sie ein.",
+    "notConfigured": "Die Kontaktdaten sind noch nicht eingerichtet."
   }
 }

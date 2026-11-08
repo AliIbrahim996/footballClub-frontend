@@ -8,6 +8,35 @@ browser ──► web (Next.js, :3000) ──► api (Django, :8000) ──► P
                   └── /media/* rewritten to api (uploads)        └── uploads: disk or Google Cloud Storage
 ```
 
+## Launch for free: designer + "contact us" (no backend, no database)
+The free designer is entirely client-side (boards autosave in the visitor's browser), so you can launch with **only the web app**. Build with:
+
+| Build-time variable | Value | Effect |
+|---|---|---|
+| `NEXT_PUBLIC_DESIGNER_ONLY` | `1` | public pages + designer only; sign-in/account pages redirect home; no backend needed |
+| `NEXT_PUBLIC_SIGNUPS_OPEN` | `0` (default) | every "free trial" call to action becomes "Contact us for the full version" |
+| `NEXT_PUBLIC_CONTACT_MODE` | `mailto` (default) | contact page shows your email address; nothing to host |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | `you@example.com` | the address shown / used |
+| `NEXT_PUBLIC_SITE_URL` | `https://your.domain` | canonical URLs, sitemap, hreflang |
+
+`NEXT_PUBLIC_*` values are compiled into the site: set them as **build** variables/arguments (Docker `--build-arg`, or the host's build environment), then rebuild after changing them.
+Where to host it (check each provider's current free limits and terms before relying on them):
+
+| Host | How | Notes |
+|---|---|---|
+| **Render** (free web service) | New Web Service from the GitHub repo, runtime Docker, add the variables above | free instances sleep when idle, so the first visit after a pause is slow |
+| **Google Cloud Run** | `deploy-cloud-run.yml` workflow (set repository variables `DESIGNER_ONLY=1`, `CONTACT_EMAIL`, `SITE_URL`, `BACKEND_URL` can be any placeholder) | generous free quota and scale-to-zero, but a billing account (card) is required |
+| **Vercel / Netlify** | import the repo, set the variables as build env | Vercel's free Hobby plan is for **non-commercial** use only: fine for a free designer, move to a paid plan or another host once you charge |
+| **Your own machine** + free Cloudflare Tunnel | `docker build` with the build args, `docker run -p 3000:3000` | free, but only up while the machine is on |
+
+A custom domain is the only recurring cost (about 10 EUR per year). Without one the host gives you a free subdomain (for example `pitchside.onrender.com`), which is enough to start, but AdSense and good SEO want your own domain.
+
+### Contact form with storage (optional, needs the API)
+Set `NEXT_PUBLIC_CONTACT_MODE=form` and deploy the API (`SIGNUPS_OPEN` stays `0`). Messages are saved in the database (Django admin, "Contact messages") and e-mailed to `CONTACT_EMAIL` when you configure SMTP. The form is rate limited and has a honeypot against bots.
+
+### Opening sign-ups later
+Set `SIGNUPS_OPEN=1` on the API **and** rebuild the web app with `NEXT_PUBLIC_SIGNUPS_OPEN=1` (and `NEXT_PUBLIC_DESIGNER_ONLY=0`). Until you do, the API itself refuses registrations (HTTP 403), so the free trial cannot be started by calling it directly. Clubs you create by hand in the Django admin can still sign in.
+
 ## Option A: one machine with Docker Compose (cheapest)
 Works on a home PC / Raspberry Pi, an Oracle Cloud free VM, or a Google Cloud `e2-micro` (always-free in some US regions).
 ```bash

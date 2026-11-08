@@ -12,6 +12,11 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
         BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
+        # Build-time switches (see .env.example): closed beta by default, contact by e-mail.
+        NEXT_PUBLIC_SIGNUPS_OPEN: ${NEXT_PUBLIC_SIGNUPS_OPEN:-0}
+        NEXT_PUBLIC_DESIGNER_ONLY: ${NEXT_PUBLIC_DESIGNER_ONLY:-0}
+        NEXT_PUBLIC_CONTACT_MODE: ${NEXT_PUBLIC_CONTACT_MODE:-mailto}
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
     restart: unless-stopped
     environment:
       BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
