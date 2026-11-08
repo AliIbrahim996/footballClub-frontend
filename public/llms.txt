@@ -1,6 +1,6 @@
 # Pitchside
 
-> Pitchside is a web app for football (soccer) clubs and coaches. It combines a squad database, a skill-rating system and an interactive tactics board in one place. Available in English, German and Arabic (right-to-left).
+> Pitchside is a web app for football (soccer) clubs and coaches. It combines a squad database, a skill-rating system and an interactive tactics board in one place. Available in English and Arabic (right-to-left).
 
 ## What it does
 - Squad management: store player profiles (contact details, club, photo) and search the squad.
@@ -9,12 +9,11 @@
 - Plans: save boards as tactical plans, filter by manager, reopen and edit later.
 
 ## Pricing
-- The tactics designer (/en/designer, /de/designer, /ar/designer) is free and needs no account.
-- The full club management system (players, ratings, cloud-saved plans, coach invitations, share links) is in early access: ask for it through the contact page (/en/contact, /de/contact, /ar/contact).
+- The tactics designer (/en/designer, /ar/designer) is free and needs no account.
+- The full club management system (players, ratings, cloud-saved plans, coach invitations, share links) is in early access: ask for it through the contact page (/en/contact, /ar/contact).
 
 ## Pages (public)
 - English: /en and /en/features
-- Deutsch: /de and /de/features
 - العربية: /ar and /ar/features
 
 The signed-in application (dashboard, players, tactics, plans) requires an account and is not crawlable.

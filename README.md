@@ -2,7 +2,7 @@
 
 [![Support on Patreon](https://img.shields.io/badge/Support%20on-Patreon-F96854?logo=patreon&logoColor=white)](https://patreon.com/AliIbrahim870)
 
-Football club management in the browser: a **free tactics designer** (no account), plus a paid **club management system** with player database, skill ratings, cloud-saved plans, team invites and share links. Next.js (App Router, SSR) in **English, German and Arabic (RTL)**. The API is the sibling repo **footballClub-backend** (Django REST + PostgreSQL).
+Football club management in the browser: a **free tactics designer** (no account), plus a paid **club management system** with player database, skill ratings, cloud-saved plans, team invites and share links. Next.js (App Router, SSR) in **English and Arabic (RTL)**. The API is the sibling repo **footballClub-backend** (Django REST + PostgreSQL).
 
 ## Screenshots
 
@@ -53,16 +53,13 @@ Set `NEXT_PUBLIC_SITE_URL` to your public origin (used for sitemap, canonical an
 - Auth token lives in an httpOnly cookie. Browser calls go to `/api/*`, a same-origin proxy that adds the token and forwards `Accept-Language`, so Django returns messages in the UI language. `/media/*` is rewritten to the API.
 - `src/components/board/` — SVG tactics board: pitches (full/half/box/blank), players, ball, cones, goals, runs/passes/dribbles, zones, text, formations, undo/redo, PNG export, save to API.
 - SEO/AI: server-rendered pages, per-locale metadata + hreflang, JSON-LD (Organization, SoftwareApplication, FAQPage), `sitemap.xml`, `robots.txt` (AI crawlers allowed on public pages), `public/llms.txt`.
-- Translations: `messages/{en,de,ar}.json` (keep keys identical).
+- Translations: `messages/{en,ar}.json` (keep keys identical).
 
 ## Product model
 - **Free:** the tactics designer at `/designer` (no account, autosaves in the browser, PNG export; ads optional).
 - **Full version (early access):** the club management system (players, ratings, cloud plans, team invites, share links). While `NEXT_PUBLIC_SIGNUPS_OPEN` is `0` visitors are sent to a **contact us** page. Opening sign-ups later enables the one-time 14-day free trial and Stripe subscription (already built).
 - **GitHub Pages:** `npm run build:static` exports the designer-only site to `out/` and `.github/workflows/pages.yml` publishes it (see [docs/DEPLOY.md](docs/DEPLOY.md#github-pages-free-static-hosting-for-the-designer)). No login, club system or contact API there.
 - **Free hosting:** `NEXT_PUBLIC_DESIGNER_ONLY=1` runs only the public pages and the free designer with no backend or database. See [docs/DEPLOY.md](docs/DEPLOY.md#launch-for-free-designer--contact-us-no-backend-no-database) for hosts, Stripe, ads, Google Cloud and the Android APK.
-
-## Legal (Germany / GDPR)
-`/privacy`, `/terms` and `/imprint` exist in English, German (the binding version) and Arabic, linked from every page footer. They are **drafts**: set your real operator details with the `NEXT_PUBLIC_LEGAL_*` variables (until then the pages show a warning and are `noindex`), then have them reviewed. Sign-up requires accepting the terms and records the version. For clubs that enter **youth players' data** you are the processor: use the data processing agreement templates and the checklist in [docs/legal](docs/legal/COMPLIANCE_CHECKLIST.md).
 
 ## Scripts
 `npm run dev` · `npm run build` · `npm run lint`

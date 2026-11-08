@@ -3,6 +3,9 @@ name: Deploy designer to GitHub Pages
 # designer as a static site: no login, no club management, no API. See docs/DEPLOY.md ("GitHub Pages").
 #
 # One-time setup: repository Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# The public details below (name, city, country, contact email, demo mode, hosting) default to the values you gave for the
+# imprint, which is published on the site anyway. Override any of them with a repository variable of the same name.
+# Street and phone are deliberately NOT defaulted here: add LEGAL_STREET / LEGAL_PHONE as variables if you want them shown.
 # Optional repository variables: CONTACT_EMAIL and LEGAL_NAME / LEGAL_STREET / LEGAL_CITY / LEGAL_EMAIL / LEGAL_PHONE /
 #   LEGAL_VAT_ID / LEGAL_REGISTER / LEGAL_REPRESENTATIVE / LEGAL_HOSTING (imprint and privacy policy), ADSENSE_PUB_ID.
 on:
@@ -36,18 +39,19 @@ jobs:
           # configure-pages knows whether this is a project page (/repo) or a custom domain / user site.
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
-          NEXT_PUBLIC_LEGAL_NAME: ${{ vars.LEGAL_NAME }}
+          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL || 'eng.aliibrahim.96@outlook.com' }}
+          NEXT_PUBLIC_LEGAL_NAME: ${{ vars.LEGAL_NAME || 'Ali Ibrahim' }}
           NEXT_PUBLIC_LEGAL_STREET: ${{ vars.LEGAL_STREET }}
-          NEXT_PUBLIC_LEGAL_CITY: ${{ vars.LEGAL_CITY }}
-          NEXT_PUBLIC_LEGAL_COUNTRY: ${{ vars.LEGAL_COUNTRY }}
+          NEXT_PUBLIC_LEGAL_CITY: ${{ vars.LEGAL_CITY || 'Dubai' }}
+          NEXT_PUBLIC_LEGAL_COUNTRY: ${{ vars.LEGAL_COUNTRY || 'United Arab Emirates' }}
           NEXT_PUBLIC_LEGAL_EMAIL: ${{ vars.LEGAL_EMAIL }}
           NEXT_PUBLIC_LEGAL_PHONE: ${{ vars.LEGAL_PHONE }}
           NEXT_PUBLIC_LEGAL_VAT_ID: ${{ vars.LEGAL_VAT_ID }}
           NEXT_PUBLIC_LEGAL_REGISTER: ${{ vars.LEGAL_REGISTER }}
           NEXT_PUBLIC_LEGAL_REPRESENTATIVE: ${{ vars.LEGAL_REPRESENTATIVE }}
-          NEXT_PUBLIC_LEGAL_HOSTING: ${{ vars.LEGAL_HOSTING }}
+          NEXT_PUBLIC_LEGAL_HOSTING: ${{ vars.LEGAL_HOSTING || 'GitHub Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA' }}
           NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE: ${{ vars.LEGAL_EU_REPRESENTATIVE }}
+          NEXT_PUBLIC_LEGAL_DEMO: ${{ vars.LEGAL_DEMO || '1' }}
           NEXT_PUBLIC_ADSENSE_CLIENT: ${{ vars.ADSENSE_CLIENT }}
           NEXT_PUBLIC_ADSENSE_SLOT_DESIGNER: ${{ vars.ADSENSE_SLOT_DESIGNER }}
           ADSENSE_PUB_ID: ${{ vars.ADSENSE_PUB_ID }}

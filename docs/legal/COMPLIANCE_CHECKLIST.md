@@ -1,43 +1,43 @@
-# Legal and GDPR launch checklist
+# Legal and privacy launch checklist
 
-The pages `/privacy`, `/terms` and `/imprint` and the data processing agreement (DPA) templates in this folder are **drafts that match what the software actually does**. They are not legal advice: have a lawyer or a data protection professional review them before you take real clubs. Rules here are German/EU; other countries differ.
+The pages `/privacy`, `/terms` and `/imprint` (provider information) in English and Arabic, and the data processing agreement (DPA) template in this folder, are **drafts that match what the software actually does**. They are not legal advice: have a lawyer or a data protection professional review them before you take real clubs or earn money. Rules differ by country, so check the ones that apply to you and to your visitors.
+
+## 0. A personal demo / portfolio project
+If you are **not earning money** (no ads, no paid plan) and use the site to show your work, set `NEXT_PUBLIC_LEGAL_DEMO=1`. The provider notice then says it is a non-commercial personal project and no street address is required (name, city and an email are enough). Keep ads and billing switched off. When you start earning, turn demo mode off and complete the provider details. The privacy policy and terms stay in place either way: the contact form and the designer still handle visitors' data.
 
 ## 1. Before the site goes public
-- [ ] Set the `NEXT_PUBLIC_LEGAL_*` variables (see `.env.example`): name incl. legal form, a postal address where you can be served, email, phone (or working contact form), VAT ID / register entry / representative if they apply, hosting provider. The imprint is mandatory for a German business-like site (section 5 DDG) and must be reachable from every page in two clicks (it is linked in the footer). Pages with missing details show a warning and are `noindex` until complete.
-- [ ] **Operator outside the EU/EEA (for example the UAE)?** The GDPR still applies when you offer services to people in the EU (the German pages target them), and Art. 27 usually requires you to appoint a **representative in the EU** (unless your processing is only occasional and low-risk; ask an adviser) and name them in the privacy policy (`NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE`). Also check your home-country rules: for the UAE, the Federal Personal Data Protection Law and the requirement to display your **trade licence** on commercial sites (put its number in `LEGAL_REGISTER`). Review the governing-law clause of the terms (currently German law and your seat as venue) with a lawyer.
-- [ ] Fill the **hosting** value with the real provider(s) so the privacy policy names them.
-- [ ] Re-read `src/content/legal/de.ts` (binding version) against your real setup: hosting, e-mail provider, whether Stripe/AdSense are on. Update `LEGAL_VERSION` in `src/lib/legal.ts` when the terms or privacy policy change materially. Sign-ups store which version was accepted.
-- [ ] Decide **consumer vs business**: the terms are written for clubs/organisations. If individuals can sign up as private persons you also need consumer information (withdrawal right, price indication, cancellation button for online contracts). Ask your lawyer.
-- [ ] If you sell: price display, VAT handling (a merchant of record such as Paddle/Lemon Squeezy simplifies this), invoices.
-- [ ] Ads: AdSense needs a **certified consent platform (TCF)** for EU/UK visitors. The built-in banner is a minimal stand-in. Replace it before enabling ads.
+- [ ] Set the `NEXT_PUBLIC_LEGAL_*` variables (see `.env.example`): name, city, country, contact email, phone if you want it shown, and registration / tax numbers only if they apply. Pages with missing details show a warning and are `noindex` until complete.
+- [ ] Set the **hosting** value to the real provider(s) so the privacy policy names them.
+- [ ] Re-read `src/content/legal/en.ts` and `ar.ts` against your real setup: hosting, e-mail provider, whether Stripe or AdSense are on. Update `LEGAL_VERSION` in `src/lib/legal.ts` when the terms or privacy policy change materially. Sign-ups store which version was accepted.
+- [ ] Review the **governing-law** clause of the terms (currently the laws of Dubai and the UAE federal laws applicable there).
+- [ ] If you sell: price display, tax handling, invoices. A merchant of record such as Paddle or Lemon Squeezy can take over sales tax.
+- [ ] Ads: AdSense needs a **certified consent platform (TCF)** for visitors in the EU/UK. The built-in banner is a minimal stand-in. Replace it before enabling ads.
+- [ ] Operators outside the EU serving people in the EU may need an **EU representative** (GDPR Art. 27). Set `NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE` if you appoint one. Also check your home-country rules (for the UAE: the Federal Personal Data Protection Law, and any trade-licence display duty for commercial sites; the licence number can go in `LEGAL_REGISTER`).
 
 ## 2. Youth players' data (the sensitive part)
-- [ ] **The club is the controller, you are the processor.** Sign the DPA (`DATA_PROCESSING_AGREEMENT.de.md`) with every club *before* they enter player data. Keep the signed copies.
-- [ ] Tell clubs plainly (onboarding mail / terms already say it): they need a legal basis, must inform players and parents, and need **parental consent for minors**, especially for **photos** (publication/processing of images of children).
+- [ ] **The club decides what is stored; you process it for them.** Sign the DPA (`DATA_PROCESSING_AGREEMENT.en.md`) with every club *before* they enter player data. Keep the signed copies.
+- [ ] Tell clubs plainly (the terms already say it): they need a legal basis, must inform players and parents, and need **parental consent for minors**, especially for **photos**.
 - [ ] Encourage data minimisation: only what the club needs. Do not collect health data (the DPA excludes it); avoid free-text notes about children's health or behaviour.
-- [ ] Ads and share links: free pages never show player data. Shared plan links show only the board image and title: remind clubs not to put children's full names on shared boards.
+- [ ] Free pages never show player data. Shared plan links show only the board image and title: remind clubs not to put children's full names on shared boards.
 - [ ] Decide a **deletion process**: when a club leaves, export on request then delete data, uploads and backups within the DPA period. (There is no self-service "delete my club" button yet; today it is a manual admin task. Build it before you have many clubs.)
-- [ ] Data subject requests (access, rectification, erasure) from players/parents are answered by the **club**; you assist. Decide who in your team handles the assistance requests and how fast.
+- [ ] Requests from players or parents (access, correction, deletion) are answered by the **club**; you assist. Decide who handles that and how fast.
 
 ## 3. Your own records and security
-- [ ] **Record of processing activities** as controller (website, contact form, club accounts) *and* as processor (club data), Art. 30.
-- [ ] **TOMs**: complete Annex 1 of the DPA with what you really run (backups, access, patching). Keep secrets out of the repository (already enforced by settings and CI).
-- [ ] **Sub-processor contracts (DPAs)** with hosting, database, storage, e-mail, Stripe; fill Annex 2. Check data locations and SCCs for non-EU providers.
-- [ ] **Breach plan**: you must tell the club immediately; the club then has 72 hours to notify the authority (Art. 33). Write down who does what.
-- [ ] **Data protection officer**: required in Germany if 20+ people regularly handle personal data automatically (section 38 BDSG), or for certain core activities. Probably not you alone; check.
-- [ ] **DPIA**: large-scale processing of children's data can need one. Ask your adviser; for a small multi-club tool with minimal data it is usually not required, but document the reasoning.
+- [ ] A **record of processing activities** for the website, the contact form, club accounts and the club data you process.
+- [ ] **Security measures:** complete Annex 1 of the DPA with what you really run (backups, access, patching). Keep secrets out of the repository (already enforced by settings and CI).
+- [ ] **Contracts with providers** (hosting, database, storage, e-mail, Stripe); fill Annex 2. Check where each stores data.
+- [ ] A **breach plan**: tell the club immediately so it can notify its authority in time. Write down who does what.
 - [ ] Backups are personal data too: define retention so deletion really completes.
 
 ## 4. What the software does today (and the gaps)
 | Done | Gap / manual |
 |---|---|
 | Per-club data separation, role-based access, hashed passwords, HTTPS-ready, sign-in rate limits | No audit log of who *viewed* data |
-| Terms acceptance + version recorded at sign-up; privacy policy, terms, imprint in 3 languages | Legal texts are drafts; imprint needs your real details |
+| Terms acceptance + version recorded at sign-up; privacy policy, terms and provider notice in English and Arabic | Legal texts are drafts |
 | Designer data stays in the browser; contact messages stored with honeypot + rate limit | No automatic deletion of old contact messages (delete via Django admin) |
-| Cookie/ad consent before ads load, "Cookie settings" link in footer | Banner is not a TCF-certified CMP |
+| Cookie/ad consent before ads load, "Cookie settings" link in footer | Banner is not a TCF-certified consent platform |
 | Owner can delete players; export/delete per club by request | No self-service club export / deletion yet |
 
-## 5. Quick answers to common questions
-- **Do I need a cookie banner?** For the strictly necessary cookie/local storage used today (sign-in, language, saved board) no consent is needed, but they must be described in the privacy policy (done). Ads or analytics need consent first.
-- **Is the imprint needed for a free tool?** If the site is run in a business-like way (ads, a paid product, a company) in Germany: yes.
-- **Can clubs enter photos of children?** Only with the legal basis/consent the club has obtained. Pitchside only stores what the club uploads.
+## 5. Quick answers
+- **Do I need a cookie banner?** The strictly necessary cookie and local storage used today (sign-in, language, saved board) are described in the privacy policy (done). Ads or analytics need consent first.
+- **Can clubs enter photos of children?** Only with the legal basis and consent the club has obtained. Pitchside only stores what the club uploads.

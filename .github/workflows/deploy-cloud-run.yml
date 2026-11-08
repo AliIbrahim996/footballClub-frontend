@@ -42,6 +42,7 @@ jobs:
             --build-arg NEXT_PUBLIC_LEGAL_REPRESENTATIVE="${{ vars.LEGAL_REPRESENTATIVE }}" \
             --build-arg NEXT_PUBLIC_LEGAL_HOSTING="${{ vars.LEGAL_HOSTING }}" \
             --build-arg NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE="${{ vars.LEGAL_EU_REPRESENTATIVE }}" \
+            --build-arg NEXT_PUBLIC_LEGAL_DEMO="${{ vars.LEGAL_DEMO }}" \
             -t "$IMAGE" .
           docker push "$IMAGE"
       - uses: google-github-actions/deploy-cloudrun@v3

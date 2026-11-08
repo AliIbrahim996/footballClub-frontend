@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AdSlot } from "@/components/ads";
 import { PublicDesigner } from "@/components/board/public-designer";
 import { LinkButton } from "@/components/ui";
-import { SIGNUPS_OPEN } from "@/lib/flags";
+import { PRICE_CURRENCY, SIGNUPS_OPEN } from "@/lib/flags";
 import { absolute, alternates } from "@/lib/seo";
 
 type P = { params: Promise<{ locale: string }> };
@@ -24,7 +24,7 @@ export default async function DesignerPage({ params }: P) {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: t("title"), description: t("metaDescription"), applicationCategory: "SportsApplication", operatingSystem: "Web",
-    url: absolute(`/${locale}/designer`), offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+    url: absolute(`/${locale}/designer`), offers: { "@type": "Offer", price: "0", priceCurrency: PRICE_CURRENCY },
   };
   return (
     <>

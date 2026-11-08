@@ -58,10 +58,10 @@ writeFileSync(
 <link rel="canonical" href="${base}/en/">
 <script>
 var l=(navigator.languages&&navigator.languages[0]||navigator.language||"en").slice(0,2).toLowerCase();
-location.replace("${base}/"+(["de","ar"].indexOf(l)>-1?l:"en")+"/");
+location.replace("${base}/"+(l==="ar"?"ar":"en")+"/");
 </script>
 <noscript><meta http-equiv="refresh" content="0; url=${base}/en/"></noscript></head>
-<body><p><a href="${base}/en/">English</a> · <a href="${base}/de/">Deutsch</a> · <a href="${base}/ar/">العربية</a></p></body></html>`,
+<body><p><a href="${base}/en/">English</a> · <a href="${base}/ar/">العربية</a></p></body></html>`,
 );
 writeFileSync(path.join(out, ".nojekyll"), ""); // GitHub Pages must not run Jekyll over the _next folder
 if (process.env.ADSENSE_PUB_ID) {

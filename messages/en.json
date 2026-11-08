@@ -220,7 +220,7 @@
         "body": "Store every board as a plan, filter by manager, reopen it later and export it as an image."
       },
       "languages": {
-        "title": "English, German, Arabic",
+        "title": "English and Arabic",
         "body": "The whole app is translated, including right-to-left layout for Arabic."
       }
     },
@@ -259,7 +259,7 @@
       },
       "languages": {
         "q": "Which languages are supported?",
-        "a": "English, German and Arabic, including right-to-left layout."
+        "a": "English and Arabic, including right-to-left layout."
       }
     },
     "cta": {
@@ -278,7 +278,8 @@
           "Autosave in your browser",
           "PNG export"
         ],
-        "cta": "Open the designer"
+        "cta": "Open the designer",
+        "price": "Free"
       },
       "pro": {
         "name": "Club plan",
@@ -289,7 +290,7 @@
           "Plans saved in the cloud",
           "Invite up to 5 coaches",
           "Public share links",
-          "English, German and Arabic"
+          "English and Arabic"
         ],
         "cta": "Start free trial"
       }

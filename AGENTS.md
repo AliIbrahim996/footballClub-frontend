@@ -10,14 +10,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Project guide (footballclub-frontend)
 
-Next.js 16 App Router + Tailwind v4 + next-intl (en/de/ar). Backend is the separate `footballClub-backend` repo (Django REST); this repo never talks to the DB.
+Next.js 16 App Router + Tailwind v4 + next-intl (en/ar). Backend is the separate `footballClub-backend` repo (Django REST); this repo never talks to the DB.
 
 ## Commands
 - `npm run dev`, `npm run build`, `npm run lint` — use **Node 22+**. Run build + lint before finishing.
 - `docker compose up --build` (frontend) / `--profile with-api` (adds API + PostgreSQL from `../footballClub-backend`).
 
 ## Conventions
-- Every user-visible string goes in `messages/en.json`, `de.json` AND `ar.json` (same keys). No hard-coded UI text.
+- Every user-visible string goes in `messages/en.json` AND `messages/ar.json` (same keys). No hard-coded UI text.
 - Use logical Tailwind classes (`ps-`, `pe-`, `start-`, `text-end`, `border-e`) so RTL works. Use `Link/useRouter/redirect` from `@/i18n/navigation`, not `next/link`.
 - Pages: `export` `generateMetadata`, call `setRequestLocale(locale)`. Public pages need `alternates(locale, path)` from `src/lib/seo.ts` and an entry in `src/app/sitemap.ts`.
 - Server data via `api()` in `src/lib/server.ts`; browser mutations via `call()` in `src/lib/client.ts` (goes through the `/api` proxy). API types live in `src/lib/types.ts` — update when the backend contract changes.

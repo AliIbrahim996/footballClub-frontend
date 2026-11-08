@@ -3,7 +3,7 @@ import { Check, ClipboardList, Languages, Route, Star, Users } from "lucide-reac
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LinkButton } from "@/components/ui";
 import { absolute, alternates } from "@/lib/seo";
-import { SIGNUPS_OPEN } from "@/lib/flags";
+import { PRICE_CURRENCY, SIGNUPS_OPEN, priceLabel } from "@/lib/flags";
 import { SITE } from "@/lib/site";
 
 type P = { params: Promise<{ locale: string }> };
@@ -19,8 +19,6 @@ const FEATURES = [
   { key: "plans", icon: ClipboardList }, { key: "languages", icon: Languages },
 ] as const;
 const FAQ = ["cost", "who", "board", "data", "languages"] as const;
-// Display price only; the real price lives in your Stripe Price. Override with NEXT_PUBLIC_PRICE_LABEL.
-const PRICE = process.env.NEXT_PUBLIC_PRICE_LABEL ?? "€9";
 
 function HeroPitch() {
   return (
@@ -57,10 +55,9 @@ export default async function LandingPage({ params }: P) {
       { "@type": "Organization", "@id": absolute("/#org"), name: SITE.name, url: absolute(`/${locale}`) },
       {
         "@type": "SoftwareApplication", name: SITE.name, applicationCategory: "SportsApplication", operatingSystem: "Web",
-        description: meta("description"), inLanguage: ["en", "de", "ar"], url: absolute(`/${locale}`),
+        description: meta("description"), inLanguage: ["en", "ar"], url: absolute(`/${locale}`),
         offers: [
-          { "@type": "Offer", name: "Free designer", price: "0", priceCurrency: "EUR" },
-          ...(SIGNUPS_OPEN ? [{ "@type": "Offer", name: "Club plan", price: PRICE.replace(/[^0-9.]/g, "") || "9", priceCurrency: "EUR" }] : []),
+          { "@type": "Offer", name: "Free designer", price: "0", priceCurrency: PRICE_CURRENCY },
         ],
         featureList: FEATURES.map((f) => t(`features.${f.key}.title`)),
       },
@@ -124,8 +121,8 @@ export default async function LandingPage({ params }: P) {
             <div key={plan} className={`flex flex-col rounded-2xl border p-6 ${plan === "pro" ? "border-accent bg-surface" : "border-line bg-surface"}`}>
               <h3 className="font-semibold">{t(`pricing.${plan}.name`)}</h3>
               <p className="mt-3 text-4xl font-semibold tracking-tight">
-                {plan === "pro" ? (SIGNUPS_OPEN ? PRICE : t("closed.price")) : "€0"}
-                <span className="ms-1 text-base font-normal text-muted">{plan === "pro" && SIGNUPS_OPEN ? t("pricing.perMonth") : ""}</span>
+                {plan === "pro" ? ((SIGNUPS_OPEN && priceLabel(locale)) || t("closed.price")) : t("pricing.free.price")}
+                
               </p>
               <p className="mt-1 text-sm text-muted">{plan === "pro" && !SIGNUPS_OPEN ? t("closed.proNote") : t(`pricing.${plan}.note`)}</p>
               <ul className="mt-5 flex-1 space-y-2 text-sm">

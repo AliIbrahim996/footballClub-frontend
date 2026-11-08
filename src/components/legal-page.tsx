@@ -1,7 +1,7 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { LEGAL_CONTENT } from "@/content/legal";
 import type { Locale } from "@/i18n/routing";
-import { legalComplete } from "@/lib/legal";
+import { LEGAL, legalComplete } from "@/lib/legal";
 import { alternates } from "@/lib/seo";
 
 export type LegalKind = "privacy" | "terms" | "imprint";
@@ -23,7 +23,7 @@ export function LegalPage({ kind, locale }: { kind: LegalKind; locale: string })
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
       <h1 className="text-3xl font-semibold tracking-tight">{doc.title}</h1>
       <p className="mt-2 text-sm text-muted">{lang.updated}</p>
-      {lang.note && <p className="mt-3 rounded-lg bg-surface-2 px-3 py-2 text-sm">{lang.note}</p>}
+      {lang.note && !LEGAL.demo && <p className="mt-3 rounded-lg bg-surface-2 px-3 py-2 text-sm">{lang.note}</p>}
       {!legalComplete && (
         <p role="alert" className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
           Operator details are not configured. Set the NEXT_PUBLIC_LEGAL_* variables before publishing this site.

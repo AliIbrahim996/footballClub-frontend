@@ -123,7 +123,7 @@ Ads render only on the free designer and shared-plan pages, never in the signed-
 Set `NEXT_PUBLIC_LEGAL_NAME`, `_STREET`, `_CITY`, `_EMAIL` (and `_PHONE`, `_VAT_ID`, `_REGISTER`, `_REPRESENTATIVE`, `_HOSTING` where they apply) as **build** variables (Docker `--build-arg`, or the deploy workflow's repository variables `LEGAL_NAME`, `LEGAL_STREET`, …). They fill the imprint, privacy policy and terms. See [legal/COMPLIANCE_CHECKLIST.md](legal/COMPLIANCE_CHECKLIST.md).
 
 ## Before charging customers
-- Privacy policy, terms, and (Germany) an imprint; GDPR applies, especially for youth players' data.
+- Privacy policy and terms (included as drafts), and an imprint/provider notice if your country expects one. Youth players' data needs particular care: see docs/legal.
 - Back up the database and bucket; set `DJANGO_DEBUG=0`, rotate the demo admin password, turn off `SEED_DEMO_DATA`.
 - One trial per club is enforced by unique email; determined users can still use new emails, so watch for abuse.
 

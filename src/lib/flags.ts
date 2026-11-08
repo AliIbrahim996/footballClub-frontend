@@ -9,3 +9,18 @@ export const DESIGNER_ONLY = process.env.NEXT_PUBLIC_DESIGNER_ONLY === "1";
 /** "form" posts to the API (stored + e-mailed); "mailto" needs no backend and just opens the visitor's mail app. */
 export const CONTACT_MODE: "form" | "mailto" = process.env.NEXT_PUBLIC_CONTACT_MODE === "form" ? "form" : "mailto";
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+
+/**
+ * Prices are shown only once sign-ups are open, and never as a made-up euro amount. Provide a label per language, e.g.
+ * NEXT_PUBLIC_PRICES='{"en":"AED 35 / month","ar":"35 درهم / شهر"}'. A visitor's country is not known to a static
+ * site, so pick labels per language; for real per-country currencies use Stripe's multi-currency prices at checkout.
+ */
+export const PRICE_CURRENCY = process.env.NEXT_PUBLIC_PRICE_CURRENCY || "AED"; // for structured data only
+const PRICES: Record<string, string> = (() => {
+  try {
+    return JSON.parse(process.env.NEXT_PUBLIC_PRICES || "{}");
+  } catch {
+    return {};
+  }
+})();
+export const priceLabel = (locale: string): string | undefined => PRICES[locale];

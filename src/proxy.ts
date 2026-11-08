@@ -3,8 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 
 const intl = createMiddleware(routing);
-const ACCOUNT_PAGES = /^\/(en|de|ar)\/(login|register|join|dashboard|players|plans|tactics|team|billing)(\/|$)/;
-const PROTECTED = /^\/(en|de|ar)\/(dashboard|players|plans|tactics|team|billing)(\/|$)/;
+const ACCOUNT_PAGES = /^\/(en|ar)\/(login|register|join|dashboard|players|plans|tactics|team|billing)(\/|$)/;
+const PROTECTED = /^\/(en|ar)\/(dashboard|players|plans|tactics|team|billing)(\/|$)/;
 
 /** Locale routing for every page + keep signed-out visitors out of the app. */
 export default function proxy(request: NextRequest) {
@@ -16,7 +16,7 @@ export default function proxy(request: NextRequest) {
   const m = PROTECTED.exec(pathname);
   if (m && !request.cookies.get("fc_token")) {
     const url = new URL(`/${m[1]}/login`, request.url);
-    url.searchParams.set("next", pathname.replace(/^\/(en|de|ar)/, ""));
+    url.searchParams.set("next", pathname.replace(/^\/(en|ar)/, ""));
     return NextResponse.redirect(url);
   }
   return intl(request);

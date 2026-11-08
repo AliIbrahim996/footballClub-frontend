@@ -1,7 +1,7 @@
-# Data Processing Agreement (Art. 28 GDPR) – template
+# Data Processing Agreement – template
 
 > **Template, not legal advice.** Have it reviewed by a lawyer and fill in the `[bracketed]` placeholders.
-> To be concluded between the club (controller) and the operator of Pitchside (processor) **before** the club enters any player data. The German version (`DATA_PROCESSING_AGREEMENT.de.md`) is the one to use with German clubs; this is an English convenience translation.
+> To be concluded between the club (controller) and the operator of Pitchside (processor) **before** the club enters any player data.
 
 **Controller:** [club name, legal form, address, authorised representative, email] – "the Club"
 **Processor:** [operator name/company, address, email] – "the Processor"
@@ -48,7 +48,7 @@ The Processor provides the information needed to demonstrate compliance and allo
 After termination the Processor provides an export of the data on request and then deletes all of the Club's data, including copies and backups, within [30/60] days unless a legal retention duty applies. On request it confirms deletion in text form.
 
 ## 10. Liability and final provisions
-Liability follows Art. 82 GDPR and the terms of use. German law applies. Amendments require text form. In case of conflict this agreement prevails over the terms of use.
+Liability follows the applicable data protection law and the terms of use. The governing law is [governing law, e.g. the laws of the Emirate of Dubai and the UAE federal laws applicable there]. Amendments require text form. In case of conflict this agreement prevails over the terms of use.
 
 Place, date: ______________  Club: ______________  Processor: ______________
 

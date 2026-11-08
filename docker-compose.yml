@@ -17,7 +17,7 @@ services:
         NEXT_PUBLIC_DESIGNER_ONLY: ${NEXT_PUBLIC_DESIGNER_ONLY:-0}
         NEXT_PUBLIC_CONTACT_MODE: ${NEXT_PUBLIC_CONTACT_MODE:-mailto}
         NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
-        # Operator details for the legal pages (imprint is mandatory in Germany):
+        # Operator details for the legal pages:
         NEXT_PUBLIC_LEGAL_NAME: ${NEXT_PUBLIC_LEGAL_NAME:-}
         NEXT_PUBLIC_LEGAL_STREET: ${NEXT_PUBLIC_LEGAL_STREET:-}
         NEXT_PUBLIC_LEGAL_CITY: ${NEXT_PUBLIC_LEGAL_CITY:-}
@@ -29,6 +29,7 @@ services:
         NEXT_PUBLIC_LEGAL_REPRESENTATIVE: ${NEXT_PUBLIC_LEGAL_REPRESENTATIVE:-}
         NEXT_PUBLIC_LEGAL_HOSTING: ${NEXT_PUBLIC_LEGAL_HOSTING:-}
         NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE: ${NEXT_PUBLIC_LEGAL_EU_REPRESENTATIVE:-}
+        NEXT_PUBLIC_LEGAL_DEMO: ${NEXT_PUBLIC_LEGAL_DEMO:-}
     restart: unless-stopped
     environment:
       BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
