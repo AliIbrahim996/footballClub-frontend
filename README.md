@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pitchside — frontend
 
-## Getting Started
+Next.js (App Router, SSR) web app for football club management: public landing/feature pages, a signed-in dashboard, player database with skill ratings, saved tactical plans and a native interactive **tactics board** (replacing the old third-party iframe). Languages: English, German, Arabic (RTL). The API lives in the sibling repo **footballClub-backend** (Django REST + PostgreSQL).
 
-First, run the development server:
+## Requirements
+- Node.js **22+** (Tailwind v4 needs ≥ 20.19)
+- A running API (see below)
 
+## Run locally
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local      # BACKEND_URL defaults to http://127.0.0.1:8000
+npm install
+npm run dev                     # http://localhost:3000  (redirects to /en)
 ```
+Demo login (when the API was seeded with `python manage.py seed --admin`): `admin` / `admin12345`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Docker
+```bash
+docker compose up --build                     # frontend only, API at BACKEND_URL (default host:8000)
+docker compose --profile with-api up --build  # also builds ../footballClub-backend + PostgreSQL
+```
+Set `NEXT_PUBLIC_SITE_URL` to your public origin (used for sitemap, canonical and hreflang URLs) and `COOKIE_SECURE=1` behind HTTPS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
+- `src/app/[locale]/…` — all pages; `(marketing)` is public + crawlable, `(app)` requires login (`src/proxy.ts`).
+- Auth token lives in an httpOnly cookie. Browser calls go to `/api/*`, a same-origin proxy that adds the token and forwards `Accept-Language`, so Django returns messages in the UI language. `/media/*` is rewritten to the API.
+- `src/components/board/` — SVG tactics board: pitches (full/half/box/blank), players, ball, cones, goals, runs/passes/dribbles, zones, text, formations, undo/redo, PNG export, save to API.
+- SEO/AI: server-rendered pages, per-locale metadata + hreflang, JSON-LD (Organization, SoftwareApplication, FAQPage), `sitemap.xml`, `robots.txt` (AI crawlers allowed on public pages), `public/llms.txt`.
+- Translations: `messages/{en,de,ar}.json` (keep keys identical).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+`npm run dev` · `npm run build` · `npm run lint`
