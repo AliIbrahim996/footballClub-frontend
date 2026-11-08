@@ -8,6 +8,10 @@
 - Tactics board: place home/away players, ball, cones and goals on a full pitch, half pitch, penalty box or blank pitch; draw runs, passes, dribbles and zones; load formations such as 4-4-2, 4-3-3, 3-5-2; undo/redo; export as PNG.
 - Plans: save boards as tactical plans, filter by manager, reopen and edit later.
 
+## Pricing
+- The tactics designer (/en/designer, /de/designer, /ar/designer) is free and needs no account.
+- The club management system has one free 14-day trial per club, then a monthly subscription. Clubs can invite coaches, and plans can be shared with public links.
+
 ## Pages (public)
 - English: /en and /en/features
 - Deutsch: /de and /de/features
