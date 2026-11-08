@@ -2,7 +2,7 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
 // Server-side URL of the Django API (service name inside Docker, localhost in dev).
-const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:8000";
+const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
 
 const nextConfig: NextConfig = {
   output: "standalone",
