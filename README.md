@@ -58,6 +58,7 @@ Set `NEXT_PUBLIC_SITE_URL` to your public origin (used for sitemap, canonical an
 ## Product model
 - **Free:** the tactics designer at `/designer` (no account, autosaves in the browser, PNG export; ads optional).
 - **Full version (early access):** the club management system (players, ratings, cloud plans, team invites, share links). While `NEXT_PUBLIC_SIGNUPS_OPEN` is `0` visitors are sent to a **contact us** page. Opening sign-ups later enables the one-time 14-day free trial and Stripe subscription (already built).
+- **GitHub Pages:** `npm run build:static` exports the designer-only site to `out/` and `.github/workflows/pages.yml` publishes it (see [docs/DEPLOY.md](docs/DEPLOY.md#github-pages-free-static-hosting-for-the-designer)). No login, club system or contact API there.
 - **Free hosting:** `NEXT_PUBLIC_DESIGNER_ONLY=1` runs only the public pages and the free designer with no backend or database. See [docs/DEPLOY.md](docs/DEPLOY.md#launch-for-free-designer--contact-us-no-backend-no-database) for hosts, Stripe, ads, Google Cloud and the Android APK.
 
 ## Legal (Germany / GDPR)

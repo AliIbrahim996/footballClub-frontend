@@ -1,0 +1,65 @@
+name: Deploy designer to GitHub Pages
+# UNTESTED TEMPLATE (the build script itself is tested locally). Publishes ONLY the public pages and the free
+# designer as a static site: no login, no club management, no API. See docs/DEPLOY.md ("GitHub Pages").
+#
+# One-time setup: repository Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# Optional repository variables: CONTACT_EMAIL and LEGAL_NAME / LEGAL_STREET / LEGAL_CITY / LEGAL_EMAIL / LEGAL_PHONE /
+#   LEGAL_VAT_ID / LEGAL_REGISTER / LEGAL_REPRESENTATIVE / LEGAL_HOSTING (imprint and privacy policy), ADSENSE_PUB_ID.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/configure-pages@v6
+        id: pages
+      - name: Build static site
+        run: npm run build:static
+        env:
+          # configure-pages knows whether this is a project page (/repo) or a custom domain / user site.
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
+          NEXT_PUBLIC_LEGAL_NAME: ${{ vars.LEGAL_NAME }}
+          NEXT_PUBLIC_LEGAL_STREET: ${{ vars.LEGAL_STREET }}
+          NEXT_PUBLIC_LEGAL_CITY: ${{ vars.LEGAL_CITY }}
+          NEXT_PUBLIC_LEGAL_COUNTRY: ${{ vars.LEGAL_COUNTRY }}
+          NEXT_PUBLIC_LEGAL_EMAIL: ${{ vars.LEGAL_EMAIL }}
+          NEXT_PUBLIC_LEGAL_PHONE: ${{ vars.LEGAL_PHONE }}
+          NEXT_PUBLIC_LEGAL_VAT_ID: ${{ vars.LEGAL_VAT_ID }}
+          NEXT_PUBLIC_LEGAL_REGISTER: ${{ vars.LEGAL_REGISTER }}
+          NEXT_PUBLIC_LEGAL_REPRESENTATIVE: ${{ vars.LEGAL_REPRESENTATIVE }}
+          NEXT_PUBLIC_LEGAL_HOSTING: ${{ vars.LEGAL_HOSTING }}
+          NEXT_PUBLIC_ADSENSE_CLIENT: ${{ vars.ADSENSE_CLIENT }}
+          NEXT_PUBLIC_ADSENSE_SLOT_DESIGNER: ${{ vars.ADSENSE_SLOT_DESIGNER }}
+          ADSENSE_PUB_ID: ${{ vars.ADSENSE_PUB_ID }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

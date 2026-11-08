@@ -31,6 +31,21 @@ Where to host it (check each provider's current free limits and terms before rel
 
 A custom domain is the only recurring cost (about 10 EUR per year). Without one the host gives you a free subdomain (for example `pitchside.onrender.com`), which is enough to start, but AdSense and good SEO want your own domain.
 
+### GitHub Pages (free static hosting for the designer)
+GitHub Pages only serves static files, so it can host the **designer-only** site (landing, features, designer, contact by email, legal pages) but **not** login, club management, the contact form API or share links. `npm run build:static` builds exactly that into `out/` (it works on a temporary copy of the project, your working tree is untouched).
+
+1. Repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Optional repository **variables** (Settings → Secrets and variables → Actions → Variables): `CONTACT_EMAIL`, `LEGAL_NAME`, `LEGAL_STREET`, `LEGAL_CITY`, `LEGAL_EMAIL`, … (imprint and privacy policy; see "Legal pages" below), `ADSENSE_*` if you use ads.
+3. Push to `main` (or run **Deploy designer to GitHub Pages** from the Actions tab). The workflow `.github/workflows/pages.yml` builds with `npm run build:static` and publishes `out/`.
+4. The site appears at `https://<user>.github.io/<repo>/` (a *project page*, served from a sub-path; the build handles the sub-path automatically). For a clean address use a **custom domain** (Settings → Pages → Custom domain, plus a DNS `CNAME` to `<user>.github.io`, then tick "Enforce HTTPS"): the sub-path disappears and the site is served from the domain root.
+
+Things to know:
+- Search engines only read `robots.txt` and `sitemap.xml` at a domain root, so on a project page they are ignored. A custom domain (or a repository named `<user>.github.io`) fixes this and is also needed for AdSense.
+- Contact is `mailto:` only (set `CONTACT_EMAIL`); there is no server to store messages.
+- Check GitHub's current Pages terms and limits before relying on them: Pages is meant for projects and sites, **not** for running a commercial SaaS or shop, and has size/bandwidth soft limits. A free designer with a "contact us" page is the intended kind of use; the paid club system belongs on a server (see Options A/B).
+- To try it locally: `npm run build:static`, then serve `out/` with any static file server (for a project page, serve it under the same `/<repo>` sub-path).
+- Open question when you later switch to the full app: keep Pages as the marketing front and point "Sign in" at the server deployment, or move everything to the server.
+
 ### Contact form with storage (optional, needs the API)
 Set `NEXT_PUBLIC_CONTACT_MODE=form` and deploy the API (`SIGNUPS_OPEN` stays `0`). Messages are saved in the database (Django admin, "Contact messages") and e-mailed to `CONTACT_EMAIL` when you configure SMTP. The form is rate limited and has a honeypot against bots.
 
