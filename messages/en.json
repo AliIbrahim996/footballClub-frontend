@@ -3,96 +3,439 @@
     "title": "Pitchside — Run your football club from one place",
     "description": "Pitchside is a football club management app: keep a squad database, rate players on technical, physical, tactical and mental skills, and design tactical plans on an interactive board."
   },
-  "common": { "language": "Language", "delete": "Delete" },
-  "nav": { "main": "Main", "dashboard": "Dashboard", "players": "Players", "tactics": "Tactics", "plans": "Plans", "signOut": "Sign out" },
+  "common": {
+    "language": "Language",
+    "delete": "Delete"
+  },
+  "nav": {
+    "main": "Main",
+    "dashboard": "Dashboard",
+    "players": "Players",
+    "tactics": "Tactics",
+    "plans": "Plans",
+    "signOut": "Sign out",
+    "team": "Team",
+    "billing": "Billing"
+  },
   "auth": {
-    "signIn": "Sign in", "welcome": "Welcome back", "subtitle": "Sign in to manage your squad and tactics.",
-    "username": "Username", "password": "Password", "signingIn": "Signing in…",
-    "invalid": "Wrong username or password.", "unavailable": "The server is unreachable. Try again shortly."
+    "signIn": "Sign in",
+    "welcome": "Welcome back",
+    "subtitle": "Sign in to manage your squad and tactics.",
+    "username": "Username",
+    "password": "Password",
+    "signingIn": "Signing in…",
+    "invalid": "Wrong username or password.",
+    "unavailable": "The server is unreachable. Try again shortly.",
+    "noAccount": "No account yet?",
+    "startTrial": "Start your free trial"
   },
   "dashboard": {
-    "title": "Dashboard", "subtitle": "Your squad at a glance.", "addPlayer": "Add player", "newTactic": "New tactic",
-    "totals": "Totals", "players": "Players", "skills": "Skills tracked", "evaluations": "Evaluations", "plans": "Tactical plans",
-    "byCategory": "Average rating by category", "noEvaluations": "No evaluations yet.",
+    "title": "Dashboard",
+    "subtitle": "Your squad at a glance.",
+    "addPlayer": "Add player",
+    "newTactic": "New tactic",
+    "totals": "Totals",
+    "players": "Players",
+    "skills": "Skills tracked",
+    "evaluations": "Evaluations",
+    "plans": "Tactical plans",
+    "byCategory": "Average rating by category",
+    "noEvaluations": "No evaluations yet.",
     "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
-    "topPlayers": "Top players", "noRanking": "Rate players to see a ranking.",
-    "recentPlans": "Recent plans", "noPlans": "No tactical plans yet", "noPlansHint": "Design your first formation on the tactics board.", "openBoard": "Open board"
+    "topPlayers": "Top players",
+    "noRanking": "Rate players to see a ranking.",
+    "recentPlans": "Recent plans",
+    "noPlans": "No tactical plans yet",
+    "noPlansHint": "Design your first formation on the tactics board.",
+    "openBoard": "Open board"
   },
   "players": {
-    "title": "Players", "inSquad": "{count, plural, one {# player} other {# players}} in your squad", "add": "Add player",
-    "search": "Search players", "searchPlaceholder": "Search name, city, club…", "noMatch": "No players match “{q}”", "none": "No players yet",
-    "rating": "rating", "pagination": "Pagination", "prev": "Previous", "next": "Next", "pageOf": "Page {cur} of {pages}",
-    "edit": "Edit player", "confirmDelete": "Delete {name}? This cannot be undone.", "overall": "Overall",
+    "title": "Players",
+    "inSquad": "{count, plural, one {# player} other {# players}} in your squad",
+    "add": "Add player",
+    "search": "Search players",
+    "searchPlaceholder": "Search name, city, club…",
+    "noMatch": "No players match “{q}”",
+    "none": "No players yet",
+    "rating": "rating",
+    "pagination": "Pagination",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {cur} of {pages}",
+    "edit": "Edit player",
+    "confirmDelete": "Delete {name}? This cannot be undone.",
+    "overall": "Overall",
     "form": {
-      "firstName": "First name", "lastName": "Last name", "dob": "Date of birth", "email": "Email", "phone": "Phone", "club": "Club",
-      "address": "Street and number", "postCode": "Post code", "city": "City", "photo": "Photo",
-      "saving": "Saving…", "save": "Save player", "cancel": "Cancel"
+      "firstName": "First name",
+      "lastName": "Last name",
+      "dob": "Date of birth",
+      "email": "Email",
+      "phone": "Phone",
+      "club": "Club",
+      "address": "Street and number",
+      "postCode": "Post code",
+      "city": "City",
+      "photo": "Photo",
+      "saving": "Saving…",
+      "save": "Save player",
+      "cancel": "Cancel"
     },
-    "evaluation": { "title": "Skill evaluation", "noSkills": "No skills defined yet. Add some in the admin.", "saving": "Saving…", "save": "Save ratings", "saved": "Ratings saved.", "error": "Could not save. Try again." }
+    "evaluation": {
+      "title": "Skill evaluation",
+      "noSkills": "No skills defined yet. Add some in the admin.",
+      "saving": "Saving…",
+      "save": "Save ratings",
+      "saved": "Ratings saved.",
+      "error": "Could not save. Try again."
+    }
   },
   "plans": {
-    "title": "Tactical plans", "subtitle": "Every board your staff has saved.", "new": "New tactic", "search": "Search plans",
-    "manager": "Manager", "allManagers": "All managers", "filter": "Filter", "none": "No plans found",
-    "noneHint": "Save a board from the tactics page and it will appear here.", "confirmDelete": "Delete this plan?",
-    "pagination": "Pagination", "prev": "Previous", "next": "Next", "pageOf": "Page {cur} of {pages}"
+    "title": "Tactical plans",
+    "subtitle": "Every board your staff has saved.",
+    "new": "New tactic",
+    "search": "Search plans",
+    "manager": "Manager",
+    "allManagers": "All managers",
+    "filter": "Filter",
+    "none": "No plans found",
+    "noneHint": "Save a board from the tactics page and it will appear here.",
+    "confirmDelete": "Delete this plan?",
+    "pagination": "Pagination",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {cur} of {pages}",
+    "share": "Share link",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "stopSharing": "Stop sharing"
   },
   "tactics": {
-    "title": "Tactics board", "subtitle": "Drag players, draw movements and save the plan.",
-    "textPrompt": "Text", "labelPrompt": "Player number or name (max 3 characters)", "untitled": "Untitled plan",
+    "title": "Tactics board",
+    "subtitle": "Drag players, draw movements and save the plan.",
+    "textPrompt": "Text",
+    "labelPrompt": "Player number or name (max 3 characters)",
+    "untitled": "Untitled plan",
     "toolbar": "Board tools",
     "tools": {
-      "select": "Select and move", "home": "Add home player", "away": "Add away player", "neutral": "Add neutral player", "ball": "Ball",
-      "cone": "Cone", "goal": "Goal", "run": "Run (dashed)", "pass": "Pass (solid)", "dribble": "Dribble (wavy)", "zone": "Zone", "text": "Text", "erase": "Eraser"
+      "select": "Select and move",
+      "home": "Add home player",
+      "away": "Add away player",
+      "neutral": "Add neutral player",
+      "ball": "Ball",
+      "cone": "Cone",
+      "goal": "Goal",
+      "run": "Run (dashed)",
+      "pass": "Pass (solid)",
+      "dribble": "Dribble (wavy)",
+      "zone": "Zone",
+      "text": "Text",
+      "erase": "Eraser"
     },
-    "undo": "Undo", "redo": "Redo", "deleteSelected": "Delete selected",
+    "undo": "Undo",
+    "redo": "Redo",
+    "deleteSelected": "Delete selected",
     "boardLabel": "Interactive tactics board",
     "hint": "Pick a tool, then click or drag on the pitch. Double-click a player or text to edit it. Delete removes the selection; Ctrl+Z undoes.",
-    "pitch": "Pitch", "pitches": { "full": "Full", "half": "Half", "box": "Box", "fullPortrait": "Full (portrait)", "halfPortrait": "Half (portrait)", "blank": "Plain green", "grey": "Grey stripes", "white": "White", "whitePortrait": "White (portrait)", "futsal": "Futsal court", "futsalPortrait": "Futsal (portrait)" },
-    "formation": "Formation", "place": { "home": "Place home", "away": "Place away" }, "clear": "Clear board",
-    "savePlan": "Save plan", "titleLabel": "Title", "commentLabel": "Comment", "saving": "Saving…", "save": "Save plan", "update": "Update plan",
-    "exportPng": "Download PNG", "saved": "Plan saved.", "saveError": "Could not save the plan."
+    "pitch": "Pitch",
+    "pitches": {
+      "full": "Full",
+      "half": "Half",
+      "box": "Box",
+      "fullPortrait": "Full (portrait)",
+      "halfPortrait": "Half (portrait)",
+      "blank": "Plain green",
+      "grey": "Grey stripes",
+      "white": "White",
+      "whitePortrait": "White (portrait)",
+      "futsal": "Futsal court",
+      "futsalPortrait": "Futsal (portrait)"
+    },
+    "formation": "Formation",
+    "place": {
+      "home": "Place home",
+      "away": "Place away"
+    },
+    "clear": "Clear board",
+    "savePlan": "Save plan",
+    "titleLabel": "Title",
+    "commentLabel": "Comment",
+    "saving": "Saving…",
+    "save": "Save plan",
+    "update": "Update plan",
+    "exportPng": "Download PNG",
+    "saved": "Plan saved.",
+    "saveError": "Could not save the plan.",
+    "public": {
+      "title": "Free designer",
+      "body": "Your board is saved in this browser only. Export it as an image any time, or create a club account to keep plans in the cloud and share them.",
+      "cta": "Start free trial"
+    }
   },
   "landing": {
     "skip": "Skip to content",
-    "nav": { "label": "Primary", "features": "Features", "signIn": "Sign in" },
-    "footer": { "blurb": "Squad management, player ratings and an interactive tactics board for football clubs.", "label": "Footer" },
+    "nav": {
+      "label": "Primary",
+      "features": "Features",
+      "signIn": "Sign in",
+      "designer": "Free designer",
+      "trial": "Free trial"
+    },
+    "footer": {
+      "blurb": "Squad management, player ratings and an interactive tactics board for football clubs.",
+      "label": "Footer"
+    },
     "hero": {
       "badge": "Football club management",
       "title": "Your squad, ratings and tactics in one place",
       "body": "Pitchside replaces spreadsheets and screenshots. Keep every player on file, rate their skills after each session, and draw the game plan on an interactive tactics board.",
-      "cta": "Get started", "secondary": "See features"
+      "cta": "Try the free designer",
+      "secondary": "Start free trial"
     },
     "features": {
       "title": "Everything a coach needs between matchdays",
-      "squad": { "title": "Squad database", "body": "Profiles with contact details, club and photo. Search by name, city or club in seconds." },
-      "ratings": { "title": "Skill ratings", "body": "Score players from 1 to 5 across technical, physical, tactical and mental skills and track the average over time." },
-      "board": { "title": "Tactics board", "body": "Drag players, draw runs, passes and dribbles, mark zones and load formations like 4-3-3 on four pitch layouts." },
-      "plans": { "title": "Saved plans", "body": "Store every board as a plan, filter by manager, reopen it later and export it as an image." },
-      "languages": { "title": "English, German, Arabic", "body": "The whole app is translated, including right-to-left layout for Arabic." }
+      "squad": {
+        "title": "Squad database",
+        "body": "Profiles with contact details, club and photo. Search by name, city or club in seconds."
+      },
+      "ratings": {
+        "title": "Skill ratings",
+        "body": "Score players from 1 to 5 across technical, physical, tactical and mental skills and track the average over time."
+      },
+      "board": {
+        "title": "Tactics board",
+        "body": "Drag players, draw runs, passes and dribbles, mark zones and load formations like 4-3-3 on four pitch layouts."
+      },
+      "plans": {
+        "title": "Saved plans",
+        "body": "Store every board as a plan, filter by manager, reopen it later and export it as an image."
+      },
+      "languages": {
+        "title": "English, German, Arabic",
+        "body": "The whole app is translated, including right-to-left layout for Arabic."
+      }
     },
     "how": {
       "title": "How it works",
-      "one": { "title": "Add your players", "body": "Enter your squad once with their details and photo." },
-      "two": { "title": "Rate their skills", "body": "After training, rate each skill from 1 to 5. The dashboard shows who is improving." },
-      "three": { "title": "Draw the plan", "body": "Build the formation and movements on the board, save it and share the image with the team." }
+      "one": {
+        "title": "Add your players",
+        "body": "Enter your squad once with their details and photo."
+      },
+      "two": {
+        "title": "Rate their skills",
+        "body": "After training, rate each skill from 1 to 5. The dashboard shows who is improving."
+      },
+      "three": {
+        "title": "Draw the plan",
+        "body": "Build the formation and movements on the board, save it and share the image with the team."
+      }
     },
     "faq": {
       "title": "Frequently asked questions",
-      "cost": { "q": "Is Pitchside free?", "a": "Yes. Pitchside is free to use and runs on your own server with Docker." },
-      "who": { "q": "Who is it for?", "a": "Amateur and youth clubs, coaches and team managers who want one tool for squad data, player development and match preparation." },
-      "board": { "q": "What can the tactics board do?", "a": "Place home, away and neutral players, balls, cones and goals; draw runs, passes, dribbles and zones; load common formations; undo and redo; export a PNG." },
-      "data": { "q": "Where is my data stored?", "a": "In a PostgreSQL database that you host. Nothing is sent to third parties." },
-      "languages": { "q": "Which languages are supported?", "a": "English, German and Arabic, including right-to-left layout." }
+      "cost": {
+        "q": "Is Pitchside free?",
+        "a": "The tactics designer is free with no account. The club management system includes one free 14-day trial per club, then a monthly subscription. You can also self-host it with Docker."
+      },
+      "who": {
+        "q": "Who is it for?",
+        "a": "Amateur and youth clubs, coaches and team managers who want one tool for squad data, player development and match preparation."
+      },
+      "board": {
+        "q": "What can the tactics board do?",
+        "a": "Place home, away and neutral players, balls, cones and goals; draw runs, passes, dribbles and zones; load common formations; undo and redo; export a PNG."
+      },
+      "data": {
+        "q": "Where is my data stored?",
+        "a": "In a PostgreSQL database that you host. Nothing is sent to third parties."
+      },
+      "languages": {
+        "q": "Which languages are supported?",
+        "a": "English, German and Arabic, including right-to-left layout."
+      }
     },
-    "cta": { "title": "Plan your next match in minutes" }
+    "cta": {
+      "title": "Plan your next match in minutes"
+    },
+    "pricing": {
+      "title": "Free to design, simple to run your club",
+      "subtitle": "The tactics designer is free for everyone. The management system has one free trial per club, then a monthly plan.",
+      "perMonth": "/ month",
+      "free": {
+        "name": "Free designer",
+        "note": "No account needed",
+        "items": [
+          "All 11 playing fields",
+          "Players, arrows, zones and formations",
+          "Autosave in your browser",
+          "PNG export"
+        ],
+        "cta": "Open the designer"
+      },
+      "pro": {
+        "name": "Club plan",
+        "note": "14-day free trial, one per club",
+        "items": [
+          "Player database with photos",
+          "Skill ratings and dashboard",
+          "Plans saved in the cloud",
+          "Invite up to 5 coaches",
+          "Public share links",
+          "English, German and Arabic"
+        ],
+        "cta": "Start free trial"
+      }
+    }
   },
   "featuresPage": {
-    "metaTitle": "Features", "metaDescription": "Squad database, skill ratings, an interactive tactics board and saved plans for football clubs.",
-    "title": "Features", "intro": "Pitchside covers the three jobs a coach repeats every week: knowing the squad, tracking development and planning the match.",
-    "squad": { "title": "Squad database", "body": "Keep every player's details in one searchable list.", "points": ["Profile photo, date of birth, club and address", "Search by name, city or club", "Overall rating shown on every card"] },
-    "ratings": { "title": "Skill ratings", "body": "Evaluate players on a clear 1–5 scale grouped by category.", "points": ["Technical, physical, tactical and mental categories", "Records who changed a rating and when", "Dashboard with category averages and top players"] },
-    "board": { "title": "Interactive tactics board", "body": "A modern board that works with mouse, touch and keyboard.", "points": ["Full pitch, half pitch, penalty box and blank pitch", "Home, away and neutral players with editable numbers", "Runs, passes, dribbles, zones, text, balls, cones and goals", "Formations: 4-4-2, 4-3-3, 3-5-2, 4-2-3-1, 5-3-2", "Undo, redo, delete and PNG export"] },
-    "plans": { "title": "Saved plans", "body": "Turn boards into a library your staff can reuse.", "points": ["Filter by manager and search comments", "Reopen and edit any saved plan", "Image preview for every plan"] },
+    "metaTitle": "Features",
+    "metaDescription": "Squad database, skill ratings, an interactive tactics board and saved plans for football clubs.",
+    "title": "Features",
+    "intro": "Pitchside covers the three jobs a coach repeats every week: knowing the squad, tracking development and planning the match.",
+    "squad": {
+      "title": "Squad database",
+      "body": "Keep every player's details in one searchable list.",
+      "points": [
+        "Profile photo, date of birth, club and address",
+        "Search by name, city or club",
+        "Overall rating shown on every card"
+      ]
+    },
+    "ratings": {
+      "title": "Skill ratings",
+      "body": "Evaluate players on a clear 1–5 scale grouped by category.",
+      "points": [
+        "Technical, physical, tactical and mental categories",
+        "Records who changed a rating and when",
+        "Dashboard with category averages and top players"
+      ]
+    },
+    "board": {
+      "title": "Interactive tactics board",
+      "body": "A modern board that works with mouse, touch and keyboard.",
+      "points": [
+        "Full pitch, half pitch, penalty box and blank pitch",
+        "Home, away and neutral players with editable numbers",
+        "Runs, passes, dribbles, zones, text, balls, cones and goals",
+        "Formations: 4-4-2, 4-3-3, 3-5-2, 4-2-3-1, 5-3-2",
+        "Undo, redo, delete and PNG export"
+      ]
+    },
+    "plans": {
+      "title": "Saved plans",
+      "body": "Turn boards into a library your staff can reuse.",
+      "points": [
+        "Filter by manager and search comments",
+        "Reopen and edit any saved plan",
+        "Image preview for every plan"
+      ]
+    },
     "cta": "Get started"
+  },
+  "register": {
+    "title": "Create your club account",
+    "subtitle": "Try the full management system free for 14 days.",
+    "club": "Club name",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password (8+ characters)",
+    "creating": "Creating account…",
+    "submit": "Start free trial",
+    "trialNote": "One free trial per club. No card needed to start.",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
+  "join": {
+    "title": "Join {club}",
+    "subtitle": "You were invited as {email}. Choose a username and password.",
+    "username": "Username",
+    "password": "Password (8+ characters)",
+    "joining": "Joining…",
+    "submit": "Join the team",
+    "invalid": "This invitation is invalid or has expired",
+    "invalidHint": "Ask the club owner to send you a new invitation."
+  },
+  "billing": {
+    "title": "Billing",
+    "trialBanner": "{days, plural, one {# day} other {# days}} left in your free trial.",
+    "subscribe": "Subscribe",
+    "manage": "Manage subscription",
+    "pastDue": "Your last payment failed. Update your payment details to keep access.",
+    "status": "Status",
+    "states": {
+      "trialing": "Free trial",
+      "active": "Active",
+      "past_due": "Payment overdue",
+      "canceled": "Canceled"
+    },
+    "trialEnds": "Trial ends",
+    "renews": "Renews on",
+    "accessUntil": "Access until",
+    "blocked": "Your trial or subscription has ended. Subscribe to continue using the management system.",
+    "ownerOnly": "Only the club owner can change the subscription.",
+    "notConfigured": "Online payment is not set up on this server yet.",
+    "redirecting": "Redirecting…",
+    "error": "Could not open the payment page. Try again.",
+    "success": "Thank you! Your subscription is being activated.",
+    "cancelled": "Checkout was cancelled. You have not been charged.",
+    "includes": "The club plan includes",
+    "features": {
+      "players": "Unlimited players and profiles",
+      "ratings": "Skill ratings and dashboard",
+      "plans": "Saved tactical plans in the cloud",
+      "team": "Invite coaches to your club",
+      "share": "Public share links for plans"
+    },
+    "designerFree": "The tactics designer stays free for everyone, no account required."
+  },
+  "team": {
+    "title": "Team",
+    "subtitle": "{used} of {limit} seats used.",
+    "members": "Members",
+    "you": "you",
+    "roles": {
+      "owner": "Owner",
+      "coach": "Coach",
+      "viewer": "Viewer"
+    },
+    "remove": "Remove member",
+    "confirmRemove": "Remove {name} from the club? They will lose access.",
+    "pending": "Pending invitations",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "revoke": "Revoke invitation",
+    "invite": "Invite a coach",
+    "email": "Email",
+    "role": "Role",
+    "seatsFull": "All seats are in use.",
+    "sendInvite": "Send invitation",
+    "inviteHint": "We email the invitation; you can also copy the link and send it yourself. Links expire after 14 days.",
+    "ownerOnly": "Only the club owner can manage the team."
+  },
+  "designer": {
+    "metaTitle": "Free football tactics board",
+    "metaDescription": "Free online tactics board for football coaches: full, half, portrait and futsal pitches, formations, runs, passes and PNG export. No account needed.",
+    "title": "Free football tactics board",
+    "intro": "Draw formations, runs and passes on a full pitch, half pitch, portrait field or futsal court. No account needed.",
+    "loading": "Loading the board…",
+    "whyTitle": "What you can do",
+    "points": {
+      "fields": "11 playing fields: full, half, penalty box, portrait, grey, white and futsal",
+      "draw": "Home, away and neutral players, ball, cones, goals, runs, passes, dribbles, zones and text",
+      "formations": "One-click formations such as 4-4-2, 4-3-3, 3-5-2 and 4-2-3-1",
+      "export": "Undo and redo, autosave in your browser and PNG export"
+    },
+    "upgradeTitle": "Run the whole club",
+    "upgradeBody": "Save plans in the cloud, share them with a link, manage players, rate skills and invite your coaching staff. Try everything free for 14 days.",
+    "upgradeCta": "Start free trial"
+  },
+  "shared": {
+    "from": "Shared by {club}",
+    "cta": "Plan your own tactics for free with the Pitchside designer.",
+    "tryDesigner": "Open the free designer"
+  },
+  "ads": {
+    "title": "Ads and cookies",
+    "body": "We show ads on free pages to keep the designer free. Allow advertising cookies?",
+    "accept": "Allow",
+    "decline": "No thanks"
   }
 }

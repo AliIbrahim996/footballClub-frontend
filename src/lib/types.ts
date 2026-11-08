@@ -26,7 +26,7 @@ export type BoardItem =
   | { id: string; kind: "zone"; x: number; y: number; w: number; h: number };
 
 export type Plan = {
-  id: number; title: string; image: string; board: Partial<BoardState>; created_at: string; created_by: string; comment: string;
+  id: number; title: string; image: string; board: Partial<BoardState>; created_at: string; created_by: string; comment: string; share_token: string | null;
 };
 
 export type Dashboard = {
@@ -35,3 +35,16 @@ export type Dashboard = {
   category_averages: { category: string; average: number; count: number }[];
   recent_plans: Plan[];
 };
+
+export type ClubInfo = {
+  name: string; status: "trialing" | "active" | "past_due" | "canceled"; entitled: boolean; role: "owner" | "coach" | "viewer";
+  trial_ends_at: string | null; trial_days_left: number; current_period_end: string | null; billing_configured: boolean;
+};
+export type Me = { username: string; club: ClubInfo };
+
+export type TeamData = {
+  seats_limit: number; seats_used: number;
+  members: { id: number; username: string; email: string; role: string }[];
+  invites: { id: number; email: string; role: string; token: string; created_at: string }[];
+};
+export type SharedPlan = { title: string; comment: string; image: string; board: Partial<BoardState>; created_at: string; club_name: string };

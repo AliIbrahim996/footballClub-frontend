@@ -25,6 +25,7 @@ export default async function LoginPage({ params }: { params: Promise<{ locale: 
           <h1 className="text-2xl font-semibold tracking-tight">{t("welcome")}</h1>
           <p className="mb-8 mt-1 text-sm text-muted">{t("subtitle")}</p>
           <Suspense><LoginForm /></Suspense>
+          <p className="mt-6 text-sm text-muted">{t("noAccount")} <Link href="/register" className="font-medium text-accent underline underline-offset-4">{t("startTrial")}</Link></p>
         </div>
       </section>
       <aside aria-hidden className="relative hidden overflow-hidden bg-[var(--pitch)] lg:block">

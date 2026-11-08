@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 
 const intl = createMiddleware(routing);
-const PROTECTED = /^\/(en|de|ar)\/(dashboard|players|plans|tactics)(\/|$)/;
+const PROTECTED = /^\/(en|de|ar)\/(dashboard|players|plans|tactics|team|billing)(\/|$)/;
 
 /** Locale routing for every page + keep signed-out visitors out of the app. */
 export default function proxy(request: NextRequest) {

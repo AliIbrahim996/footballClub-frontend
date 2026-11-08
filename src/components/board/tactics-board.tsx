@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   ArrowRight, Circle, Cone, Download, Eraser, MousePointer2, MoveUpRight, Redo2, Save, Square, Trash2, Type, Undo2, Waves,
@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { call } from "@/lib/client";
 import type { BoardItem, BoardState, Plan } from "@/lib/types";
-import { Button, Card, Field, Input } from "../ui";
+import { Button, Card, Field, Input, LinkButton } from "../ui";
 import { FORMATIONS, formation, svgToPng, uid, wavy } from "./geometry";
 import { PITCH_KINDS, Pitch, VIEWBOX } from "./pitch";
 
@@ -15,10 +15,20 @@ type Tool = "select" | "home" | "away" | "neutral" | "ball" | "cone" | "goal" | 
 const TEAM_COLOR = { home: "#2563eb", away: "#dc2626", neutral: "#f59e0b" } as const;
 const EMPTY: BoardState = { pitch: "full", items: [] };
 
-export function TacticsBoard({ plan }: { plan?: Plan }) {
+type BoardProps = {
+  plan?: Plan;
+  /** "public" = the free designer: no server saving, state kept in the browser by the caller. */
+  mode?: "account" | "public";
+  initialBoard?: Partial<BoardState>;
+  onBoardChange?: (board: BoardState) => void;
+};
+
+export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChange }: BoardProps) {
   const t = useTranslations("tactics");
   const svgRef = useRef<SVGSVGElement>(null);
-  const [board, setBoard] = useState<BoardState>({ ...EMPTY, ...plan?.board, items: plan?.board?.items ?? [] });
+  const start = initialBoard ?? plan?.board;
+  const [board, setBoard] = useState<BoardState>({ ...EMPTY, ...start, items: start?.items ?? [] });
+  useEffect(() => { onBoardChange?.(board); }, [board, onBoardChange]);
   const [past, setPast] = useState<BoardState[]>([]);
   const [future, setFuture] = useState<BoardState[]>([]);
   const [tool, setTool] = useState<Tool>("select");
@@ -207,7 +217,7 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
   const all = draft ? [...board.items, draft] : board.items;
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1fr_300px]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
       <div className="min-w-0 space-y-3">
         {/* Toolbar */}
         <Card className="flex items-center gap-1 overflow-x-auto p-2" role="toolbar" aria-label={t("toolbar")}>
@@ -284,6 +294,14 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
           <Button variant="ghost" className="w-full" onClick={() => { commit({ ...board, items: [] }); setSelected(null); }} disabled={!board.items.length}>{t("clear")}</Button>
         </Card>
 
+        {mode === "public" ? (
+          <Card className="space-y-3 p-4">
+            <h2 className="font-semibold">{t("public.title")}</h2>
+            <p className="text-sm text-muted">{t("public.body")}</p>
+            <Button variant="secondary" onClick={exportPng} className="w-full"><Download size={16} aria-hidden /> {t("exportPng")}</Button>
+            <LinkButton href="/register" className="w-full">{t("public.cta")}</LinkButton>
+          </Card>
+        ) : (
         <Card className="space-y-3 p-4">
           <h2 className="font-semibold">{t("savePlan")}</h2>
           <Field label={t("titleLabel")}><Input value={title} onChange={(e) => setTitle(e.target.value)} maxLength={255} /></Field>
@@ -297,6 +315,7 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
             {status === "error" && <span className="text-danger">{t("saveError")}</span>}
           </p>
         </Card>
+        )}
       </div>
     </div>
   );

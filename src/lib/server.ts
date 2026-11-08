@@ -1,4 +1,4 @@
-﻿import "server-only";
+import "server-only";
 import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
@@ -15,6 +15,7 @@ export async function api<T>(path: string): Promise<T> {
     cache: "no-store",
   });
   if (res.status === 401) redirect({ href: "/login", locale: await getLocale() });
+  if (res.status === 402) redirect({ href: "/billing", locale: await getLocale() });
   if (res.status === 404) throw new Error("not-found");
   if (!res.ok) throw new Error(`API ${res.status} for ${path}`);
   return res.json() as Promise<T>;

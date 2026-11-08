@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClipboardList, Languages, Route, Star, Users } from "lucide-react";
+import { Check, ClipboardList, Languages, Route, Star, Users } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LinkButton } from "@/components/ui";
 import { absolute, alternates } from "@/lib/seo";
@@ -18,6 +18,8 @@ const FEATURES = [
   { key: "plans", icon: ClipboardList }, { key: "languages", icon: Languages },
 ] as const;
 const FAQ = ["cost", "who", "board", "data", "languages"] as const;
+// Display price only; the real price lives in your Stripe Price. Override with NEXT_PUBLIC_PRICE_LABEL.
+const PRICE = process.env.NEXT_PUBLIC_PRICE_LABEL ?? "€9";
 
 function HeroPitch() {
   return (
@@ -53,7 +55,10 @@ export default async function LandingPage({ params }: P) {
       {
         "@type": "SoftwareApplication", name: SITE.name, applicationCategory: "SportsApplication", operatingSystem: "Web",
         description: meta("description"), inLanguage: ["en", "de", "ar"], url: absolute(`/${locale}`),
-        offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+        offers: [
+          { "@type": "Offer", name: "Free designer", price: "0", priceCurrency: "EUR" },
+          { "@type": "Offer", name: "Club plan", price: PRICE.replace(/[^0-9.]/g, "") || "9", priceCurrency: "EUR" },
+        ],
         featureList: FEATURES.map((f) => t(`features.${f.key}.title`)),
       },
       {
@@ -73,8 +78,8 @@ export default async function LandingPage({ params }: P) {
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl">{t("hero.title")}</h1>
           <p className="mt-5 max-w-xl text-lg text-muted text-pretty">{t("hero.body")}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <LinkButton href="/login" className="h-12 px-6 text-base">{t("hero.cta")}</LinkButton>
-            <LinkButton href="/features" variant="secondary" className="h-12 px-6 text-base">{t("hero.secondary")}</LinkButton>
+            <LinkButton href="/designer" className="h-12 px-6 text-base">{t("hero.cta")}</LinkButton>
+            <LinkButton href="/register" variant="secondary" className="h-12 px-6 text-base">{t("hero.secondary")}</LinkButton>
           </div>
         </div>
         <div className="rise" style={{ animationDelay: "120ms" }}><HeroPitch /></div>
@@ -106,6 +111,31 @@ export default async function LandingPage({ params }: P) {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section aria-labelledby="pricing" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 id="pricing" className="text-3xl font-semibold tracking-tight">{t("pricing.title")}</h2>
+        <p className="mt-2 max-w-2xl text-muted">{t("pricing.subtitle")}</p>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {(["free", "pro"] as const).map((plan) => (
+            <div key={plan} className={`flex flex-col rounded-2xl border p-6 ${plan === "pro" ? "border-accent bg-surface" : "border-line bg-surface"}`}>
+              <h3 className="font-semibold">{t(`pricing.${plan}.name`)}</h3>
+              <p className="mt-3 text-4xl font-semibold tracking-tight">
+                {plan === "pro" ? PRICE : "€0"}
+                <span className="ms-1 text-base font-normal text-muted">{plan === "pro" ? t("pricing.perMonth") : ""}</span>
+              </p>
+              <p className="mt-1 text-sm text-muted">{t(`pricing.${plan}.note`)}</p>
+              <ul className="mt-5 flex-1 space-y-2 text-sm">
+                {(t.raw(`pricing.${plan}.items`) as string[]).map((item) => (
+                  <li key={item} className="flex gap-2"><Check size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden />{item}</li>
+                ))}
+              </ul>
+              <LinkButton href={plan === "pro" ? "/register" : "/designer"} variant={plan === "pro" ? "primary" : "secondary"} className="mt-6">
+                {t(`pricing.${plan}.cta`)}
+              </LinkButton>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section aria-labelledby="faq" className="border-t border-line bg-surface">

@@ -3,96 +3,439 @@
     "title": "Pitchside — Ihr Fußballverein an einem Ort",
     "description": "Pitchside ist eine Vereinsverwaltung für Fußball: Kaderdatenbank, Spielerbewertung nach technischen, körperlichen, taktischen und mentalen Fähigkeiten sowie eine interaktive Taktiktafel."
   },
-  "common": { "language": "Sprache", "delete": "Löschen" },
-  "nav": { "main": "Hauptmenü", "dashboard": "Übersicht", "players": "Spieler", "tactics": "Taktik", "plans": "Pläne", "signOut": "Abmelden" },
+  "common": {
+    "language": "Sprache",
+    "delete": "Löschen"
+  },
+  "nav": {
+    "main": "Hauptmenü",
+    "dashboard": "Übersicht",
+    "players": "Spieler",
+    "tactics": "Taktik",
+    "plans": "Pläne",
+    "signOut": "Abmelden",
+    "team": "Team",
+    "billing": "Abrechnung"
+  },
   "auth": {
-    "signIn": "Anmelden", "welcome": "Willkommen zurück", "subtitle": "Melden Sie sich an, um Kader und Taktik zu verwalten.",
-    "username": "Benutzername", "password": "Passwort", "signingIn": "Anmeldung…",
-    "invalid": "Benutzername oder Passwort ist falsch.", "unavailable": "Der Server ist nicht erreichbar. Bitte später erneut versuchen."
+    "signIn": "Anmelden",
+    "welcome": "Willkommen zurück",
+    "subtitle": "Melden Sie sich an, um Kader und Taktik zu verwalten.",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "signingIn": "Anmeldung…",
+    "invalid": "Benutzername oder Passwort ist falsch.",
+    "unavailable": "Der Server ist nicht erreichbar. Bitte später erneut versuchen.",
+    "noAccount": "Noch kein Konto?",
+    "startTrial": "Kostenlos testen"
   },
   "dashboard": {
-    "title": "Übersicht", "subtitle": "Ihr Kader auf einen Blick.", "addPlayer": "Spieler hinzufügen", "newTactic": "Neue Taktik",
-    "totals": "Summen", "players": "Spieler", "skills": "Erfasste Fähigkeiten", "evaluations": "Bewertungen", "plans": "Taktikpläne",
-    "byCategory": "Durchschnittsbewertung je Kategorie", "noEvaluations": "Noch keine Bewertungen.",
+    "title": "Übersicht",
+    "subtitle": "Ihr Kader auf einen Blick.",
+    "addPlayer": "Spieler hinzufügen",
+    "newTactic": "Neue Taktik",
+    "totals": "Summen",
+    "players": "Spieler",
+    "skills": "Erfasste Fähigkeiten",
+    "evaluations": "Bewertungen",
+    "plans": "Taktikpläne",
+    "byCategory": "Durchschnittsbewertung je Kategorie",
+    "noEvaluations": "Noch keine Bewertungen.",
     "ratingsCount": "{count, plural, one {# Bewertung} other {# Bewertungen}}",
-    "topPlayers": "Beste Spieler", "noRanking": "Bewerten Sie Spieler, um eine Rangliste zu sehen.",
-    "recentPlans": "Neueste Pläne", "noPlans": "Noch keine Taktikpläne", "noPlansHint": "Erstellen Sie Ihre erste Aufstellung auf der Taktiktafel.", "openBoard": "Tafel öffnen"
+    "topPlayers": "Beste Spieler",
+    "noRanking": "Bewerten Sie Spieler, um eine Rangliste zu sehen.",
+    "recentPlans": "Neueste Pläne",
+    "noPlans": "Noch keine Taktikpläne",
+    "noPlansHint": "Erstellen Sie Ihre erste Aufstellung auf der Taktiktafel.",
+    "openBoard": "Tafel öffnen"
   },
   "players": {
-    "title": "Spieler", "inSquad": "{count, plural, one {# Spieler} other {# Spieler}} im Kader", "add": "Spieler hinzufügen",
-    "search": "Spieler suchen", "searchPlaceholder": "Name, Stadt, Verein suchen…", "noMatch": "Keine Spieler für „{q}“", "none": "Noch keine Spieler",
-    "rating": "Wertung", "pagination": "Seitennavigation", "prev": "Zurück", "next": "Weiter", "pageOf": "Seite {cur} von {pages}",
-    "edit": "Spieler bearbeiten", "confirmDelete": "{name} löschen? Das kann nicht rückgängig gemacht werden.", "overall": "Gesamt",
+    "title": "Spieler",
+    "inSquad": "{count, plural, one {# Spieler} other {# Spieler}} im Kader",
+    "add": "Spieler hinzufügen",
+    "search": "Spieler suchen",
+    "searchPlaceholder": "Name, Stadt, Verein suchen…",
+    "noMatch": "Keine Spieler für „{q}“",
+    "none": "Noch keine Spieler",
+    "rating": "Wertung",
+    "pagination": "Seitennavigation",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "pageOf": "Seite {cur} von {pages}",
+    "edit": "Spieler bearbeiten",
+    "confirmDelete": "{name} löschen? Das kann nicht rückgängig gemacht werden.",
+    "overall": "Gesamt",
     "form": {
-      "firstName": "Vorname", "lastName": "Nachname", "dob": "Geburtsdatum", "email": "E-Mail", "phone": "Telefon", "club": "Verein",
-      "address": "Straße und Hausnummer", "postCode": "Postleitzahl", "city": "Stadt", "photo": "Foto",
-      "saving": "Speichern…", "save": "Spieler speichern", "cancel": "Abbrechen"
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "dob": "Geburtsdatum",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "club": "Verein",
+      "address": "Straße und Hausnummer",
+      "postCode": "Postleitzahl",
+      "city": "Stadt",
+      "photo": "Foto",
+      "saving": "Speichern…",
+      "save": "Spieler speichern",
+      "cancel": "Abbrechen"
     },
-    "evaluation": { "title": "Fähigkeitsbewertung", "noSkills": "Noch keine Fähigkeiten angelegt. Legen Sie welche im Admin-Bereich an.", "saving": "Speichern…", "save": "Bewertungen speichern", "saved": "Bewertungen gespeichert.", "error": "Speichern fehlgeschlagen. Bitte erneut versuchen." }
+    "evaluation": {
+      "title": "Fähigkeitsbewertung",
+      "noSkills": "Noch keine Fähigkeiten angelegt. Legen Sie welche im Admin-Bereich an.",
+      "saving": "Speichern…",
+      "save": "Bewertungen speichern",
+      "saved": "Bewertungen gespeichert.",
+      "error": "Speichern fehlgeschlagen. Bitte erneut versuchen."
+    }
   },
   "plans": {
-    "title": "Taktikpläne", "subtitle": "Alle Tafeln, die Ihr Trainerstab gespeichert hat.", "new": "Neue Taktik", "search": "Pläne suchen",
-    "manager": "Trainer", "allManagers": "Alle Trainer", "filter": "Filtern", "none": "Keine Pläne gefunden",
-    "noneHint": "Speichern Sie eine Tafel auf der Taktikseite, dann erscheint sie hier.", "confirmDelete": "Diesen Plan löschen?",
-    "pagination": "Seitennavigation", "prev": "Zurück", "next": "Weiter", "pageOf": "Seite {cur} von {pages}"
+    "title": "Taktikpläne",
+    "subtitle": "Alle Tafeln, die Ihr Trainerstab gespeichert hat.",
+    "new": "Neue Taktik",
+    "search": "Pläne suchen",
+    "manager": "Trainer",
+    "allManagers": "Alle Trainer",
+    "filter": "Filtern",
+    "none": "Keine Pläne gefunden",
+    "noneHint": "Speichern Sie eine Tafel auf der Taktikseite, dann erscheint sie hier.",
+    "confirmDelete": "Diesen Plan löschen?",
+    "pagination": "Seitennavigation",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "pageOf": "Seite {cur} von {pages}",
+    "share": "Link teilen",
+    "copyLink": "Link kopieren",
+    "linkCopied": "Link kopiert",
+    "stopSharing": "Teilen beenden"
   },
   "tactics": {
-    "title": "Taktiktafel", "subtitle": "Spieler verschieben, Laufwege zeichnen und den Plan speichern.",
-    "textPrompt": "Text", "labelPrompt": "Spielernummer oder Name (max. 3 Zeichen)", "untitled": "Unbenannter Plan",
+    "title": "Taktiktafel",
+    "subtitle": "Spieler verschieben, Laufwege zeichnen und den Plan speichern.",
+    "textPrompt": "Text",
+    "labelPrompt": "Spielernummer oder Name (max. 3 Zeichen)",
+    "untitled": "Unbenannter Plan",
     "toolbar": "Werkzeuge der Tafel",
     "tools": {
-      "select": "Auswählen und verschieben", "home": "Heimspieler hinzufügen", "away": "Gastspieler hinzufügen", "neutral": "Neutralen Spieler hinzufügen", "ball": "Ball",
-      "cone": "Hütchen", "goal": "Tor", "run": "Laufweg (gestrichelt)", "pass": "Pass (durchgezogen)", "dribble": "Dribbling (Wellenlinie)", "zone": "Zone", "text": "Text", "erase": "Radierer"
+      "select": "Auswählen und verschieben",
+      "home": "Heimspieler hinzufügen",
+      "away": "Gastspieler hinzufügen",
+      "neutral": "Neutralen Spieler hinzufügen",
+      "ball": "Ball",
+      "cone": "Hütchen",
+      "goal": "Tor",
+      "run": "Laufweg (gestrichelt)",
+      "pass": "Pass (durchgezogen)",
+      "dribble": "Dribbling (Wellenlinie)",
+      "zone": "Zone",
+      "text": "Text",
+      "erase": "Radierer"
     },
-    "undo": "Rückgängig", "redo": "Wiederholen", "deleteSelected": "Auswahl löschen",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "deleteSelected": "Auswahl löschen",
     "boardLabel": "Interaktive Taktiktafel",
     "hint": "Werkzeug wählen, dann auf dem Platz klicken oder ziehen. Doppelklick auf Spieler oder Text zum Bearbeiten. Entf löscht die Auswahl; Strg+Z macht rückgängig.",
-    "pitch": "Spielfeld", "pitches": { "full": "Ganz", "half": "Halb", "box": "Strafraum", "fullPortrait": "Ganz (Hochformat)", "halfPortrait": "Halb (Hochformat)", "blank": "Einfach grün", "grey": "Graue Streifen", "white": "Weiß", "whitePortrait": "Weiß (Hochformat)", "futsal": "Futsal-Feld", "futsalPortrait": "Futsal (Hochformat)" },
-    "formation": "Formation", "place": { "home": "Heim setzen", "away": "Gast setzen" }, "clear": "Tafel leeren",
-    "savePlan": "Plan speichern", "titleLabel": "Titel", "commentLabel": "Kommentar", "saving": "Speichern…", "save": "Plan speichern", "update": "Plan aktualisieren",
-    "exportPng": "PNG herunterladen", "saved": "Plan gespeichert.", "saveError": "Plan konnte nicht gespeichert werden."
+    "pitch": "Spielfeld",
+    "pitches": {
+      "full": "Ganz",
+      "half": "Halb",
+      "box": "Strafraum",
+      "fullPortrait": "Ganz (Hochformat)",
+      "halfPortrait": "Halb (Hochformat)",
+      "blank": "Einfach grün",
+      "grey": "Graue Streifen",
+      "white": "Weiß",
+      "whitePortrait": "Weiß (Hochformat)",
+      "futsal": "Futsal-Feld",
+      "futsalPortrait": "Futsal (Hochformat)"
+    },
+    "formation": "Formation",
+    "place": {
+      "home": "Heim setzen",
+      "away": "Gast setzen"
+    },
+    "clear": "Tafel leeren",
+    "savePlan": "Plan speichern",
+    "titleLabel": "Titel",
+    "commentLabel": "Kommentar",
+    "saving": "Speichern…",
+    "save": "Plan speichern",
+    "update": "Plan aktualisieren",
+    "exportPng": "PNG herunterladen",
+    "saved": "Plan gespeichert.",
+    "saveError": "Plan konnte nicht gespeichert werden.",
+    "public": {
+      "title": "Kostenloser Designer",
+      "body": "Ihre Tafel wird nur in diesem Browser gespeichert. Exportieren Sie sie jederzeit als Bild oder legen Sie ein Vereinskonto an, um Pläne in der Cloud zu speichern und zu teilen.",
+      "cta": "Kostenlos testen"
+    }
   },
   "landing": {
     "skip": "Zum Inhalt springen",
-    "nav": { "label": "Hauptnavigation", "features": "Funktionen", "signIn": "Anmelden" },
-    "footer": { "blurb": "Kaderverwaltung, Spielerbewertung und eine interaktive Taktiktafel für Fußballvereine.", "label": "Fußzeile" },
+    "nav": {
+      "label": "Hauptnavigation",
+      "features": "Funktionen",
+      "signIn": "Anmelden",
+      "designer": "Kostenloser Designer",
+      "trial": "Kostenlos testen"
+    },
+    "footer": {
+      "blurb": "Kaderverwaltung, Spielerbewertung und eine interaktive Taktiktafel für Fußballvereine.",
+      "label": "Fußzeile"
+    },
     "hero": {
       "badge": "Fußball-Vereinsverwaltung",
       "title": "Kader, Bewertungen und Taktik an einem Ort",
       "body": "Pitchside ersetzt Tabellen und Screenshots. Pflegen Sie jeden Spieler, bewerten Sie Fähigkeiten nach jedem Training und zeichnen Sie den Spielplan auf der interaktiven Taktiktafel.",
-      "cta": "Jetzt starten", "secondary": "Funktionen ansehen"
+      "cta": "Kostenlosen Designer testen",
+      "secondary": "Kostenlos testen"
     },
     "features": {
       "title": "Alles, was Trainer zwischen den Spieltagen brauchen",
-      "squad": { "title": "Kaderdatenbank", "body": "Profile mit Kontaktdaten, Verein und Foto. Suche nach Name, Stadt oder Verein in Sekunden." },
-      "ratings": { "title": "Fähigkeitsbewertung", "body": "Bewerten Sie Spieler von 1 bis 5 in technischen, körperlichen, taktischen und mentalen Fähigkeiten und verfolgen Sie den Durchschnitt." },
-      "board": { "title": "Taktiktafel", "body": "Spieler verschieben, Laufwege, Pässe und Dribblings zeichnen, Zonen markieren und Formationen wie 4-3-3 auf vier Spielfeldern laden." },
-      "plans": { "title": "Gespeicherte Pläne", "body": "Speichern Sie jede Tafel als Plan, filtern Sie nach Trainer, öffnen Sie sie später wieder und exportieren Sie sie als Bild." },
-      "languages": { "title": "Englisch, Deutsch, Arabisch", "body": "Die gesamte App ist übersetzt, inklusive Rechts-nach-links-Layout für Arabisch." }
+      "squad": {
+        "title": "Kaderdatenbank",
+        "body": "Profile mit Kontaktdaten, Verein und Foto. Suche nach Name, Stadt oder Verein in Sekunden."
+      },
+      "ratings": {
+        "title": "Fähigkeitsbewertung",
+        "body": "Bewerten Sie Spieler von 1 bis 5 in technischen, körperlichen, taktischen und mentalen Fähigkeiten und verfolgen Sie den Durchschnitt."
+      },
+      "board": {
+        "title": "Taktiktafel",
+        "body": "Spieler verschieben, Laufwege, Pässe und Dribblings zeichnen, Zonen markieren und Formationen wie 4-3-3 auf vier Spielfeldern laden."
+      },
+      "plans": {
+        "title": "Gespeicherte Pläne",
+        "body": "Speichern Sie jede Tafel als Plan, filtern Sie nach Trainer, öffnen Sie sie später wieder und exportieren Sie sie als Bild."
+      },
+      "languages": {
+        "title": "Englisch, Deutsch, Arabisch",
+        "body": "Die gesamte App ist übersetzt, inklusive Rechts-nach-links-Layout für Arabisch."
+      }
     },
     "how": {
       "title": "So funktioniert es",
-      "one": { "title": "Spieler anlegen", "body": "Erfassen Sie Ihren Kader einmalig mit Daten und Foto." },
-      "two": { "title": "Fähigkeiten bewerten", "body": "Bewerten Sie nach dem Training jede Fähigkeit von 1 bis 5. Die Übersicht zeigt, wer sich verbessert." },
-      "three": { "title": "Plan zeichnen", "body": "Erstellen Sie Formation und Laufwege auf der Tafel, speichern Sie sie und teilen Sie das Bild mit dem Team." }
+      "one": {
+        "title": "Spieler anlegen",
+        "body": "Erfassen Sie Ihren Kader einmalig mit Daten und Foto."
+      },
+      "two": {
+        "title": "Fähigkeiten bewerten",
+        "body": "Bewerten Sie nach dem Training jede Fähigkeit von 1 bis 5. Die Übersicht zeigt, wer sich verbessert."
+      },
+      "three": {
+        "title": "Plan zeichnen",
+        "body": "Erstellen Sie Formation und Laufwege auf der Tafel, speichern Sie sie und teilen Sie das Bild mit dem Team."
+      }
     },
     "faq": {
       "title": "Häufige Fragen",
-      "cost": { "q": "Ist Pitchside kostenlos?", "a": "Ja. Pitchside ist kostenlos und läuft mit Docker auf Ihrem eigenen Server." },
-      "who": { "q": "Für wen ist es gedacht?", "a": "Für Amateur- und Jugendvereine, Trainer und Mannschaftsverantwortliche, die ein Werkzeug für Kaderdaten, Spielerentwicklung und Spielvorbereitung wollen." },
-      "board": { "q": "Was kann die Taktiktafel?", "a": "Heim-, Gast- und neutrale Spieler, Bälle, Hütchen und Tore setzen; Laufwege, Pässe, Dribblings und Zonen zeichnen; gängige Formationen laden; Rückgängig und Wiederholen; PNG exportieren." },
-      "data": { "q": "Wo werden meine Daten gespeichert?", "a": "In einer PostgreSQL-Datenbank, die Sie selbst betreiben. Es werden keine Daten an Dritte gesendet." },
-      "languages": { "q": "Welche Sprachen werden unterstützt?", "a": "Englisch, Deutsch und Arabisch, einschließlich Rechts-nach-links-Layout." }
+      "cost": {
+        "q": "Ist Pitchside kostenlos?",
+        "a": "Der Taktik-Designer ist kostenlos und ohne Konto nutzbar. Die Vereinsverwaltung enthält eine kostenlose 14-Tage-Testphase pro Verein, danach ein Monatsabo. Sie können sie auch mit Docker selbst hosten."
+      },
+      "who": {
+        "q": "Für wen ist es gedacht?",
+        "a": "Für Amateur- und Jugendvereine, Trainer und Mannschaftsverantwortliche, die ein Werkzeug für Kaderdaten, Spielerentwicklung und Spielvorbereitung wollen."
+      },
+      "board": {
+        "q": "Was kann die Taktiktafel?",
+        "a": "Heim-, Gast- und neutrale Spieler, Bälle, Hütchen und Tore setzen; Laufwege, Pässe, Dribblings und Zonen zeichnen; gängige Formationen laden; Rückgängig und Wiederholen; PNG exportieren."
+      },
+      "data": {
+        "q": "Wo werden meine Daten gespeichert?",
+        "a": "In einer PostgreSQL-Datenbank, die Sie selbst betreiben. Es werden keine Daten an Dritte gesendet."
+      },
+      "languages": {
+        "q": "Welche Sprachen werden unterstützt?",
+        "a": "Englisch, Deutsch und Arabisch, einschließlich Rechts-nach-links-Layout."
+      }
     },
-    "cta": { "title": "Planen Sie das nächste Spiel in Minuten" }
+    "cta": {
+      "title": "Planen Sie das nächste Spiel in Minuten"
+    },
+    "pricing": {
+      "title": "Kostenlos zeichnen, einfach den Verein führen",
+      "subtitle": "Der Taktik-Designer ist für alle kostenlos. Die Vereinsverwaltung hat eine kostenlose Testphase pro Verein, danach einen Monatstarif.",
+      "perMonth": "/ Monat",
+      "free": {
+        "name": "Kostenloser Designer",
+        "note": "Kein Konto nötig",
+        "items": [
+          "Alle 11 Spielfelder",
+          "Spieler, Pfeile, Zonen und Formationen",
+          "Autospeichern im Browser",
+          "PNG-Export"
+        ],
+        "cta": "Designer öffnen"
+      },
+      "pro": {
+        "name": "Vereinstarif",
+        "note": "14 Tage kostenlos testen, einmal pro Verein",
+        "items": [
+          "Spielerdatenbank mit Fotos",
+          "Fähigkeitsbewertung und Übersicht",
+          "Pläne in der Cloud gespeichert",
+          "Bis zu 5 Trainer einladen",
+          "Öffentliche Links zum Teilen",
+          "Englisch, Deutsch und Arabisch"
+        ],
+        "cta": "Kostenlos testen"
+      }
+    }
   },
   "featuresPage": {
-    "metaTitle": "Funktionen", "metaDescription": "Kaderdatenbank, Fähigkeitsbewertung, interaktive Taktiktafel und gespeicherte Pläne für Fußballvereine.",
-    "title": "Funktionen", "intro": "Pitchside deckt die drei Aufgaben ab, die Trainer jede Woche wiederholen: den Kader kennen, Entwicklung verfolgen und das Spiel planen.",
-    "squad": { "title": "Kaderdatenbank", "body": "Alle Spielerdaten in einer durchsuchbaren Liste.", "points": ["Profilfoto, Geburtsdatum, Verein und Adresse", "Suche nach Name, Stadt oder Verein", "Gesamtwertung auf jeder Karte"] },
-    "ratings": { "title": "Fähigkeitsbewertung", "body": "Spieler auf einer klaren Skala von 1 bis 5 nach Kategorien bewerten.", "points": ["Kategorien: technisch, körperlich, taktisch, mental", "Protokolliert, wer eine Bewertung wann geändert hat", "Übersicht mit Kategoriedurchschnitten und besten Spielern"] },
-    "board": { "title": "Interaktive Taktiktafel", "body": "Eine moderne Tafel für Maus, Touch und Tastatur.", "points": ["Ganzes Feld, halbes Feld, Strafraum und leeres Feld", "Heim-, Gast- und neutrale Spieler mit editierbaren Nummern", "Laufwege, Pässe, Dribblings, Zonen, Text, Bälle, Hütchen und Tore", "Formationen: 4-4-2, 4-3-3, 3-5-2, 4-2-3-1, 5-3-2", "Rückgängig, Wiederholen, Löschen und PNG-Export"] },
-    "plans": { "title": "Gespeicherte Pläne", "body": "Machen Sie aus Tafeln eine Bibliothek für Ihren Trainerstab.", "points": ["Nach Trainer filtern und Kommentare durchsuchen", "Jeden gespeicherten Plan wieder öffnen und bearbeiten", "Bildvorschau für jeden Plan"] },
+    "metaTitle": "Funktionen",
+    "metaDescription": "Kaderdatenbank, Fähigkeitsbewertung, interaktive Taktiktafel und gespeicherte Pläne für Fußballvereine.",
+    "title": "Funktionen",
+    "intro": "Pitchside deckt die drei Aufgaben ab, die Trainer jede Woche wiederholen: den Kader kennen, Entwicklung verfolgen und das Spiel planen.",
+    "squad": {
+      "title": "Kaderdatenbank",
+      "body": "Alle Spielerdaten in einer durchsuchbaren Liste.",
+      "points": [
+        "Profilfoto, Geburtsdatum, Verein und Adresse",
+        "Suche nach Name, Stadt oder Verein",
+        "Gesamtwertung auf jeder Karte"
+      ]
+    },
+    "ratings": {
+      "title": "Fähigkeitsbewertung",
+      "body": "Spieler auf einer klaren Skala von 1 bis 5 nach Kategorien bewerten.",
+      "points": [
+        "Kategorien: technisch, körperlich, taktisch, mental",
+        "Protokolliert, wer eine Bewertung wann geändert hat",
+        "Übersicht mit Kategoriedurchschnitten und besten Spielern"
+      ]
+    },
+    "board": {
+      "title": "Interaktive Taktiktafel",
+      "body": "Eine moderne Tafel für Maus, Touch und Tastatur.",
+      "points": [
+        "Ganzes Feld, halbes Feld, Strafraum und leeres Feld",
+        "Heim-, Gast- und neutrale Spieler mit editierbaren Nummern",
+        "Laufwege, Pässe, Dribblings, Zonen, Text, Bälle, Hütchen und Tore",
+        "Formationen: 4-4-2, 4-3-3, 3-5-2, 4-2-3-1, 5-3-2",
+        "Rückgängig, Wiederholen, Löschen und PNG-Export"
+      ]
+    },
+    "plans": {
+      "title": "Gespeicherte Pläne",
+      "body": "Machen Sie aus Tafeln eine Bibliothek für Ihren Trainerstab.",
+      "points": [
+        "Nach Trainer filtern und Kommentare durchsuchen",
+        "Jeden gespeicherten Plan wieder öffnen und bearbeiten",
+        "Bildvorschau für jeden Plan"
+      ]
+    },
     "cta": "Jetzt starten"
+  },
+  "register": {
+    "title": "Vereinskonto erstellen",
+    "subtitle": "Testen Sie die komplette Verwaltung 14 Tage kostenlos.",
+    "club": "Vereinsname",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "password": "Passwort (mind. 8 Zeichen)",
+    "creating": "Konto wird erstellt…",
+    "submit": "Kostenlos testen",
+    "trialNote": "Eine kostenlose Testphase pro Verein. Keine Karte zum Start nötig.",
+    "haveAccount": "Schon ein Konto?",
+    "signIn": "Anmelden"
+  },
+  "join": {
+    "title": "{club} beitreten",
+    "subtitle": "Sie wurden als {email} eingeladen. Wählen Sie Benutzername und Passwort.",
+    "username": "Benutzername",
+    "password": "Passwort (mind. 8 Zeichen)",
+    "joining": "Beitritt…",
+    "submit": "Dem Team beitreten",
+    "invalid": "Diese Einladung ist ungültig oder abgelaufen",
+    "invalidHint": "Bitten Sie den Vereinsinhaber um eine neue Einladung."
+  },
+  "billing": {
+    "title": "Abrechnung",
+    "trialBanner": "{days, plural, one {Noch # Tag} other {Noch # Tage}} in Ihrer kostenlosen Testphase.",
+    "subscribe": "Abonnieren",
+    "manage": "Abo verwalten",
+    "pastDue": "Die letzte Zahlung ist fehlgeschlagen. Aktualisieren Sie Ihre Zahlungsdaten, um den Zugang zu behalten.",
+    "status": "Status",
+    "states": {
+      "trialing": "Testphase",
+      "active": "Aktiv",
+      "past_due": "Zahlung überfällig",
+      "canceled": "Gekündigt"
+    },
+    "trialEnds": "Testphase endet",
+    "renews": "Verlängert sich am",
+    "accessUntil": "Zugang bis",
+    "blocked": "Ihre Testphase oder Ihr Abo ist beendet. Abonnieren Sie, um die Verwaltung weiter zu nutzen.",
+    "ownerOnly": "Nur der Vereinsinhaber kann das Abo ändern.",
+    "notConfigured": "Die Online-Zahlung ist auf diesem Server noch nicht eingerichtet.",
+    "redirecting": "Weiterleitung…",
+    "error": "Die Zahlungsseite konnte nicht geöffnet werden. Bitte erneut versuchen.",
+    "success": "Vielen Dank! Ihr Abo wird aktiviert.",
+    "cancelled": "Der Bezahlvorgang wurde abgebrochen. Es wurde nichts abgebucht.",
+    "includes": "Der Vereinstarif enthält",
+    "features": {
+      "players": "Unbegrenzt Spieler und Profile",
+      "ratings": "Fähigkeitsbewertung und Übersicht",
+      "plans": "Taktikpläne in der Cloud",
+      "team": "Trainer in den Verein einladen",
+      "share": "Öffentliche Links zum Teilen von Plänen"
+    },
+    "designerFree": "Der Taktik-Designer bleibt für alle kostenlos, ganz ohne Konto."
+  },
+  "team": {
+    "title": "Team",
+    "subtitle": "{used} von {limit} Plätzen belegt.",
+    "members": "Mitglieder",
+    "you": "Sie",
+    "roles": {
+      "owner": "Inhaber",
+      "coach": "Trainer",
+      "viewer": "Betrachter"
+    },
+    "remove": "Mitglied entfernen",
+    "confirmRemove": "{name} aus dem Verein entfernen? Der Zugang geht verloren.",
+    "pending": "Offene Einladungen",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert",
+    "revoke": "Einladung widerrufen",
+    "invite": "Trainer einladen",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "seatsFull": "Alle Plätze sind belegt.",
+    "sendInvite": "Einladung senden",
+    "inviteHint": "Wir senden die Einladung per E-Mail; Sie können den Link auch kopieren und selbst senden. Links laufen nach 14 Tagen ab.",
+    "ownerOnly": "Nur der Vereinsinhaber kann das Team verwalten."
+  },
+  "designer": {
+    "metaTitle": "Kostenlose Fußball-Taktiktafel",
+    "metaDescription": "Kostenlose Online-Taktiktafel für Fußballtrainer: ganzes und halbes Feld, Hochformat und Futsal, Formationen, Laufwege, Pässe und PNG-Export. Ohne Konto.",
+    "title": "Kostenlose Fußball-Taktiktafel",
+    "intro": "Zeichnen Sie Formationen, Laufwege und Pässe auf dem ganzen oder halben Feld, im Hochformat oder auf dem Futsal-Feld. Ohne Konto.",
+    "loading": "Tafel wird geladen…",
+    "whyTitle": "Was Sie tun können",
+    "points": {
+      "fields": "11 Spielfelder: ganz, halb, Strafraum, Hochformat, grau, weiß und Futsal",
+      "draw": "Heim-, Gast- und neutrale Spieler, Ball, Hütchen, Tore, Laufwege, Pässe, Dribblings, Zonen und Text",
+      "formations": "Formationen per Klick, z. B. 4-4-2, 4-3-3, 3-5-2 und 4-2-3-1",
+      "export": "Rückgängig und Wiederholen, Autospeichern im Browser und PNG-Export"
+    },
+    "upgradeTitle": "Den ganzen Verein verwalten",
+    "upgradeBody": "Pläne in der Cloud speichern, per Link teilen, Spieler verwalten, Fähigkeiten bewerten und den Trainerstab einladen. 14 Tage alles kostenlos testen.",
+    "upgradeCta": "Kostenlos testen"
+  },
+  "shared": {
+    "from": "Geteilt von {club}",
+    "cta": "Planen Sie Ihre eigene Taktik kostenlos mit dem Pitchside-Designer.",
+    "tryDesigner": "Kostenlosen Designer öffnen"
+  },
+  "ads": {
+    "title": "Werbung und Cookies",
+    "body": "Auf kostenlosen Seiten zeigen wir Werbung, damit der Designer kostenlos bleibt. Werbe-Cookies erlauben?",
+    "accept": "Erlauben",
+    "decline": "Nein danke"
   }
 }

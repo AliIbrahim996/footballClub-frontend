@@ -5,6 +5,7 @@ import { api } from "@/lib/server";
 import type { Paginated, Plan } from "@/lib/types";
 import { Card, Empty, LinkButton, PageHeader, inputCls } from "@/components/ui";
 import { DeleteButton } from "@/components/delete-button";
+import { SharePlanButton } from "@/components/share-plan-button";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const t = await getTranslations({ locale: (await params).locale, namespace: "nav" });
@@ -53,7 +54,10 @@ export default async function PlansPage({
                     {p.title && <p className="truncate text-sm text-muted">{p.comment}</p>}
                     <p className="mt-1 text-xs text-muted">{p.created_by} · {fmt.dateTime(new Date(p.created_at), { dateStyle: "medium" })}</p>
                   </div>
-                  <DeleteButton path={`/plans/${p.id}/`} redirectTo="/plans" confirmText={t("confirmDelete")} />
+                  <div className="flex shrink-0 flex-col items-end gap-1.5">
+                    <SharePlanButton planId={p.id} shareToken={p.share_token} />
+                    <DeleteButton path={`/plans/${p.id}/`} redirectTo="/plans" confirmText={t("confirmDelete")} />
+                  </div>
                 </div>
               </Card>
             </li>

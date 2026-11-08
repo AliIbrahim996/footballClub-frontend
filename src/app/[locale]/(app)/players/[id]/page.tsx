@@ -46,7 +46,7 @@ export default async function PlayerPage({
           </>
         }
       />
-      <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
         <Card className="h-fit p-5">
           <div className="flex items-center gap-4">
             <Avatar src={player.image} name={fullName} size={72} />
