@@ -9,7 +9,12 @@ export async function call<T = unknown>(path: string, init: RequestInit & { json
   const { json, headers, ...rest } = init;
   const res = await fetch(`/api${path}`, {
     ...rest,
-    headers: { ...(json !== undefined ? { "Content-Type": "application/json" } : {}), ...headers },
+    headers: {
+      ...(json !== undefined ? { "Content-Type": "application/json" } : {}),
+      // Tell Django which language to use for validation/error messages.
+      "Accept-Language": typeof document !== "undefined" ? document.documentElement.lang || "en" : "en",
+      ...headers,
+    },
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
   if (res.status === 204) return undefined as T;
@@ -26,4 +31,5 @@ export function fieldErrors(e: unknown): Record<string, string> {
     Object.entries(e.data as Record<string, unknown>).map(([k, v]) => [k, Array.isArray(v) ? String(v[0]) : String(v)]),
   );
 }
+
 

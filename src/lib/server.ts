@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 
-export const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:8000";
+export const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8000";
 export const TOKEN_COOKIE = "fc_token";
 
 /** Fetch from the Django API on the server with the user's token. Redirects to /login when unauthenticated. */
@@ -11,7 +11,7 @@ export async function api<T>(path: string): Promise<T> {
   const token = (await cookies()).get(TOKEN_COOKIE)?.value;
   if (!token) redirect({ href: "/login", locale: await getLocale() });
   const res = await fetch(`${BACKEND_URL}/api${path}`, {
-    headers: { Authorization: `Token ${token}` },
+    headers: { Authorization: `Token ${token}`, "Accept-Language": await getLocale() },
     cache: "no-store",
   });
   if (res.status === 401) redirect({ href: "/login", locale: await getLocale() });
@@ -23,5 +23,6 @@ export async function api<T>(path: string): Promise<T> {
 export async function hasSession() {
   return Boolean((await cookies()).get(TOKEN_COOKIE)?.value);
 }
+
 
 

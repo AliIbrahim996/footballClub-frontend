@@ -9,6 +9,8 @@ async function forward(request: NextRequest, ctx: { params: Promise<{ path: stri
 
   const target = `${BACKEND_URL}/api/${path.join("/")}/${request.nextUrl.search}`;
   const headers = new Headers({ Authorization: `Token ${token}` });
+  const lang = request.headers.get("accept-language");
+  if (lang) headers.set("accept-language", lang);
   const type = request.headers.get("content-type");
   if (type) headers.set("content-type", type);
 
