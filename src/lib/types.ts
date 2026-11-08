@@ -15,7 +15,9 @@ export type Skill = { id: number; skill_name: string; comment: string; category:
 export type Category = { id: number; name: string };
 
 export type BoardState = { pitch: PitchKind; items: BoardItem[] };
-export type PitchKind = "full" | "half" | "box" | "blank";
+export type PitchKind =
+  | "full" | "half" | "box" | "fullPortrait" | "halfPortrait"
+  | "blank" | "grey" | "white" | "whitePortrait" | "futsal" | "futsalPortrait";
 export type BoardItem =
   | { id: string; kind: "player"; x: number; y: number; team: "home" | "away" | "neutral"; label: string }
   | { id: string; kind: "ball" | "cone" | "goal"; x: number; y: number; rot?: number }

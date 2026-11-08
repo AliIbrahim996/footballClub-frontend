@@ -47,7 +47,7 @@
     "undo": "Rückgängig", "redo": "Wiederholen", "deleteSelected": "Auswahl löschen",
     "boardLabel": "Interaktive Taktiktafel",
     "hint": "Werkzeug wählen, dann auf dem Platz klicken oder ziehen. Doppelklick auf Spieler oder Text zum Bearbeiten. Entf löscht die Auswahl; Strg+Z macht rückgängig.",
-    "pitch": "Spielfeld", "pitches": { "full": "Ganz", "half": "Halb", "box": "Strafraum", "blank": "Leer" },
+    "pitch": "Spielfeld", "pitches": { "full": "Ganz", "half": "Halb", "box": "Strafraum", "fullPortrait": "Ganz (Hochformat)", "halfPortrait": "Halb (Hochformat)", "blank": "Einfach grün", "grey": "Graue Streifen", "white": "Weiß", "whitePortrait": "Weiß (Hochformat)", "futsal": "Futsal-Feld", "futsalPortrait": "Futsal (Hochformat)" },
     "formation": "Formation", "place": { "home": "Heim setzen", "away": "Gast setzen" }, "clear": "Tafel leeren",
     "savePlan": "Plan speichern", "titleLabel": "Titel", "commentLabel": "Kommentar", "saving": "Speichern…", "save": "Plan speichern", "update": "Plan aktualisieren",
     "exportPng": "PNG herunterladen", "saved": "Plan gespeichert.", "saveError": "Plan konnte nicht gespeichert werden."

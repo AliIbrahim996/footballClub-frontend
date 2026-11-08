@@ -6,14 +6,13 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { call } from "@/lib/client";
-import type { BoardItem, BoardState, PitchKind, Plan } from "@/lib/types";
+import type { BoardItem, BoardState, Plan } from "@/lib/types";
 import { Button, Card, Field, Input } from "../ui";
 import { FORMATIONS, formation, svgToPng, uid, wavy } from "./geometry";
-import { Pitch, VIEWBOX } from "./pitch";
+import { PITCH_KINDS, Pitch, VIEWBOX } from "./pitch";
 
 type Tool = "select" | "home" | "away" | "neutral" | "ball" | "cone" | "goal" | "run" | "pass" | "dribble" | "zone" | "text" | "erase";
 const TEAM_COLOR = { home: "#2563eb", away: "#dc2626", neutral: "#f59e0b" } as const;
-const PITCHES: PitchKind[] = ["full", "half", "box", "blank"];
 const EMPTY: BoardState = { pitch: "full", items: [] };
 
 export function TacticsBoard({ plan }: { plan?: Plan }) {
@@ -226,11 +225,11 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
         </Card>
 
         {/* Board */}
-        <div className="overflow-hidden rounded-2xl border border-line bg-[#2f7d3a] shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface-2 shadow-sm">
           <svg
             ref={svgRef}
             viewBox={`${vx} ${vy} ${vw} ${vh}`}
-            className={`block w-full touch-none select-none ${tool === "select" ? "cursor-default" : "cursor-crosshair"}`}
+            className={`mx-auto block max-h-[78vh] w-full touch-none select-none ${tool === "select" ? "cursor-default" : "cursor-crosshair"}`}
             role="img" aria-label={t("boardLabel")}
             onPointerDown={onBackgroundDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}
           >
@@ -257,8 +256,8 @@ export function TacticsBoard({ plan }: { plan?: Plan }) {
       <div className="space-y-4">
         <Card className="space-y-4 p-4">
           <h2 className="font-semibold">{t("pitch")}</h2>
-          <div className="grid grid-cols-4 gap-1.5" role="radiogroup" aria-label={t("pitch")}>
-            {PITCHES.map((p) => (
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 xl:grid-cols-2" role="radiogroup" aria-label={t("pitch")}>
+            {PITCH_KINDS.map((p) => (
               <button
                 key={p} type="button" role="radio" aria-checked={board.pitch === p}
                 onClick={() => commit({ ...board, pitch: p })}

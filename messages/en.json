@@ -47,7 +47,7 @@
     "undo": "Undo", "redo": "Redo", "deleteSelected": "Delete selected",
     "boardLabel": "Interactive tactics board",
     "hint": "Pick a tool, then click or drag on the pitch. Double-click a player or text to edit it. Delete removes the selection; Ctrl+Z undoes.",
-    "pitch": "Pitch", "pitches": { "full": "Full", "half": "Half", "box": "Box", "blank": "Blank" },
+    "pitch": "Pitch", "pitches": { "full": "Full", "half": "Half", "box": "Box", "fullPortrait": "Full (portrait)", "halfPortrait": "Half (portrait)", "blank": "Plain green", "grey": "Grey stripes", "white": "White", "whitePortrait": "White (portrait)", "futsal": "Futsal court", "futsalPortrait": "Futsal (portrait)" },
     "formation": "Formation", "place": { "home": "Place home", "away": "Place away" }, "clear": "Clear board",
     "savePlan": "Save plan", "titleLabel": "Title", "commentLabel": "Comment", "saving": "Saving…", "save": "Save plan", "update": "Update plan",
     "exportPng": "Download PNG", "saved": "Plan saved.", "saveError": "Could not save the plan."

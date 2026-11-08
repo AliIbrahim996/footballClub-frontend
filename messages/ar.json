@@ -47,7 +47,7 @@
     "undo": "تراجع", "redo": "إعادة", "deleteSelected": "حذف المحدد",
     "boardLabel": "لوحة تكتيك تفاعلية",
     "hint": "اختر أداة ثم انقر أو اسحب على الملعب. انقر مرتين على لاعب أو نص لتعديله. مفتاح Delete يحذف المحدد، وCtrl+Z يتراجع.",
-    "pitch": "الملعب", "pitches": { "full": "كامل", "half": "نصف", "box": "منطقة الجزاء", "blank": "فارغ" },
+    "pitch": "الملعب", "pitches": { "full": "كامل", "half": "نصف", "box": "منطقة الجزاء", "fullPortrait": "كامل (عمودي)", "halfPortrait": "نصف (عمودي)", "blank": "أخضر سادة", "grey": "خطوط رمادية", "white": "أبيض", "whitePortrait": "أبيض (عمودي)", "futsal": "ملعب خماسي", "futsalPortrait": "خماسي (عمودي)" },
     "formation": "التشكيلة", "place": { "home": "وضع المضيف", "away": "وضع الضيف" }, "clear": "مسح اللوحة",
     "savePlan": "حفظ الخطة", "titleLabel": "العنوان", "commentLabel": "ملاحظة", "saving": "جارٍ الحفظ…", "save": "حفظ الخطة", "update": "تحديث الخطة",
     "exportPng": "تنزيل PNG", "saved": "تم حفظ الخطة.", "saveError": "تعذّر حفظ الخطة."
