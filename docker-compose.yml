@@ -1,0 +1,57 @@
+# Frontend stack. Run: docker compose up --build   ->  http://localhost:3000
+#
+# By default it expects the API at BACKEND_URL (set below; the API repo's own compose
+# publishes it on host port 8000). To run the API + PostgreSQL together from the sibling
+# repo instead, use the "with-api" profile:
+#     docker compose --profile with-api up --build
+name: pitchside-frontend
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:8000}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "3000:3000"
+
+  # --- optional: build and run the Django API + PostgreSQL from ../footballClub-backend ---
+  db:
+    profiles: [with-api]
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: footballclub
+      POSTGRES_USER: footballclub
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-footballclub-dev}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U footballclub -d footballclub"]
+      interval: 5s
+      retries: 10
+
+  backend:
+    profiles: [with-api]
+    build: ${BACKEND_CONTEXT:-../footballClub-backend}
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,backend
+      POSTGRES_HOST: db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-footballclub-dev}
+      MEDIA_ROOT: /data/media
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-1}
+    volumes: [media:/data/media]
+    ports: ["8000:8000"]
+
+volumes:
+  pgdata:
+  media:
