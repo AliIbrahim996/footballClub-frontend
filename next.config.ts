@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+﻿import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 // Server-side URL of the Django API (service name inside Docker, localhost in dev).
@@ -21,3 +21,4 @@ const nextConfig: NextConfig = {
 };
 
 export default createNextIntlPlugin("./src/i18n/request.ts")(nextConfig);
+
