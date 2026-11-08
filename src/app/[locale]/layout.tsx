@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LOCALE_META, routing } from "@/i18n/routing";
-import { SITE } from "@/lib/site";
+import { SITE, SITE_ORIGIN } from "@/lib/site";
 import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    metadataBase: new URL(SITE.url),
+    metadataBase: new URL(SITE_ORIGIN),
     title: { default: t("title"), template: `%s · ${SITE.name}` },
     description: t("description"),
     applicationName: SITE.name,

@@ -1,4 +1,4 @@
-﻿import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 
 // Makes the site installable on Android/iOS/desktop ("Add to home screen").
 export default function manifest(): MetadataRoute.Manifest {
@@ -13,3 +13,6 @@ export default function manifest(): MetadataRoute.Manifest {
     icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }],
   };
 }
+
+// Required for `output: "export"` (static hosting); harmless for the normal server build.
+export const dynamic = "force-static";

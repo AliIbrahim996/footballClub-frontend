@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Mail } from "lucide-react";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LinkButton } from "@/components/ui";
 import { CONTACT_EMAIL, CONTACT_MODE } from "@/lib/flags";
 import { alternates } from "@/lib/seo";
 import { ContactForm } from "./contact-form";
 
-type P = { params: Promise<{ locale: string }>; searchParams: Promise<{ topic?: string }> };
+type P = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { locale } = await params;
@@ -14,11 +15,10 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   return { title: t("metaTitle"), description: t("metaDescription"), alternates: alternates(locale, "/contact") };
 }
 
-export default async function ContactPage({ params, searchParams }: P) {
+export default async function ContactPage({ params }: P) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contact");
-  const { topic } = await searchParams;
   const useForm = CONTACT_MODE === "form";
   const subject = encodeURIComponent(t("mailSubject"));
 
@@ -28,7 +28,7 @@ export default async function ContactPage({ params, searchParams }: P) {
       <p className="mt-4 text-lg text-muted">{t("intro")}</p>
       <div className="mt-8">
         {useForm ? (
-          <ContactForm locale={locale} initialMessage={topic === "full" ? t("prefill") : ""} />
+          <Suspense><ContactForm locale={locale} prefill={t("prefill")} /></Suspense>
         ) : CONTACT_EMAIL ? (
           <div className="rounded-2xl border border-line bg-surface p-6">
             <p className="text-sm text-muted">{t("mailtoBody")}</p>

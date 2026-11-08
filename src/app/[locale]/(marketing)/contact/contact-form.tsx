@@ -1,13 +1,15 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button, Card, Field, Input, inputCls } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
 import { ApiError, call, fieldErrors } from "@/lib/client";
 
-export function ContactForm({ locale, initialMessage }: { locale: string; initialMessage: string }) {
+export function ContactForm({ locale, prefill }: { locale: string; prefill: string }) {
   const t = useTranslations("contact");
+  const initialMessage = useSearchParams().get("topic") === "full" ? prefill : "";
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
 

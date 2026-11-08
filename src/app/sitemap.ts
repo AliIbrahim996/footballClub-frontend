@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-import { SITE } from "@/lib/site";
+import { SITE, TRAILING_SLASH } from "@/lib/site";
 
 import { SIGNUPS_OPEN } from "@/lib/flags";
 
@@ -9,11 +9,14 @@ const PATHS = ["", "/features", "/designer", "/contact", "/privacy", "/terms", "
 export default function sitemap(): MetadataRoute.Sitemap {
   return PATHS.flatMap((path) =>
     routing.locales.map((locale) => ({
-      url: `${SITE.url}/${locale}${path}`,
+      url: `${SITE.url}/${locale}${path}${TRAILING_SLASH}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: path === "" ? 1 : 0.7,
-      alternates: { languages: Object.fromEntries(routing.locales.map((l) => [l, `${SITE.url}/${l}${path}`])) },
+      alternates: { languages: Object.fromEntries(routing.locales.map((l) => [l, `${SITE.url}/${l}${path}${TRAILING_SLASH}`])) },
     })),
   );
 }
+
+// Required for `output: "export"` (static hosting); harmless for the normal server build.
+export const dynamic = "force-static";

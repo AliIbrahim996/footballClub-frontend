@@ -15,3 +15,6 @@ export default function robots(): MetadataRoute.Robots {
     host: SITE.url,
   };
 }
+
+// Required for `output: "export"` (static hosting); harmless for the normal server build.
+export const dynamic = "force-static";
