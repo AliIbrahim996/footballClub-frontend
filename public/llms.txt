@@ -1,0 +1,19 @@
+# Pitchside
+
+> Pitchside is a web app for football (soccer) clubs and coaches. It combines a squad database, a skill-rating system and an interactive tactics board in one place. Available in English, German and Arabic (right-to-left).
+
+## What it does
+- Squad management: store player profiles (contact details, club, photo) and search the squad.
+- Player evaluation: rate each player from 1 to 5 on technical, physical, tactical and mental skills; see averages and rankings on a dashboard.
+- Tactics board: place home/away players, ball, cones and goals on a full pitch, half pitch, penalty box or blank pitch; draw runs, passes, dribbles and zones; load formations such as 4-4-2, 4-3-3, 3-5-2; undo/redo; export as PNG.
+- Plans: save boards as tactical plans, filter by manager, reopen and edit later.
+
+## Pages (public)
+- English: /en and /en/features
+- Deutsch: /de and /de/features
+- العربية: /ar and /ar/features
+
+The signed-in application (dashboard, players, tactics, plans) requires an account and is not crawlable.
+
+## Technical
+- Frontend: Next.js (App Router, server-rendered, localized routes). Backend: Django REST API with PostgreSQL.
