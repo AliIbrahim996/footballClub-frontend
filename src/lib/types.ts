@@ -14,7 +14,9 @@ export type Player = {
 export type Skill = { id: number; skill_name: string; comment: string; category: number; category_name: string };
 export type Category = { id: number; name: string };
 
-export type BoardState = { pitch: PitchKind; items: BoardItem[] };
+/** A simulation step: where items move to, relative to the previous step (missing ids stay where they were). */
+export type BoardStep = { id: string; pos: Record<string, [number, number]> };
+export type BoardState = { pitch: PitchKind; items: BoardItem[]; steps?: BoardStep[] };
 export type PitchKind =
   | "full" | "half" | "box" | "fullPortrait" | "halfPortrait"
   | "blank" | "grey" | "white" | "whitePortrait" | "futsal" | "futsalPortrait";
@@ -26,7 +28,7 @@ export type BoardItem =
   | { id: string; kind: "zone"; x: number; y: number; w: number; h: number };
 
 export type Plan = {
-  id: number; title: string; image: string; board: Partial<BoardState>; created_at: string; created_by: string; comment: string; share_token: string | null;
+  id: number; title: string; image: string; board: Partial<BoardState>; tags: string[]; created_at: string; created_by: string; comment: string; share_token: string | null;
 };
 
 export type Dashboard = {

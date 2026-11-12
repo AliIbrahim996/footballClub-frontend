@@ -110,7 +110,9 @@
     "share": "Share link",
     "copyLink": "Copy link",
     "linkCopied": "Link copied",
-    "stopSharing": "Stop sharing"
+    "stopSharing": "Stop sharing",
+    "tag": "Tag",
+    "allTags": "All tags"
   },
   "tactics": {
     "title": "Tactics board",
@@ -174,6 +176,37 @@
       "cta": "Start free trial",
       "bodyClosed": "Your board is saved in this browser only. Export it as an image any time. For cloud saving, sharing and club management, contact us.",
       "ctaClosed": "Contact us for the full version"
+    },
+    "formationHint": "Formations need a full-size pitch (full, portrait, plain, grey or white).",
+    "sim": {
+      "title": "Simulate the play",
+      "steps": "Steps",
+      "progress": "Step {current} of {total}",
+      "addStep": "Add step",
+      "deleteStep": "Delete this step",
+      "play": "Play",
+      "pause": "Pause",
+      "speed": "Speed",
+      "loop": "Loop",
+      "hintEmpty": "Step 1 is the starting position. Add a step, move players and the ball to where they go next, then press Play.",
+      "hint": "Pick a step and drag players to where they should be at that moment. Dashed lines show each movement. Press Play to watch the whole play.",
+      "lockedTitle": "Simulate plays step by step",
+      "lockedBody": "Build an attack or a defensive shape in steps, tag it, and watch it play out with smooth player movement. Part of the full version.",
+      "lockedCta": "Get the full version"
+    },
+    "tags": {
+      "label": "Tags",
+      "placeholder": "Custom tag",
+      "add": "Add",
+      "remove": "Remove tag {tag}",
+      "presets": {
+        "attack": "Attack",
+        "defense": "Defense",
+        "set-piece": "Set piece",
+        "counter": "Counter-attack",
+        "pressing": "Pressing",
+        "transition": "Transition"
+      }
     }
   },
   "landing": {
@@ -288,6 +321,7 @@
           "Player database with photos",
           "Skill ratings and dashboard",
           "Plans saved in the cloud",
+          "Step-by-step play simulation with tags",
           "Invite up to 5 coaches",
           "Public share links",
           "English and Arabic"

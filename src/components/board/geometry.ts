@@ -1,4 +1,4 @@
-import type { BoardItem } from "@/lib/types";
+import type { BoardItem, BoardStep } from "@/lib/types";
 import { PITCH_H, PITCH_W } from "./pitch";
 
 export const uid = () => Math.random().toString(36).slice(2, 9);
@@ -30,6 +30,28 @@ export function formation(name: string, team: "home" | "away"): BoardItem[] {
   });
   return items;
 }
+
+// Formations need a full-size 11-a-side field; portrait fields are the landscape layout rotated 90 degrees.
+const LANDSCAPE_11 = new Set(["full", "blank", "grey", "white"]);
+const PORTRAIT_11 = new Set(["fullPortrait", "whitePortrait"]);
+export const formationFits = (pitch: string) => LANDSCAPE_11.has(pitch) || PORTRAIT_11.has(pitch);
+
+/**
+ * Put one team into a formation. Players already on the board keep their identity (so simulation steps that move
+ * them still apply) and are reordered by shirt number; missing players are added, surplus players removed.
+ */
+export function arrangeFormation(items: BoardItem[], name: string, team: "home" | "away", pitch: string): BoardItem[] {
+  const portrait = PORTRAIT_11.has(pitch);
+  const spots = formation(name, team).map((p) => (portrait && p.kind === "player" ? { ...p, x: PITCH_H - p.y, y: p.x } : p));
+  const isTeam = (i: BoardItem) => i.kind === "player" && i.team === team;
+  const existing = items.filter(isTeam).sort((a, b) => num(a) - num(b));
+  const placed = spots.map((s, i) => {
+    const old = existing[i];
+    return old && old.kind === "player" && s.kind === "player" ? { ...old, x: s.x, y: s.y, label: s.label } : s;
+  });
+  return [...items.filter((i) => !isTeam(i)), ...placed];
+}
+const num = (i: BoardItem) => (i.kind === "player" ? Number(i.label) || 99 : 99);
 
 /** A zig-zag path between two points, used for dribbles. */
 export function wavy([x1, y1]: [number, number], [x2, y2]: [number, number]) {
@@ -64,4 +86,52 @@ export async function svgToPng(svg: SVGSVGElement, scale = 2): Promise<Blob> {
   } finally {
     URL.revokeObjectURL(url);
   }
+}
+
+/**
+ * CSS-equivalent cubic-bezier easing for JavaScript animation (Newton-Raphson with a bisection fallback).
+ * The board playback uses the same strong ease-in-out curve as the CSS token --ease-in-out.
+ */
+export function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
+  const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+  const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+  const sampleX = (t: number) => ((ax * t + bx) * t + cx) * t;
+  const sampleY = (t: number) => ((ay * t + by) * t + cy) * t;
+  const slopeX = (t: number) => (3 * ax * t + 2 * bx) * t + cx;
+  return (x: number) => {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+    let t = x;
+    for (let i = 0; i < 8; i++) {
+      const err = sampleX(t) - x;
+      if (Math.abs(err) < 1e-6) return sampleY(t);
+      const d = slopeX(t);
+      if (Math.abs(d) < 1e-6) break;
+      t -= err / d;
+    }
+    let lo = 0, hi = 1;
+    t = x;
+    while (hi - lo > 1e-6) {
+      if (sampleX(t) < x) lo = t; else hi = t;
+      t = (lo + hi) / 2;
+    }
+    return sampleY(t);
+  };
+}
+export const easeInOut = cubicBezier(0.77, 0, 0.175, 1);
+
+export type Positions = Record<string, [number, number]>;
+
+/** Absolute positions of every movable item at each step (index 0 = the board as drawn). */
+export function stepPositions(items: BoardItem[], steps: BoardStep[] = []): Positions[] {
+  const base: Positions = {};
+  for (const it of items) if (it.kind !== "arrow") base[it.id] = [it.x, it.y];
+  const out = [base];
+  for (const s of steps) {
+    const prev = out[out.length - 1];
+    const next: Positions = { ...prev };
+    for (const [id, p] of Object.entries(s.pos)) if (id in prev) next[id] = p;
+    out.push(next);
+  }
+  return out;
 }
