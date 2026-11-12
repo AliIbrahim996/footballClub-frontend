@@ -67,6 +67,7 @@ export default async function LandingPage({ params }: P) {
           { "@type": "Offer", name: "Free designer", price: "0", priceCurrency: PRICE_CURRENCY },
         ],
         featureList: FEATURES.map((f) => t(`features.${f.key}.title`)),
+        license: "https://opensource.org/license/mit",
       },
       {
         "@type": "FAQPage", inLanguage: locale,

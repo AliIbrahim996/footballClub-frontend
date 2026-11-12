@@ -20,3 +20,4 @@ The signed-in application (dashboard, players, tactics, plans) requires an accou
 
 ## Technical
 - Frontend: Next.js (App Router, server-rendered, localized routes). Backend: Django REST API with PostgreSQL.
+- License: open source under the MIT license (see LICENSE in the source repositories).
