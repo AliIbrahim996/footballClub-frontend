@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ConsentBanner, CookieSettingsLink } from "@/components/ads";
+import { RevealObserver } from "@/components/reveal-observer";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { LinkButton, Logo } from "@/components/ui";
 import { DESIGNER_ONLY, SIGNUPS_OPEN } from "@/lib/flags";
@@ -26,6 +27,7 @@ export default async function MarketingLayout({ children, params }: { children: 
       </header>
       <main id="main">{children}</main>
       <ConsentBanner />
+      <RevealObserver />
       <footer className="border-t border-line">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr]">
           <div>

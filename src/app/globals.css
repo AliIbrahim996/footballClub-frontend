@@ -59,10 +59,51 @@ body {
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  /* Reduced motion = no movement, not no feedback: smooth scrolling off, entrances become plain fades (below). */
+  html { scroll-behavior: auto; }
 }
 
+/* ---- Motion ------------------------------------------------------------------------------------------- */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entrances */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movement on screen (also used by the board playback) */
+}
+
+/* Hero entrance: each element rises once on load, staggered by inline animation-delay. */
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.rise { animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.rise { animation: rise 0.6s var(--ease-out) both; }
+
+/* Scroll reveal: only hidden when JavaScript runs (html.js), so content never disappears without it. */
+[data-reveal] { transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+.js [data-reveal]:not([data-revealed]) { opacity: 0; transform: translateY(16px); }
+
+/* Hero mini-play (explains the product): a run, a pass, a shot, then a quiet reset while invisible. 7s loop. */
+.hp-play { animation: hp-fade 7s linear infinite; }
+.hp-run { animation: hp-run 7s var(--ease-in-out) infinite; }
+.hp-ball { animation: hp-ball 7s var(--ease-in-out) infinite; }
+.hp-defender { animation: hp-defender 7s var(--ease-in-out) infinite; }
+.hp-run-arrow { animation: hp-show 7s var(--ease-out) infinite; }
+.hp-pass { stroke-dasharray: 160; animation: hp-draw 7s var(--ease-out) infinite; }
+@keyframes hp-fade { 0%, 88% { opacity: 1; } 93%, 95% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes hp-show { 0%, 8% { opacity: 0; } 15%, 94% { opacity: 1; } 94.01%, 100% { opacity: 0; } }
+@keyframes hp-draw { 0%, 20% { stroke-dashoffset: 160; } 30%, 94% { stroke-dashoffset: 0; } 94.01%, 100% { stroke-dashoffset: 160; } }
+@keyframes hp-run { 0%, 15% { transform: none; } 45%, 94% { transform: translate(95px, -65px); } 94.01%, 100% { transform: none; } }
+@keyframes hp-ball {
+  0%, 25% { transform: none; }
+  42%, 50% { transform: translate(158px, 10px); }
+  64%, 94% { transform: translate(273px, 67px); }
+  94.01%, 100% { transform: none; }
+}
+@keyframes hp-defender { 0%, 30% { transform: none; } 55%, 94% { transform: translate(-20px, -18px); } 94.01%, 100% { transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fewer, gentler: no movement. The play shows as a still diagram and sections only fade in. */
+  .hp-play, .hp-run, .hp-ball, .hp-defender, .hp-run-arrow, .hp-pass { animation: none; }
+  .rise { animation-name: fade; }
+  .hp-pass { stroke-dasharray: none; }
+  .js [data-reveal]:not([data-revealed]) { transform: none; }
+  [data-reveal] { transition: opacity 0.3s ease; }
+}
 
 html[lang='ar'] body { font-family: var(--font-arabic), var(--font-sans); }

@@ -45,7 +45,11 @@ export default async function RootLayout({ children, params }: { children: React
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   return (
-    <html lang={locale} dir={LOCALE_META[locale].dir} className={`${geistSans.variable} ${geistMono.variable} ${arabic.variable}`}>
+    <html lang={locale} dir={LOCALE_META[locale].dir} className={`${geistSans.variable} ${geistMono.variable} ${arabic.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Lets scroll-reveal styles hide content only when JavaScript is available to reveal it. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="min-h-dvh">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

@@ -21,6 +21,7 @@ const FEATURES = [
 const FAQ = ["cost", "who", "board", "data", "languages"] as const;
 
 function HeroPitch() {
+  // Animated with CSS keyframes in globals.css (.hp-*): runner 8 makes a run, 6 passes, 8 shoots. Still diagram with reduced motion.
   return (
     <svg viewBox="0 0 520 340" role="img" aria-label="Tactics board preview" className="w-full rounded-2xl border border-line shadow-sm">
       <rect width="520" height="340" fill="#2f7d3a" />
@@ -29,14 +30,20 @@ function HeroPitch() {
         <rect x="10" y="10" width="500" height="320" /><path d="M260 10v320" /><circle cx="260" cy="170" r="45" />
         <rect x="10" y="85" width="80" height="170" /><rect x="430" y="85" width="80" height="170" />
       </g>
-      {[[50, 170], [130, 70], [130, 135], [130, 205], [130, 270], [220, 90], [220, 250], [300, 170], [380, 100], [380, 240]].map(([x, y], i) => (
-        <g key={i}><circle cx={x} cy={y} r="14" fill="#2563eb" stroke="#fff" strokeWidth="2.5" />
-          <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fill="#fff" fontSize="13" fontWeight="700">{i + 1}</text></g>
-      ))}
-      {[[390, 60], [440, 130], [440, 210], [330, 290]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="14" fill="#dc2626" stroke="#fff" strokeWidth="2.5" />)}
-      <path d="M300 170 L395 105" stroke="#fde047" strokeWidth="3" strokeDasharray="9 7" fill="none" strokeLinecap="round" />
-      <path d="M220 90 L370 100" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
-      <circle cx="372" cy="100" r="6" fill="#fff" />
+      <g className="hp-play">
+        <path className="hp-run-arrow" d="M300 170 L395 105" stroke="#fde047" strokeWidth="3" strokeDasharray="9 7" fill="none" strokeLinecap="round" />
+        <path className="hp-pass" d="M220 90 L370 100" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
+        {[[50, 170], [130, 70], [130, 135], [130, 205], [130, 270], [220, 90], [220, 250], [300, 170], [380, 100], [380, 240]].map(([x, y], i) => (
+          <g key={i} className={i === 7 ? "hp-run" : undefined}>
+            <circle cx={x} cy={y} r="14" fill="#2563eb" stroke="#fff" strokeWidth="2.5" />
+            <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fill="#fff" fontSize="13" fontWeight="700">{i + 1}</text>
+          </g>
+        ))}
+        {[[390, 60], [440, 130], [440, 210], [330, 290]].map(([x, y], i) => (
+          <circle key={i} className={i === 1 ? "hp-defender" : undefined} cx={x} cy={y} r="14" fill="#dc2626" stroke="#fff" strokeWidth="2.5" />
+        ))}
+        <circle className="hp-ball" cx="232" cy="98" r="6" fill="#fff" stroke="#111" strokeWidth="1.5" />
+      </g>
     </svg>
   );
 }
@@ -73,24 +80,24 @@ export default async function LandingPage({ params }: P) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-2">
-        <div className="rise">
-          <p className="mb-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent">{t("hero.badge")}</p>
-          <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl">{t("hero.title")}</h1>
-          <p className="mt-5 max-w-xl text-lg text-muted text-pretty">{t("hero.body")}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
+        <div>
+          <p className="rise mb-3 inline-block rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent">{t("hero.badge")}</p>
+          <h1 className="rise text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl" style={{ animationDelay: "60ms" }}>{t("hero.title")}</h1>
+          <p className="rise mt-5 max-w-xl text-lg text-muted text-pretty" style={{ animationDelay: "120ms" }}>{t("hero.body")}</p>
+          <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: "180ms" }}>
             <LinkButton href="/designer" className="h-12 px-6 text-base">{t("hero.cta")}</LinkButton>
             <LinkButton href={SIGNUPS_OPEN ? "/register" : "/contact?topic=full"} variant="secondary" className="h-12 px-6 text-base">{SIGNUPS_OPEN ? t("hero.secondary") : t("closed.heroSecondary")}</LinkButton>
           </div>
         </div>
-        <div className="rise" style={{ animationDelay: "120ms" }}><HeroPitch /></div>
+        <div className="rise" style={{ animationDelay: "240ms" }}><HeroPitch /></div>
       </section>
 
       <section aria-labelledby="features" className="border-y border-line bg-surface">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 id="features" className="max-w-2xl text-3xl font-semibold tracking-tight text-balance">{t("features.title")}</h2>
+          <h2 data-reveal id="features" className="max-w-2xl text-3xl font-semibold tracking-tight text-balance">{t("features.title")}</h2>
           <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map(({ key, icon: Icon }) => (
-              <li key={key}>
+            {FEATURES.map(({ key, icon: Icon }, i) => (
+              <li key={key} data-reveal style={{ "--reveal-delay": `${i * 60}ms` } as React.CSSProperties}>
                 <Icon size={22} className="text-accent" aria-hidden />
                 <h3 className="mt-3 font-semibold">{t(`features.${key}.title`)}</h3>
                 <p className="mt-1.5 text-sm text-muted">{t(`features.${key}.body`)}</p>
@@ -101,10 +108,10 @@ export default async function LandingPage({ params }: P) {
       </section>
 
       <section aria-labelledby="how" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 id="how" className="text-3xl font-semibold tracking-tight">{t("how.title")}</h2>
+        <h2 data-reveal id="how" className="text-3xl font-semibold tracking-tight">{t("how.title")}</h2>
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {(["one", "two", "three"] as const).map((k, i) => (
-            <li key={k} className="rounded-2xl border border-line bg-surface p-6">
+            <li key={k} data-reveal style={{ "--reveal-delay": `${i * 60}ms` } as React.CSSProperties} className="rounded-2xl border border-line bg-surface p-6">
               <span className="font-mono text-sm text-accent">0{i + 1}</span>
               <h3 className="mt-2 font-semibold">{t(`how.${k}.title`)}</h3>
               <p className="mt-1.5 text-sm text-muted">{t(`how.${k}.body`)}</p>
@@ -114,11 +121,11 @@ export default async function LandingPage({ params }: P) {
       </section>
 
       <section aria-labelledby="pricing" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 id="pricing" className="text-3xl font-semibold tracking-tight">{t("pricing.title")}</h2>
-        <p className="mt-2 max-w-2xl text-muted">{SIGNUPS_OPEN ? t("pricing.subtitle") : t("closed.pricingSubtitle")}</p>
+        <h2 data-reveal id="pricing" className="text-3xl font-semibold tracking-tight">{t("pricing.title")}</h2>
+        <p data-reveal className="mt-2 max-w-2xl text-muted">{SIGNUPS_OPEN ? t("pricing.subtitle") : t("closed.pricingSubtitle")}</p>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {(["free", "pro"] as const).map((plan) => (
-            <div key={plan} className={`flex flex-col rounded-2xl border p-6 ${plan === "pro" ? "border-accent bg-surface" : "border-line bg-surface"}`}>
+            <div key={plan} data-reveal style={{ "--reveal-delay": `${(plan === "pro" ? 1 : 0) * 60}ms` } as React.CSSProperties} className={`flex flex-col rounded-2xl border p-6 ${plan === "pro" ? "border-accent bg-surface" : "border-line bg-surface"}`}>
               <h3 className="font-semibold">{t(`pricing.${plan}.name`)}</h3>
               <p className="mt-3 text-4xl font-semibold tracking-tight">
                 {plan === "pro" ? ((SIGNUPS_OPEN && priceLabel(locale)) || t("closed.price")) : t("pricing.free.price")}
@@ -143,8 +150,8 @@ export default async function LandingPage({ params }: P) {
 
       <section aria-labelledby="faq" className="border-t border-line bg-surface">
         <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-          <h2 id="faq" className="text-3xl font-semibold tracking-tight">{t("faq.title")}</h2>
-          <dl className="mt-8 divide-y divide-line">
+          <h2 data-reveal id="faq" className="text-3xl font-semibold tracking-tight">{t("faq.title")}</h2>
+          <dl data-reveal className="mt-8 divide-y divide-line">
             {FAQ.map((k) => (
               <div key={k} className="py-5">
                 <dt className="font-medium">{t(`faq.${k}.q`)}</dt>
@@ -156,7 +163,7 @@ export default async function LandingPage({ params }: P) {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
-        <h2 className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-balance">{t("cta.title")}</h2>
+        <h2 data-reveal className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-balance">{t("cta.title")}</h2>
         <LinkButton href="/login" className="mt-8 h-12 px-8 text-base">{t("hero.cta")}</LinkButton>
       </section>
     </>
