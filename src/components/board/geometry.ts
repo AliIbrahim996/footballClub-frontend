@@ -37,21 +37,61 @@ const PORTRAIT_11 = new Set(["fullPortrait", "whitePortrait"]);
 export const formationFits = (pitch: string) => LANDSCAPE_11.has(pitch) || PORTRAIT_11.has(pitch);
 
 /**
- * Put one team into a formation. Players already on the board keep their identity (so simulation steps that move
- * them still apply) and are reordered by shirt number; missing players are added, surplus players removed.
+ * Put one team into a formation. Players already on the board keep their identity and label (so simulation steps
+ * that move them still apply, and custom labels like "GK" survive); the keeper ("GK"/"1") takes the goal spot, the rest
+ * follow by shirt number. Missing players are added with unused numbers, surplus players removed.
  */
 export function arrangeFormation(items: BoardItem[], name: string, team: "home" | "away", pitch: string): BoardItem[] {
   const portrait = PORTRAIT_11.has(pitch);
   const spots = formation(name, team).map((p) => (portrait && p.kind === "player" ? { ...p, x: PITCH_H - p.y, y: p.x } : p));
   const isTeam = (i: BoardItem) => i.kind === "player" && i.team === team;
-  const existing = items.filter(isTeam).sort((a, b) => num(a) - num(b));
+  const existing = items.filter(isTeam).sort((a, b) => order(a) - order(b));
+  const used = new Set(existing.slice(0, spots.length).map((i) => (i.kind === "player" ? i.label : "")));
+  let n = 1;
+  const freeLabel = (want: string) => {
+    if (!used.has(want)) { used.add(want); return want; }
+    while (used.has(String(n))) n++;
+    used.add(String(n));
+    return String(n);
+  };
   const placed = spots.map((s, i) => {
     const old = existing[i];
-    return old && old.kind === "player" && s.kind === "player" ? { ...old, x: s.x, y: s.y, label: s.label } : s;
+    if (s.kind !== "player") return s;
+    if (old && old.kind === "player") return { ...old, x: s.x, y: s.y };
+    return { ...s, label: freeLabel(s.label) };
   });
   return [...items.filter((i) => !isTeam(i)), ...placed];
 }
-const num = (i: BoardItem) => (i.kind === "player" ? Number(i.label) || 99 : 99);
+/** Sort key for lining players up: keeper first, then shirt numbers, then any other custom labels. */
+function order(i: BoardItem) {
+  if (i.kind !== "player") return 999;
+  const l = i.label.trim().toLowerCase();
+  if (l === "gk" || l === "1") return 0;
+  return Number(l) || 99;
+}
+
+/**
+ * Steps store absolute positions. When the starting position of an item moves (e.g. a new formation), move its
+ * recorded positions by the same amount, so the play keeps its shape from the new starting point.
+ */
+export function shiftSteps(before: BoardItem[], after: BoardItem[], steps: BoardStep[] = []): BoardStep[] {
+  const was = new Map<string, [number, number]>();
+  for (const i of before) if (i.kind !== "arrow") was.set(i.id, [i.x, i.y]);
+  const delta = new Map<string, [number, number]>();
+  for (const i of after) {
+    if (i.kind === "arrow") continue;
+    const w = was.get(i.id);
+    if (w && (i.x !== w[0] || i.y !== w[1])) delta.set(i.id, [i.x - w[0], i.y - w[1]]);
+  }
+  if (!delta.size) return steps;
+  return steps.map((s) => ({
+    ...s,
+    pos: Object.fromEntries(Object.entries(s.pos).map(([id, [x, y]]) => {
+      const d = delta.get(id);
+      return [id, d ? [x + d[0], y + d[1]] : [x, y]];
+    })),
+  }));
+}
 
 /** A zig-zag path between two points, used for dribbles. */
 export function wavy([x1, y1]: [number, number], [x2, y2]: [number, number]) {

@@ -11,7 +11,7 @@ import { call } from "@/lib/client";
 import { SIGNUPS_OPEN } from "@/lib/flags";
 import type { BoardItem, BoardState, Plan } from "@/lib/types";
 import { Button, Card, Field, Input, LinkButton } from "../ui";
-import { FORMATIONS, arrangeFormation, easeInOut, formationFits, stepPositions, svgToPng, uid, wavy } from "./geometry";
+import { FORMATIONS, arrangeFormation, easeInOut, formationFits, shiftSteps, stepPositions, svgToPng, uid, wavy } from "./geometry";
 import { PITCH_KINDS, Pitch, VIEWBOX } from "./pitch";
 
 type Tool = "select" | "home" | "away" | "neutral" | "ball" | "cone" | "goal" | "run" | "pass" | "dribble" | "zone" | "text" | "erase";
@@ -48,7 +48,8 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
   const [tags, setTags] = useState<string[]>(plan?.tags ?? []);
   const [tagDraft, setTagDraft] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
-  const [fname, setFname] = useState("4-4-2");
+  // Each team has its own formation (e.g. home 4-3-3 against away 4-4-2).
+  const [formations, setFormations] = useState<Record<"home" | "away", string>>({ home: "4-4-2", away: "4-4-2" });
 
   // --- simulation state -------------------------------------------------------
   const simulation = mode === "account";
@@ -57,6 +58,7 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
   const [speed, setSpeed] = useState<(typeof SPEEDS)[number]>(1);
   const [loop, setLoop] = useState(false);
   const raf = useRef(0);
+  const [glide, setGlide] = useState(true); // false with reduced motion; read once per play, not per item per frame
   useEffect(() => () => cancelAnimationFrame(raf.current), []);
   const steps = board.steps ?? [];
   const positions = useMemo(() => stepPositions(board.items, board.steps), [board.items, board.steps]);
@@ -72,7 +74,7 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
       const i = Math.floor(playhead);
       const a = positions[i][item.id];
       const b = positions[Math.min(i + 1, last)][item.id];
-      const e = reducedMotion() ? 0 : easeInOut(playhead - i);
+      const e = glide ? easeInOut(playhead - i) : 0;
       p = [a[0] + (b[0] - a[0]) * e, a[1] + (b[1] - a[1]) * e];
     } else {
       p = positions[current][item.id];
@@ -114,6 +116,7 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (playing) return; // the board is read-only during playback (undo could remove the step being played)
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); if (e.shiftKey) redo(); else undo(); }
       else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") { e.preventDefault(); redo(); }
       else if (e.key === "Delete" || e.key === "Backspace") removeSelected();
@@ -215,6 +218,13 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
     }
   }
 
+  /** Line one team up in a formation; its recorded steps move with it so the play keeps its shape. */
+  function applyFormation(team: "home" | "away", name: string) {
+    if (!formationFits(board.pitch)) return;
+    const items = arrangeFormation(board.items, name, team, board.pitch);
+    commit({ ...board, items, steps: shiftSteps(board.items, items, board.steps) });
+  }
+
   // --- steps and playback ---------------------------------------------------------
   function addStep() {
     if (steps.length + 1 >= MAX_STEPS) return;
@@ -234,6 +244,7 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
     setSelected(null);
     setDraft(null);
     cancelAnimationFrame(raf.current); // never run two loops (e.g. a double click before the first frame)
+    setGlide(!reducedMotion());
     const per = STEP_MS / speed;
     let base = current >= last ? 0 : current;
     let t0 = performance.now();
@@ -266,7 +277,8 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
 
   // Functional updates: two quick clicks must not overwrite each other with a stale list.
   function addTag(raw: string) {
-    const tag = raw.trim().toLowerCase().split(/\s+/).join("-").slice(0, 30);
+    // Same normalization as the API (lowercase, commas dropped, spaces to hyphens) so the chip matches what is saved.
+    const tag = raw.toLowerCase().replace(/,/g, " ").trim().split(/\s+/).join("-").slice(0, 30);
     if (!tag) return;
     setTags((prev) => (prev.includes(tag) || prev.length >= 10 ? prev : [...prev, tag]));
     setStatus("idle");
@@ -442,30 +454,27 @@ export function TacticsBoard({ plan, mode = "account", initialBoard, onBoardChan
             ))}
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium" htmlFor="formation">{t("formation")}</label>
-            <div className="flex gap-2">
-              <select
-                id="formation" value={fname} disabled={playing}
-                onChange={(e) => {
-                  const name = e.target.value;
-                  setFname(name);
-                  if (!formationFits(board.pitch)) return;
-                  // Re-arrange the teams already on the board; with an empty board, line up the home team.
-                  const teams = (["home", "away"] as const).filter((team) => board.items.some((i) => i.kind === "player" && i.team === team));
-                  const items = (teams.length ? teams : (["home"] as const)).reduce((acc, team) => arrangeFormation(acc, name, team, board.pitch), board.items);
-                  commit({ ...board, items });
-                }}
-                className="h-10 min-w-0 flex-1 rounded-lg border border-line bg-surface px-2 text-sm"
-              >
-                {Object.keys(FORMATIONS).map((f) => <option key={f}>{f}</option>)}
-              </select>
-            </div>
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <p className="mb-1.5 text-sm font-medium">{t("formation")}</p>
+            <div className="space-y-2">
               {(["home", "away"] as const).map((team) => (
-                <Button
-                  key={team} variant="secondary" className="h-9 px-2 text-xs" disabled={!formationFits(board.pitch) || playing}
-                  onClick={() => commit({ ...board, items: arrangeFormation(board.items, fname, team, board.pitch) })}
-                >{t(`place.${team}`)}</Button>
+                <div key={team} className="flex items-center gap-2">
+                  <label htmlFor={`formation-${team}`} className="flex w-16 shrink-0 items-center gap-1.5 text-sm">
+                    <span className="size-2.5 rounded-full" style={{ background: TEAM_COLOR[team] }} aria-hidden />
+                    {t(`teams.${team}`)}
+                  </label>
+                  <select
+                    id={`formation-${team}`} value={formations[team]} disabled={playing || !formationFits(board.pitch)}
+                    onChange={(e) => { const name = e.target.value; setFormations((f) => ({ ...f, [team]: name })); applyFormation(team, name); }}
+                    className="h-9 min-w-0 flex-1 rounded-lg border border-line bg-surface px-2 text-sm disabled:opacity-50"
+                  >
+                    {Object.keys(FORMATIONS).map((f) => <option key={f}>{f}</option>)}
+                  </select>
+                  {/* Places the team in the shown formation (picking the already-selected option fires no change event). */}
+                  <Button
+                    variant="secondary" className="h-9 px-3 text-xs" disabled={!formationFits(board.pitch) || playing}
+                    onClick={() => applyFormation(team, formations[team])} aria-label={t(`place.${team}`)}
+                  >{t("applyFormation")}</Button>
+                </div>
               ))}
             </div>
             {!formationFits(board.pitch) && <p className="mt-2 text-xs text-muted">{t("formationHint")}</p>}

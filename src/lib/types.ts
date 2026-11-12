@@ -14,7 +14,7 @@ export type Player = {
 export type Skill = { id: number; skill_name: string; comment: string; category: number; category_name: string };
 export type Category = { id: number; name: string };
 
-/** A simulation step: where items move to, relative to the previous step (missing ids stay where they were). */
+/** A simulation step: absolute board positions items move to in this step (missing ids stay where they were). */
 export type BoardStep = { id: string; pos: Record<string, [number, number]> };
 export type BoardState = { pitch: PitchKind; items: BoardItem[]; steps?: BoardStep[] };
 export type PitchKind =

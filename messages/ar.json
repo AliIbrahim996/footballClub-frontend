@@ -156,6 +156,11 @@
       "futsalPortrait": "خماسي (عمودي)"
     },
     "formation": "التشكيلة",
+    "applyFormation": "تطبيق",
+    "teams": {
+      "home": "المضيف",
+      "away": "الضيف"
+    },
     "place": {
       "home": "وضع المضيف",
       "away": "وضع الضيف"

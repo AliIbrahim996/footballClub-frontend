@@ -156,6 +156,11 @@
       "futsalPortrait": "Futsal (portrait)"
     },
     "formation": "Formation",
+    "applyFormation": "Apply",
+    "teams": {
+      "home": "Home",
+      "away": "Away"
+    },
     "place": {
       "home": "Place home",
       "away": "Place away"
