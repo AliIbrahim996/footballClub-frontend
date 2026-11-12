@@ -88,3 +88,6 @@ Set `NEXT_PUBLIC_SITE_URL` to your public origin (used for sitemap, canonical an
 
 ## Scripts
 `npm run dev` · `npm run build` · `npm run lint`
+
+## License
+[MIT](LICENSE) © 2026 Ali Ibrahim
